@@ -1,0 +1,7 @@
+{
+  "name": "workut",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
