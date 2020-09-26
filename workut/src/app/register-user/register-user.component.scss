@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap');
+ion-title {
+  text-align: center;
+  font-family: 'Nova Mono', monospace;
+  font-size: 2rem;
+}
+.icone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ion-title, h3 {
+  color: #f82790;
+}
+ion-item{
+  --color: rgb(126, 122, 125);
+  margin-top: 1rem;
+}
+ion-button{
+  --background:#f82790;
+  margin-top: 2.8rem;
+}
+ion-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+form {
+  border: 1px solid #CCC;
+  padding: 20px 50px;
+  border-radius: .7rem;
+}
+ion-content {
+  height: 110vh;
+}

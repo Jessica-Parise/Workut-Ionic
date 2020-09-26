@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-row text-center>
+      <div class="icone">
+        <ion-icon name="arrow-back" class="ion-margin-start"></ion-icon>
+      </div>
+      <ion-title>Workut</ion-title>
+      <ion-icon class="ion-margin-end"></ion-icon>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="#ffffff" padding>
+
+  <ion-grid>
+    <form #form="ngForm" (ngSubmit)="SignUp(form)">
+      <ion-row color="primary" justify-content-center>
+        <ion-col align-self-center size-md="12" size-lg="12" size-xs="12">
+
+          <div text-center>
+            <h3>Sign up</h3>
+          </div>
+
+          <div padding>
+
+            <ion-item>
+              <ion-input [(ngModel)]="email" name="email" type="email" placeholder="your@email.com" ngModel required>
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input [(ngModel)]="name" name="name" type="text" placeholder="Name" ngModel required>
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input [(ngModel)]="lastname" name="lastname" type="text" placeholder="Last name" ngModel required>
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input [(ngModel)]="password" name="password" type="password" placeholder="Password" ngModel required>
+              </ion-input>
+            </ion-item>
+
+          </div>
+
+          <div padding>
+            <ion-button size="larger" type="submit" [disabled]="form.invalid" expand="block">Sign up</ion-button>
+          </div>
+
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+
+</ion-content>
