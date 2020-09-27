@@ -81,4 +81,5 @@ form {
 // Testing the Countries and States list
 .listData{
   display : flex;
+  flex-direction: column;
 }

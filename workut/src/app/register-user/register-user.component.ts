@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IonSlides } from '@ionic/angular';
-import { stat } from 'fs';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register-user',
@@ -112,7 +112,7 @@ export class RegisterUserComponent implements OnInit {
   countries: any; states: any;
 
   // Constructor
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public alertController: AlertController) {
 
   }
 
@@ -140,18 +140,28 @@ export class RegisterUserComponent implements OnInit {
     // Sending the user object to MondoDB via POST request
     this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/SignUp', user)
 
-      .subscribe(x => {
-        console.log(x);
+      .subscribe(response => {
+        if (response == 200) {
+          // 200 sucess action
+          this._200code();
+          // Reseting the values, case the user return to this page
+          this.email = '';
+          this.name = '';
+          this.lastname = '';
+          this.password = '';
+          this.country = '';
+          this.state = '';
+          this.Move(0);
+        } else if (response == 400) {
+          // 400 error action
+          this._400code();
+        } else if (response == 500) {
+          // 500 error action
+          this._500code();
+        }
       });
 
-    // Reseting the values, case the user return to this page
-    this.email = '';
-    this.name = '';
-    this.lastname = '';
-    this.password = '';
-    this.country = '';
-    this.state = '';
-    this.Move(0);
+
 
   }
 
@@ -198,6 +208,39 @@ export class RegisterUserComponent implements OnInit {
       this.states = [{ "nome": "Outro" }];
     }
 
+  }
+
+  // Presents an alert for 400 error code
+  async _400code() {
+    const alert = await this.alertController.create({
+      header: 'Erro',
+      message: 'Esse e-mail já está cadastrado no sistema!',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  // Presents an alert for 500 error code
+  async _500code() {
+    const alert = await this.alertController.create({
+      header: 'Erro',
+      message: 'Ocorreu um erro, por favor tente novamente!',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  // Presents an alert for 200 sucess code
+  async _200code() {
+    const alert = await this.alertController.create({
+      header: 'Sucesso',
+      message: 'Conta cadastrada com sucesso!',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }
