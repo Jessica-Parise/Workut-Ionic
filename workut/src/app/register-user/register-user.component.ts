@@ -138,28 +138,33 @@ export class RegisterUserComponent implements OnInit {
     }
 
     // Sending the user object to MondoDB via POST request
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/SignUp', user)
-
-      .subscribe(response => {
-        if (response == 200) {
-          // 200 sucess action
-          this._200code();
-          // Reseting the values, case the user return to this page
-          this.email = '';
-          this.name = '';
-          this.lastname = '';
-          this.password = '';
-          this.country = '';
-          this.state = '';
-          this.Move(0);
-        } else if (response == 400) {
-          // 400 error action
-          this._400code();
-        } else if (response == 500) {
+    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserSignUp', user)
+      .subscribe(
+        (response) => {
+          if (response == 200) {
+            // 200 sucess action
+            this._200code();
+            // Reseting the values, case the user return to this page
+            this.email = '';
+            this.name = '';
+            this.lastname = '';
+            this.password = '';
+            this.country = '';
+            this.state = '';
+            this.Move(0);
+          } else if (response == 400) {
+            // 400 error action
+            this._400code();
+          } else if (response == 500) {
+            // 500 error action
+            this._500code();
+          }
+        },
+        (error) => {
           // 500 error action
           this._500code();
         }
-      });
+      );
 
 
 
