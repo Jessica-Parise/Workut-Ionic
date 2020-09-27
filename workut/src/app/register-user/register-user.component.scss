@@ -1,38 +1,79 @@
 @import url('https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap');
+
+// 'Workut' title at navbar
 ion-title {
   text-align: center;
   font-family: 'Nova Mono', monospace;
   font-size: 2rem;
 }
+
+// Back button at navbar
 .icone {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+// Coloring the 'Workut' and 'SignUp' titles
 ion-title, h3 {
   color: #f82790;
 }
+
+// Adapting the Email, Name, Lastname and Password fields
 ion-item{
   --color: rgb(126, 122, 125);
   margin-top: 1rem;
+  border-radius: 5px;
 }
+
+// Coloring and adjusting the button
 ion-button{
   --background:#f82790;
   margin-top: 2.8rem;
 }
+
+// Form style
 ion-grid {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
-  align-items: center;
+  height: 80%;
   justify-content: center;
+  // align-items: center;
 }
+
+// Creates a border to outline the form
 form {
   border: 1px solid #CCC;
-  padding: 20px 50px;
+  padding: 0px 15px;
   border-radius: .7rem;
 }
-ion-content {
-  height: 110vh;
+
+// Removes the border if width > 600px
+@media (max-width: 600px) {
+  form {
+    border: none;
+  }
+}
+
+// Adjusting the ion-content's
+// ion-content {
+//   height: 110vh;
+// }
+
+// Control the distances beetween the buttons in slides
+.btnsSlide{
+  display : flex;
+  justify-content: space-between;
+}
+
+// Set a pattern width to buttons in slides
+.btnSlide{
+  width: 45%;
+}
+
+// Centralize the title 'SignUp'
+.titleSlide{
+  width:100%;
+  text-align: center;
 }

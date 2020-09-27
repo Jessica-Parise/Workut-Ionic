@@ -13,41 +13,93 @@
 <ion-content color="#ffffff" padding>
 
   <ion-grid>
-    <form #form="ngForm" (ngSubmit)="SignUp(form)">
+    <form #form="ngForm" (ngSubmit)="SignUp()">
       <ion-row color="primary" justify-content-center>
         <ion-col align-self-center size-md="12" size-lg="12" size-xs="12">
 
-          <div text-center>
-            <h3>Sign up</h3>
+          <!--SignUp Title-->
+          <div>
+            <h3 class="titleSlide">Sign up</h3>
           </div>
 
-          <div padding>
+          <!--Slides-->
+          <ion-slides #slides [options]="slideOpts">
 
-            <ion-item>
-              <ion-input [(ngModel)]="email" name="email" type="email" placeholder="your@email.com" ngModel required>
-              </ion-input>
-            </ion-item>
+            <!--Name and Lastname-->
+            <ion-slide>
+              <div>
+                <!--Name-->
+                <ion-item>
+                  <ion-input [(ngModel)]="name" name="name" type="text" placeholder="Name" ngModel required>
+                  </ion-input>
+                </ion-item>
+                <!--Lastname-->
+                <ion-item>
+                  <ion-input [(ngModel)]="lastname" name="lastname" type="text" placeholder="Last name" ngModel
+                    required>
+                  </ion-input>
+                </ion-item>
+                <!--Next Button-->
+                <ion-button size="larger" expand="block" (click)="Move(1)">
+                  Next
+                </ion-button>
+              </div>
 
-            <ion-item>
-              <ion-input [(ngModel)]="name" name="name" type="text" placeholder="Name" ngModel required>
-              </ion-input>
-            </ion-item>
+            </ion-slide>
 
-            <ion-item>
-              <ion-input [(ngModel)]="lastname" name="lastname" type="text" placeholder="Last name" ngModel required>
-              </ion-input>
-            </ion-item>
+            <!--Country and City-->
+            <ion-slide>
+              <div>
+                <!--Name-->
+                <ion-item>
+                  <ion-input [(ngModel)]="country" name="country" type="text" placeholder="Country" ngModel required>
+                  </ion-input>
+                </ion-item>
+                <!--Lastname-->
+                <ion-item>
+                  <ion-input [(ngModel)]="city" name="city" type="text" placeholder="City" ngModel required>
+                  </ion-input>
+                </ion-item>
+                <!--Next and Previous Buttons-->
+                <div class="btnsSlide">
+                  <ion-button class="btnSlide" size="larger" (click)="Move(0)">
+                    Back
+                  </ion-button>
+                  <ion-button class="btnSlide" size="larger" (click)="Move(2)">
+                    Next
+                  </ion-button>
+                </div>
+              </div>
+            </ion-slide>
 
-            <ion-item>
-              <ion-input [(ngModel)]="password" name="password" type="password" placeholder="Password" ngModel required>
-              </ion-input>
-            </ion-item>
+            <!--Email and Password-->
+            <ion-slide>
+              <div>
+                <!--Email-->
+                <ion-item>
+                  <ion-input [(ngModel)]="email" name="email" type="email" placeholder="your@email.com" ngModel
+                    required>
+                  </ion-input>
+                </ion-item>
+                <!--Password-->
+                <ion-item>
+                  <ion-input [(ngModel)]="password" name="password" type="password" placeholder="Password" ngModel
+                    required>
+                  </ion-input>
+                </ion-item>
+                <!--Next and SignUp Button-->
+                <div class="btnsSlide">
+                  <ion-button class="btnSlide" size="larger" (click)="Move(1)">
+                    Back
+                  </ion-button>
+                  <ion-button class="btnSlide" size="larger" type="submit" [disabled]="form.invalid">
+                    Sign up
+                  </ion-button>
+                </div>
+              </div>
+            </ion-slide>
 
-          </div>
-
-          <div padding>
-            <ion-button size="larger" type="submit" [disabled]="form.invalid" expand="block">Sign up</ion-button>
-          </div>
+          </ion-slides>
 
         </ion-col>
       </ion-row>
