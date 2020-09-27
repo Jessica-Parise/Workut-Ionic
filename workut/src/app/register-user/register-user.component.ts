@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IonSlides } from '@ionic/angular';
+import { stat } from 'fs';
 
 @Component({
   selector: 'app-register-user',
@@ -105,47 +106,98 @@ export class RegisterUserComponent implements OnInit {
   // User data variables
   email: string; password: string;
   name: string; lastname: string;
-  country: string; city: string;
+  country: string; state: string;
 
-  // 
+  // List of Countries and States
+  countries: any; states: any;
+
+  // Constructor
   constructor(public http: HttpClient) {
 
   }
 
+  // Init
   ngOnInit() {
+    // locking the swipe beetween Slides
     this.slides.lockSwipes(true);
+    // Getting the countries and states values
+    this.searchAPI();
   }
 
+  // Inserts a new User into the Mondo datebase
   SignUp() {
 
+    // Creating the user object to send to MondoDB
     let user = {
       "email": this.email,
       "name": this.name,
       "lastname": this.lastname,
       "password": this.password,
-      "country": "",
-      "city": ""
+      "country": this.country,
+      "state": this.state
     }
 
+    // Sending the user object to MondoDB via POST request
     this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/SignUp', user)
 
       .subscribe(x => {
         console.log(x);
       });
 
+    // Reseting the values, case the user return to this page
     this.email = '';
     this.name = '';
     this.lastname = '';
     this.password = '';
     this.country = '';
-    this.city = '';
+    this.state = '';
+    this.Move(0);
 
   }
 
-  Move() {
+  // Action for the 'Next' and 'Previous' buttons
+  Move(i) {
+    // unlocking the swipe beetween Slides
     this.slides.lockSwipes(false);
-    this.slides.slideTo(arguments[0]);
+    // Swiping to the selected Slide
+    this.slides.slideTo(i);
+    // locking the swipe beetween Slides again
     this.slides.lockSwipes(true);
+  }
+
+  // Search Countries and States data from api
+  searchAPI() {
+
+    // Searching the Countries
+    this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getCountries')
+      .subscribe((data) => {
+        this.countries = data;
+      });
+
+    // Searching the States
+    this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getStates')
+      .subscribe((data) => {
+        this.states = data;
+      });
+
+  }
+
+  // Update the State list with brazilian states, if the Country is 'Brasil'
+  countrySelected() {
+
+    // Verify if the selected country is Brazil
+    // and update the States list with all the brazilian states
+    if (this.country == 'Brasil') {
+      this.searchAPI();
+    }
+
+    // Verify if isn't Brazil
+    // and update the States list with the 'Outros' option
+    else {
+      this.state = '';
+      this.states = [{ "nome": "Outro" }];
+    }
+
   }
 
 }
