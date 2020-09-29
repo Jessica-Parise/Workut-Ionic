@@ -24,3 +24,136 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-grid {
+  background: url(assets/undraw_Around_the_world_re_n353_1.svg) no-repeat 700px center;
+  background-size: 650px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.background {
+  width: 100%;
+  height: 25%;
+  opacity: .3;
+  top: 0;
+}
+.conteudo {
+  margin-left: 70px;
+}
+.explication {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+}
+.explication h3 {
+  font-size: 40px;
+}
+.explication p {
+  font-size: 20px;
+  margin-top: 24px;
+  line-height: 38px;
+}
+.title {
+  display: flex;
+  align-items: center;
+  margin: 0px 0px 0px 15px;
+}
+.title img {
+  width: 100px;
+  height: 30px;
+}
+
+// Coloring the 'Workut' and 'SignUp' titles
+h3 {
+  color: #f82790;
+  
+}
+
+// Coloring and adjusting the button
+.buttoms{
+  display: flex;
+  flex-direction: row-reverse;
+  width: 200px;
+  text-align:center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.buttoms a {
+  margin: 1rem 1rem 0 0;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  background: darken($color: #f82790, $amount: 1);
+  border-radius: 5px;
+  text-align: center;
+}
+.buttoms a:hover{
+  color:#f82790;
+  background-color: white;
+  border: 1px solid #f82790;
+}
+
+.aleatorio {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  
+}
+
+//Links in the toolbar
+.links{
+  display:flex;
+  justify-content: flex-end;
+  width: 900px;
+  margin-left: 200px;
+  align-items: center;
+}
+    
+
+.links a {
+    color: #f82790;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    margin-right: 15px;
+    padding: 10px;
+    border: 1px solid #f82790;
+}
+.links a:hover{
+  color: white;
+  background-color: #f82790;
+}
+// Form style
+ion-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+// Adjusting the ion-content's
+// ion-content {
+//   height: 110vh;
+// }
+
+@media(max-width: 700px){
+  .title {
+    justify-content: center;
+  }
+
+  
+  
+  .conteudo {
+    margin-left: 60px;
+
+  }
+
+  .explication h3 {
+    font-size: 28px;
+  }
+  
+}

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Ionic App</title>
+  <title>Workut</title>
 
   <base href="/" />
 
@@ -20,7 +20,45 @@
 </head>
 
 <body>
-  <app-root></app-root>
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-row text-center>
+          <div class="aleatorio">
+            <div class="title">
+              <img src="../assets/logonome2.png" alt=""> 
+            </div>
+            <div padding class="links"> 
+              <a href="">Sign up</a>
+              <a href="">Sign in</a>
+            </div>
+          </div>
+      </ion-row>
+      
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-grid>
+      <div class="conteudo">
+        <ion-row color="primary" justify-content-center>
+          <ion-col align-self-center size-md="12" size-lg="12" size-xs="12">
+            <div text-center class="explication">
+              <h3>Criado para facilitar sua busca por emprego.</h3>
+              <p>Ajudamos pessoas a aproveitar seu tempo de forma eficiente.</p>
+            </div>
+            
+            <div padding class="buttoms">
+              <a href=""> Sign in</a>
+              <a href=""> Sign up</a>
+            </div>
+          </ion-col>
+        </ion-row>
+      </div>
+
+  </ion-grid>
+  </ion-content>
+  
+  
 </body>
 
 </html>
