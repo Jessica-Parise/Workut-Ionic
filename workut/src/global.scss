@@ -27,40 +27,48 @@
 
 ion-grid {
   background: url(assets/undraw_Around_the_world_re_n353_1.svg) no-repeat 700px center;
-  background-size: 650px;
+  background-size: 800px;
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 .background {
   width: 100%;
-  height: 25%;
+  height: 80%;
   opacity: .3;
   top: 0;
 }
+
 .conteudo {
   margin-left: 70px;
 }
+
 .explication {
   display: flex;
   flex-direction: column;
   max-width: 500px;
 }
+
 .explication h3 {
-  font-size: 40px;
+  font-size: 45px;
 }
+
 .explication p {
   font-size: 20px;
   margin-top: 24px;
   line-height: 38px;
 }
+
 .title {
   display: flex;
   align-items: center;
   margin: 0px 0px 0px 15px;
 }
+
 .title img {
   width: 100px;
   height: 30px;
@@ -72,7 +80,7 @@ h3 {
   
 }
 
-// Coloring and adjusting the button
+// Coloring and adjusting the buttons
 .buttoms{
   display: flex;
   flex-direction: row-reverse;
@@ -80,6 +88,8 @@ h3 {
   text-align:center;
   justify-content: space-between;
   margin-top: 10px;
+  visibility: hidden;
+
 }
 .buttoms a {
   margin: 1rem 1rem 0 0;
@@ -101,6 +111,31 @@ h3 {
   align-items: center;
   margin-left: 20px;
   
+}
+
+.main{
+  display: flex;
+  flex-direction: row-reverse;
+  width: 200px;
+  text-align:center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.main a{
+  margin: 1rem 1rem 0 0;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  background: darken($color: #f82790, $amount: 1);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.main a:hover{
+  color:#f82790;
+  background-color: white;
+  border: 1px solid #f82790;
 }
 
 //Links in the toolbar
@@ -126,12 +161,13 @@ h3 {
   color: white;
   background-color: #f82790;
 }
+
 // Form style
 ion-grid {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 90%;
   justify-content: center;
 }
 
@@ -140,20 +176,34 @@ ion-grid {
 //   height: 110vh;
 // }
 
+//text animation
+@keyframes explication h3{
+  from {text-decoration:dotted;}
+  to {text-decoration: none;}
+}
+
+
 @media(max-width: 700px){
   .title {
     justify-content: center;
   }
 
-  
+  .buttoms{
+    visibility: visible;
+  }
+
+  .main{
+    visibility: hidden;
+  } 
   
   .conteudo {
-    margin-left: 60px;
-
+    margin-left: 40px;
+    
   }
 
   .explication h3 {
     font-size: 28px;
+ 
   }
   
 }
