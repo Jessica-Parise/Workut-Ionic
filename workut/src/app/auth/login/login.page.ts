@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
 
     let user = {
       "email": this.email,
-      "senha": this.password
+      "password": this.password
     }
 
     this.httpClient.post("https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/Login", user)

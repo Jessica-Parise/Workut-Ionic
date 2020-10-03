@@ -1,12 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap');
 ion-title {
-  text-align: center;
+  font-family: 'Nova Mono', monospace;
+  font-size: 2rem;
 }
 ion-title, h3 {
+  text-align: center;
   color: #f82790;
 }
 ion-item{
   --color: rgb(126, 122, 125);
   margin-top: 1.5rem;
+  border-radius: 5px;
 }
 ion-button{
   --background:#f82790;
@@ -22,6 +26,16 @@ ion-grid {
 }
 form {
   border: 1px solid #CCC;
-  padding: 50px;
+  padding: 40px 30px;
   border-radius: .7rem;
+}
+
+.icone {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 600px) {
+  form {
+    border: none;
+  }
 }
