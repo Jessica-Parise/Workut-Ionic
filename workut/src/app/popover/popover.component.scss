@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user, .company {
+  padding: 10px;
+}
+.user a, .company a {
+  text-decoration: none;
+  color: #f82790;
+  padding: 10px;
+}
+
+.link:hover a{
+ color: rgb(255, 0, 0);
+}

@@ -1,20 +1,39 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+      <div class="container-menu">
+        <div class="title">
+          <img src="../assets/logonome2.png" alt="">
+          <ion-icon class="ion-margin-end"></ion-icon>
+        </div>
+        <div padding class="links">
+          <a routerLink="/login">Login</a>
+          <a my-custom-class popover-contention button icon-only (click)="presentPopover($event)">
+            Sign up
+          </a>
+        </div>
+      </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-grid>
+    <div class="conteudo">
+      <ion-row color="primary" justify-content-center>
+        <ion-col align-self-center size-md="12" size-lg="12" size-xs="12">
+          <div text-center class="explication">
+            <h3>Criado para facilitar sua busca por emprego.</h3>
+            <p>Ajudamos pessoas a aproveitar seu tempo de forma eficiente.</p>
+          </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+          <div padding class="buttoms">
+              <a routerLink="/login">Login</a>
+              <a my-custom-class popover-contention button icon-only (click)="presentPopover($event)">
+                Sign up
+              </a>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+
+  </ion-grid>
 </ion-content>
