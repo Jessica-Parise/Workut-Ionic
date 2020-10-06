@@ -4,17 +4,22 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'jobs-management',
+    redirectTo: 'jobs-list',
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    path: 'job-create',
+    loadChildren: () => import('./job-create/job-create.module').then(m => m.JobCreatePageModule)
   },
   {
-    path: 'jobs-management',
-    loadChildren: () => import('./jobs-management/jobs-management.module').then(m => m.JobsManagementPageModule)
+    path: 'job-edit',
+    loadChildren: () => import('./job-edit/job-edit.module').then(m => m.JobEditPageModule)
   },
+  {
+    path: 'jobs-list',
+    loadChildren: () => import('./jobs-list/jobs-list.module').then(m => m.JobsListPageModule)
+  },
+
 
 ];
 
