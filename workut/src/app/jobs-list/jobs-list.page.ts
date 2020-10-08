@@ -40,4 +40,8 @@ export class JobsListPage implements OnInit {
     console.log(job);
   }
 
+  deleteJob(job) {
+    console.log(job);
+  }
+
 }

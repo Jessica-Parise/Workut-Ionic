@@ -6,26 +6,29 @@
 
 <ion-content>
 
-  <!-- Fixed Floating Action Button that does not scroll with the content -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon routerLink='/job-create' name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <ion-list>
-    <div class="container" *ngFor="let job of Jobs">
+  <ion-list class="list">
+    <ion-item *ngFor="let job of Jobs">
+      <div class="container">
 
-      <div (click)="editJob(job)">
-        <p>{{job.companyName}}</p>
-        <p>{{job.companyEmail}}</p>
-        <p>{{job.jobTitle}}</p>
-        <p>{{job.jobDescription}}</p>
-        <p>{{job.salary}}</p>
-        <p>{{job.date}}</p>
+        <ion-icon name="close" color="danger" class="close-icon" (click)="deleteJob(job)"></ion-icon>
+        <ion-icon name="create" color="secondary" class="edit-icon" (click)="editJob(job)"></ion-icon>
+
+        <ion-text class="list-title">{{job.jobTitle}}</ion-text><br>
+
+        <div style="margin-bottom: 5px;"></div>
+
+        <ion-text class="list-subtitle">Salary: {{job.salary}}</ion-text><br>
+        <ion-text class="list-subtitle">Creation date: {{job.date}}</ion-text><br>
+        <ion-text class="list-subtitle">Job Description: {{job.jobDescription}}</ion-text>
+
       </div>
-
-    </div>
+    </ion-item>
   </ion-list>
 
 </ion-content>

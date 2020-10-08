@@ -1,6 +1,29 @@
-.container{
-    margin: 6%;
-    padding: 2%;
-    border-radius: 8%;
-    text-align: center;
+.container {
+    width: 100%;
+    margin: 5%;
+}
+
+.close-icon{
+    float: right;
+    font-size: 25px;
+}
+
+.edit-icon{
+    float: right;
+    font-size: 23px;
+}
+
+.list{
+    margin-top: 5px;
+}
+
+.list-subtitle{
+    font-size: 14px;
+    color: gray;
+    margin: 0;
+}
+
+.list-title{
+    font-size:16px;
+    color: black;
 }
