@@ -84,7 +84,8 @@ export class JobsListPage implements OnInit {
   }
 
   editJob(job) {
-    console.log(job);
+    this.router.navigate(['/job-edit', { id: job._id.$oid }]);
+    // console.log(job);
   }
 
 }
