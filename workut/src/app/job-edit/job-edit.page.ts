@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-job-edit',
@@ -15,7 +17,7 @@ export class JobEditPage implements OnInit {
   countries: any; states: any;
   country: String; state: String;
 
-  constructor(public http: HttpClient, private router: ActivatedRoute) { }
+  constructor(public http: HttpClient, private router: ActivatedRoute, private navigationRouter: Router, public alertController: AlertController) { }
 
   ngOnInit() {
     this.router.params.subscribe(params => {
@@ -75,6 +77,57 @@ export class JobEditPage implements OnInit {
       this.states = [{ "nome": "Outro" }];
     }
 
+  }
+
+  saveChanges() {
+
+    const body = {
+      "company": {
+        "email": "workut@uam.com",
+        "password": "UAM123"
+      },
+      "job": {
+        "id": this.id,
+        "jobTitle": this.jobTitle,
+        "jobDescription": this.jobDescription,
+        "salary": this.salary,
+        "country": this.country,
+        "state": this.state
+      }
+    }
+
+    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsEdit', body)
+      .subscribe(
+        (response) => {
+          if (response == "200") {
+            this.statusMessage('Sucess', 'Job data was sucessfully updated');
+          } else {
+            this.statusMessage('Error', 'Error during the update ... please try again later');
+          }
+        },
+        (error) => {
+          console.log('Error: ' + error);
+        }
+      );
+
+  }
+
+  async statusMessage(title, message) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: title,
+      message: message,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.navigationRouter.navigate(['/jobs-list']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

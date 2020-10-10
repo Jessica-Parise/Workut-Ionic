@@ -24,6 +24,10 @@ export class JobsListPage implements OnInit {
     this.searchJobs();
   }
 
+  ionViewDidEnter() {
+    this.searchJobs();
+  }
+
   async deleteJob(job) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -85,7 +89,6 @@ export class JobsListPage implements OnInit {
 
   editJob(job) {
     this.router.navigate(['/job-edit', { id: job._id.$oid }]);
-    // console.log(job);
   }
 
 }

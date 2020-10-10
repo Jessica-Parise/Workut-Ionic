@@ -12,7 +12,7 @@
 
 <ion-content>
   <ion-grid>
-    <form #form="ngForm" (ngSubmit)="SignUp()" class="editForm">
+    <form #form="ngForm" (ngSubmit)="saveChanges()" class="editForm">
 
       <ion-input class="input" ngModel required type="text" [(ngModel)]="jobTitle" name="jobTitle" placeholder="Title">
       </ion-input>
@@ -33,6 +33,10 @@
         <ion-select-option class="input" *ngFor="let state of states" [value]="state.nome">
           {{state.nome}}</ion-select-option>
       </ion-select>
+
+      <ion-button type="submit" expand="block">
+        Save
+      </ion-button>
 
     </form>
   </ion-grid>
