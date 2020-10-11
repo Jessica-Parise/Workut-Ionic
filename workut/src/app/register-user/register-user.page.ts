@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register-user.page.scss'],
 })
 export class RegisterUserPage implements OnInit {
+
   // Linking variable 'slides' to the slides in hmtl page
   @ViewChild('slides', { static: true }) slides: IonSlides;
 
@@ -122,6 +123,24 @@ export class RegisterUserPage implements OnInit {
     this.slides.lockSwipes(true);
     // Getting the countries and states values
     this.searchAPI();
+
+    this.verifySession();
+  }
+
+  verifySession() {
+    const email = localStorage.getItem('loggedEmail');
+    const password = localStorage.getItem('loggedPassword');
+    const id = localStorage.getItem('loggedID');
+    const type = localStorage.getItem('type');
+    
+    if (email != null || password != null || id != null || type != null) {
+      if(type=="1") {
+        this.router.navigate(['/tabs-user']);
+      }else{
+        this.router.navigate(['/tabs-company']);
+      }
+    }
+
   }
 
   // Inserts a new User into the Mondo datebase
@@ -143,7 +162,7 @@ export class RegisterUserPage implements OnInit {
         (response) => {
           if (response == 200) {
             // 200 sucess action
-            this.statusAlert('Sucesso','Conta cadastrada com sucesso!');
+            this.statusAlert('Sucesso', 'Conta cadastrada com sucesso!');
             // Reseting the values, case the user return to this page
             this.email = '';
             this.name = '';
@@ -151,19 +170,18 @@ export class RegisterUserPage implements OnInit {
             this.password = '';
             this.country = '';
             this.state = '';
-            this.router.navigate(['/home']);
             // this.Move(0);
           } else if (response == 400) {
             // 400 error action
-            this.statusAlert('Erro','Esse e-mail já está cadastrado no sistema!');
+            this.statusAlert('Erro', 'Esse e-mail já está cadastrado no sistema!');
           } else if (response == 500) {
             // 500 error action
-            this.statusAlert('Erro','Ocorreu um erro, por favor tente novamente!');
+            this.statusAlert('Erro', 'Ocorreu um erro, por favor tente novamente!');
           }
         },
         (error) => {
           // 500 error action
-          this.statusAlert('Erro','Ocorreu um erro, por favor tente novamente!');
+          this.statusAlert('Erro', 'Ocorreu um erro, por favor tente novamente!');
         }
       );
 
@@ -221,7 +239,16 @@ export class RegisterUserPage implements OnInit {
     const alert = await this.alertController.create({
       header: title,
       message: message,
-      buttons: ['OK']
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            if (message == 'Conta cadastrada com sucesso!') {
+              this.router.navigate(['/login']);
+            }
+          }
+        }
+      ]
     });
 
     await alert.present();

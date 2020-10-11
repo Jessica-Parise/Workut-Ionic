@@ -1,0 +1,22 @@
+<ion-header>
+  <div class="bem-vindo">
+    <h6>Olá, {{nome}}</h6>
+  </div>
+  <ion-icon class="logout-icon" name="log-out" (click)="Logout();"></ion-icon>
+</ion-header>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="jobs-management">
+      <ion-icon name="create"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="jobs">
+      <ion-icon name="briefcase"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="profile">
+      <ion-icon name="person-circle"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>

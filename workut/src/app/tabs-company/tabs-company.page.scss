@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.header-md::after {
+  background: none;
+}
+.logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0px 0px 10px;
+}
+.logo img {
+  width: 30px;
+}
+.bem-vindo {
+  padding: 25px 0px 0px 10px;
+}
+.logout-icon {
+  font-size: 30px;
+  margin-right: 15px;
+  color: #ff6db6;
+}

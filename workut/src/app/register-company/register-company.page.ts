@@ -123,6 +123,24 @@ export class RegisterCompanyPage implements OnInit {
     this.slides.lockSwipes(true);
     // Getting the countries and states values
     this.searchAPI();
+
+    this.verifySession();
+  }
+
+  verifySession() {
+    const email = localStorage.getItem('loggedEmail');
+    const password = localStorage.getItem('loggedPassword');
+    const id = localStorage.getItem('loggedID');
+    const type = localStorage.getItem('type');
+    
+    if (email != null || password != null || id != null || type != null) {
+      if(type=="1") {
+        this.router.navigate(['/tabs-user']);
+      }else{
+        this.router.navigate(['/tabs-company']);
+      }
+    }
+
   }
 
   // Inserts a new Company into the Mondo datebase
@@ -152,7 +170,6 @@ export class RegisterCompanyPage implements OnInit {
           this.password = '';
           this.country = '';
           this.state = '';
-          this.router.navigate(['/page']);
           // this.Move(0);
         } else if (response == 400) {
           // 400 error action
@@ -222,7 +239,16 @@ export class RegisterCompanyPage implements OnInit {
     const alert = await this.alertController.create({
       header: title,
       message: message,
-      buttons: ['OK']
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            if (message == 'Conta cadastrada com sucesso!') {
+              this.router.navigate(['/login']);
+            }
+          }
+        }
+      ]
     });
 
     await alert.present();

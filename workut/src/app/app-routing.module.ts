@@ -22,6 +22,14 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'tabs-company',
+    loadChildren: () => import('./tabs-company/tabs-company.module').then( m => m.TabsCompanyPageModule)
+  },
+  {
+    path: 'tabs-user',
+    loadChildren: () => import('./tabs-user/tabs-user.module').then( m => m.TabsUserPageModule)
+  },
 
 ];
 
