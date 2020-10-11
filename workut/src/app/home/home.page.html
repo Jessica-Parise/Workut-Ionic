@@ -1,20 +1,21 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
+  <h4>Lista de vagas</h4>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="content">
+  <ion-list class="list">
+    <ion-item *ngFor="let job of Jobs" class="item">
+      <div class="container">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+        <ion-text class="list-subtitle">Job Title: {{job.jobTitle}}</ion-text>
+        <ion-text class="list-subtitle">Job Description: {{job.jobDescription}}</ion-text>
+        <ion-text class="list-subtitle">Salary: {{job.salary}}</ion-text>
+        <ion-text class="list-subtitle">Start Date: {{job.startDate}}</ion-text>
+        <ion-text class="list-subtitle">Country: {{job.country}}</ion-text>
+        <ion-text class="list-subtitle">State: {{job.state}}</ion-text>
+
+      </div>
+
+    </ion-item>
+  </ion-list>
 </ion-content>
