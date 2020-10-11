@@ -40,7 +40,9 @@ export class JobEditPage implements OnInit {
     this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getStates')
       .subscribe((data) => {
         this.states = data;
-        this.searchData();
+        if (this.state == null) {
+          this.searchData();
+        }
       });
   }
 
@@ -53,7 +55,7 @@ export class JobEditPage implements OnInit {
         this.salary = data.salary;
         this.country = data.country;
         if (data.country != "Brasil") {
-          this.states = [{ "nome": "Outro" }];
+          this.states = [];
           this.state = data.state;
         } else {
           this.state = data.state;
@@ -70,10 +72,11 @@ export class JobEditPage implements OnInit {
       this.bindStateList();
     }
 
-    // Verify if isn't Brazil
-    // and update the States list with the 'Outros' option
-    else if (this.state != "Outro") {
-      this.states = [{ "nome": "Outro" }];
+    else {
+      this.states = [];
+      if (this.state != 'Other' && this.state != 'Any state') {
+        this.state = 'Any state';
+      }
     }
 
   }

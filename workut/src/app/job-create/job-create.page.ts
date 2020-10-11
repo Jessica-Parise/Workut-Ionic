@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { stat } from 'fs';
 
 @Component({
   selector: 'app-job-create',
@@ -20,6 +21,7 @@ export class JobCreatePage implements OnInit {
   constructor(public http: HttpClient, private router: ActivatedRoute, private navigationRouter: Router, public alertController: AlertController) { }
 
   ngOnInit() {
+    this.listInitialValues();
     this.bindCountryList();
     this.bindStateList();
   }
@@ -37,8 +39,9 @@ export class JobCreatePage implements OnInit {
     // Searching the States
     this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getStates')
       .subscribe((data) => {
-        this.states = data;
-        this.listInitialValues();
+        if (this.country == "Brasil") {
+          this.states = data;
+        }
       });
   }
 
@@ -57,16 +60,18 @@ export class JobCreatePage implements OnInit {
 
     // Verify if isn't Brazil
     // and update the States list with the 'Outros' option
-    else if (this.state != "Outro") {
-      this.state = '';
-      this.states = [{ "nome": "Outro" }];
+    else {
+      this.states = [];
+      if (this.state != 'Other' && this.state != 'Any state') {
+        this.state = 'Any state';
+      }
     }
 
   }
 
   saveChanges() {
 
-    this.startDate = new Date().toLocaleDateString();
+    this.startDate = new Date().toISOString();
 
 
     const body = {
