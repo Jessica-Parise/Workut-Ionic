@@ -15,12 +15,14 @@ export class UserProfilePage implements OnInit {
     this.getStates();
   }
 
+  iconName = "lock-closed";
+
   countries: any;
   states: any;
 
   user = {
-    email: "testando@testando.com",
-    password: "testando",
+    email: "mateus@workut.com",
+    password: "senha",
   };
 
   data: any;
@@ -38,17 +40,16 @@ export class UserProfilePage implements OnInit {
       )
       .subscribe(
         (response) => {
-          if(response == 404){
-            console.log('Sessão expirada');
-          }else{
+          if (response == 404) {
+            console.log("Sessão expirada");
+          } else {
             this.data = response;
             this.email = this.data.email;
             this.name = this.data.name;
-            this.lastname = this.data.lastname;
-            this.country = this.data.country; 
+            this.lastname = this.data.lastName;
+            this.country = this.data.country;
             this.state = this.data.state;
           }
-          
         },
         (error) => {
           console.log(error);
@@ -56,11 +57,11 @@ export class UserProfilePage implements OnInit {
       );
   }
 
-  countrySelected(){ 
-    if(this.country == "Brasil"){
+  countrySelected() {
+    if (this.country == "Brazil") {
       this.getStates();
-    }else{
-      if(this.state != "Other" || this.state != "Any state"){
+    } else {
+      if (this.state != "Other" || this.state != "Any state") {
         this.states = [];
         this.state = "Other";
       }
@@ -74,7 +75,7 @@ export class UserProfilePage implements OnInit {
       )
       .subscribe(
         (response) => {
-         this.countries = response;          
+          this.countries = response;
         },
         (error) => {
           console.log(error);
@@ -82,18 +83,59 @@ export class UserProfilePage implements OnInit {
       );
   }
 
-   getStates() {
+  getStates() {
     this.httpClient
       .get(
         "https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getStates"
       )
       .subscribe(
         (response) => {
-         this.states = response;          
+          this.states = response;
         },
         (error) => {
           console.log(error);
         }
       );
+  }
+
+  editProfile() {
+
+    this.iconName = "lock-open";
+
+    /*
+    const body = {
+      user: {
+        email: "mateus@workut.com",
+        password: "senha",
+      },
+      newData: {
+        email: this.email,
+        name: this.name,
+        lastName: this.lastname,
+        country: this.country,
+        state: this.state,
+      },
+    };
+
+    this.httpClient
+      .post(
+        "https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserEditProfile",
+        body
+      )
+      .subscribe(
+        (response) => {
+          if (response == "200") {
+            console.log("Sucesso");
+          } else if (response == "404") {
+            console.log("Seesão Expirada");
+          } else {
+            console.log("Error");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      */
   }
 }
