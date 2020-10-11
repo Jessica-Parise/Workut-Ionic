@@ -7,7 +7,7 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./user-profile.page.scss"],
 })
 export class UserProfilePage implements OnInit {
-  constructor(public httpClient: HttpClient) {}
+  constructor(public httpClient: HttpClient) { }
 
   ngOnInit() {
     this.search();
@@ -16,6 +16,9 @@ export class UserProfilePage implements OnInit {
   }
 
   iconName = "lock-closed";
+  emailDisabled: boolean;
+  nameDisabled: boolean; lastnameDisabled: boolean;
+  countryDisabled: boolean; stateDisabled: boolean;
 
   countries: any;
   states: any;
@@ -25,12 +28,9 @@ export class UserProfilePage implements OnInit {
     password: "senha",
   };
 
-  data: any;
-  email: string;
-  name: string;
-  lastname: string;
-  country: String;
-  state: String;
+  data: any; email: string;
+  name: string; lastname: string;
+  country: String; state: String;
 
   search() {
     this.httpClient
@@ -98,44 +98,56 @@ export class UserProfilePage implements OnInit {
       );
   }
 
+  updateControls(status: boolean) {
+    this.emailDisabled = status;
+    this.nameDisabled = status; this.lastnameDisabled = status;
+    this.countryDisabled = status; this.stateDisabled = status;
+  }
+
   editProfile() {
 
-    this.iconName = "lock-open";
+    if (this.iconName == "lock-open") {
 
-    /*
-    const body = {
-      user: {
-        email: "mateus@workut.com",
-        password: "senha",
-      },
-      newData: {
-        email: this.email,
-        name: this.name,
-        lastName: this.lastname,
-        country: this.country,
-        state: this.state,
-      },
-    };
-
-    this.httpClient
-      .post(
-        "https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserEditProfile",
-        body
-      )
-      .subscribe(
-        (response) => {
-          if (response == "200") {
-            console.log("Sucesso");
-          } else if (response == "404") {
-            console.log("Seesão Expirada");
-          } else {
-            console.log("Error");
-          }
+      const body = {
+        user: {
+          email: "mateus@workut.com",
+          password: "senha",
         },
-        (error) => {
-          console.log(error);
-        }
-      );
-      */
+        newData: {
+          email: this.email,
+          name: this.name,
+          lastName: this.lastname,
+          country: this.country,
+          state: this.state,
+        },
+      };
+
+      this.httpClient
+        .post(
+          "https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserEditProfile",
+          body
+        )
+        .subscribe(
+          (response) => {
+            if (response == "200") {
+              console.log("Sucesso");
+            } else if (response == "404") {
+              console.log("Seesão Expirada");
+            } else {
+              console.log("Error");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+
+      this.iconName = "lock-closed";
+      this.updateControls(true);
+    }
+    else {
+      this.iconName = "lock-open";
+      this.updateControls(false);
+    }
   }
 }
