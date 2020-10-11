@@ -1,12 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { IonSlides } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
-  selector: "app-user-profile",
-  templateUrl: "./user-profile.page.html",
-  styleUrls: ["./user-profile.page.scss"],
+  selector: 'app-profile',
+  templateUrl: './profile.page.html',
+  styleUrls: ['./profile.page.scss'],
 })
-export class UserProfilePage implements OnInit {
+export class ProfilePage implements OnInit {
+
   constructor(public httpClient: HttpClient) { }
 
   ngOnInit() {
@@ -15,6 +18,26 @@ export class UserProfilePage implements OnInit {
     this.getStates();
   }
 
+  // MAIN PAGE --------------------------------------------
+  // Linking variable 'slides' to the slides in hmtl page
+  @ViewChild('slides', { static: true }) slides: IonSlides;
+  segment;
+  slidePosition;
+
+
+
+  segmentChanged(ev: any) {
+    this.slides.slideTo(ev.detail.value);
+  }
+
+  async slidesChanged(slides: IonSlides) {
+    slides.getActiveIndex().then(index => {
+      this.slidePosition = index;
+      this.segment = this.slidePosition;
+    });
+  }
+
+  // USER DATA PAGE ----------------------------------------
   iconName = "lock-closed";
   emailDisabled: boolean;
   nameDisabled: boolean; lastnameDisabled: boolean;
@@ -150,4 +173,5 @@ export class UserProfilePage implements OnInit {
       this.updateControls(false);
     }
   }
+
 }
