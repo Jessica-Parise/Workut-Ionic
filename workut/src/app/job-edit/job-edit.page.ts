@@ -54,7 +54,7 @@ export class JobEditPage implements OnInit {
         this.country = data.country;
         if (data.country != "Brasil") {
           this.states = [{ "nome": "Outro" }];
-          this.state = 'Outro';
+          this.state = data.state;
         } else {
           this.state = data.state;
         }
@@ -73,7 +73,6 @@ export class JobEditPage implements OnInit {
     // Verify if isn't Brazil
     // and update the States list with the 'Outros' option
     else if (this.state != "Outro") {
-      this.state = '';
       this.states = [{ "nome": "Outro" }];
     }
 

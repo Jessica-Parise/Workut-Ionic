@@ -14,7 +14,8 @@ export class JobsListPage implements OnInit {
   body = {
     "company": {
       "email": "workut@uam.com",
-      "password": "UAM123"
+      "password": "UAM123",
+      "id": "5f6e9542e88085f005b9ca76"
     }
   }
 
