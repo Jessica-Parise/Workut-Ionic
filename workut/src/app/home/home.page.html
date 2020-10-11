@@ -1,20 +1,24 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Lista candidatos:
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list class="list">  
+      <ion-item *ngFor="let user of Users">
+        <div class="container">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+          <ion-text class="list-subtitle">Nome: {{user.name}}</ion-text>
+          <ion-text class="list-subtitle">Sobrenome: {{user.lastName}}</ion-text>
+          <ion-text class="list-subtitle">Email: {{user.email}}</ion-text>
+          <ion-text class="list-subtitle">Country: {{user.country}}</ion-text>
+          <ion-text class="list-subtitle">State: {{user.state}}</ion-text>
+        
+        </div>
+
+      </ion-item>  
+  </ion-list>
 </ion-content>
