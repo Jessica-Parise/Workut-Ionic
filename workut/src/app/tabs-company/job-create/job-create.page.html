@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs-company/jobs-management"></ion-back-button>
+    </ion-buttons>
+
+    <ion-text>Creating new Job</ion-text>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <form #form="ngForm" (ngSubmit)="saveChanges()" class="editForm">
+
+      <ion-input class="input" ngModel required type="text" [(ngModel)]="jobTitle" name="jobTitle" placeholder="Title"
+        required>
+      </ion-input>
+
+      <ion-input class="input" ngModel required type="text" [(ngModel)]="jobDescription" name="jobDescription" required
+        placeholder="Description">
+      </ion-input>
+
+      <ion-input class="input" ngModel required type="text" [(ngModel)]="salary" name="salary" placeholder="Salary"
+        required>
+      </ion-input>
+
+      <ion-select class="input" [(ngModel)]="country" name="country" (ionChange)="countrySelected()" required>
+        <ion-select-option>Any country</ion-select-option>
+        <ion-select-option>Other</ion-select-option>
+        <ion-select-option class="input" *ngFor="let country of countries" [value]="country.nome_pais_int" selected=true>
+          {{country.nome_pais_int}}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-select class="input" [(ngModel)]="state" name="state" required>
+        <ion-select-option>Any state</ion-select-option>
+        <ion-select-option>Other</ion-select-option>
+        <ion-select-option class="input" *ngFor="let state of states" [value]="state.nome">
+          {{state.nome}}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-button type="submit" expand="block" [disabled]="form.invalid">
+        Save
+      </ion-button>
+
+    </form>
+  </ion-grid>
+</ion-content>
