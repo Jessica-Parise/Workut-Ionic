@@ -175,5 +175,13 @@ export class ProfilePage implements OnInit {
     }
   }
 
- ca
+  async statusAlert(title, message) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 }
