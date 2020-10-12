@@ -59,8 +59,8 @@
                   <ion-item>
                     <ion-label>Country</ion-label>
                     <ion-select [(ngModel)]="country" name="country" (ionChange)="countrySelected()" required>
-                      <ion-select-option *ngFor="let country of countries" [value]="country.nome_pais">
-                        {{country.nome_pais}}</ion-select-option>
+                      <ion-select-option *ngFor="let country of countries" [value]="country.nome_pais_int">
+                        {{country.nome_pais_int}}</ion-select-option>
                     </ion-select>
                   </ion-item>
 

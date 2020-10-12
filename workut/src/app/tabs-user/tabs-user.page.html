@@ -1,9 +1,12 @@
 <ion-header>
-  <div class="bem-vindo">
-    <h6>Olá, {{nome}}</h6>
-  </div>
-  <ion-icon class="logout-icon" name="log-out" (click)="Logout();"></ion-icon>
+  <ion-toolbar>
+    <div class="logo">
+      <h6>Hi, {{name}}</h6>
+      <ion-icon class="logout-icon" name="log-out" (click)="Logout();"></ion-icon>
+    </div>
+  </ion-toolbar>
 </ion-header>
+
 <ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="jobs-management">

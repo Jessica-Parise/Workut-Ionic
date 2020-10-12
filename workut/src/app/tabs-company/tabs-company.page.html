@@ -1,11 +1,10 @@
-<ion-header>
-  <div class="logo">
-    <img src="../../assets/LogoWorkut.png" alt="">
-    <ion-icon class="logout-icon" name="log-out" (click)="Logout();"></ion-icon>
-  </div>
-    <div class="bem-vindo">
-      <h6>Olá, {{nome}}</h6>
+<ion-header no-border>
+  <ion-toolbar>
+    <div class="logo">
+      <h6>Hi, {{name}}</h6>
+      <ion-icon class="logout-icon" name="log-out" (click)="Logout();"></ion-icon>
     </div>
+  </ion-toolbar>
 </ion-header>
 
 <ion-tabs>
