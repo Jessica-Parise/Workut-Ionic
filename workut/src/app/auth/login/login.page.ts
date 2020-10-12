@@ -84,13 +84,13 @@ export class LoginPage implements OnInit {
         
         // Login Errors
         else if (result.status == '404') {
-          this.statusAlert('Erro', 'Conta não encontrada!');
+          this.statusAlert('Erro', 'Account not found!');
         } else {
-          this.statusAlert('Erro', 'Ocorreu um erro, por favor tente novamente!');
+          this.statusAlert('Erro', 'An error occurred. Please try again!');
         }
 
       }, error => {
-        this.statusAlert('Erro', 'Ocorreu um erro, por favor tente novamente!');
+        this.statusAlert('Erro', 'An error occurred. Please try again!');
       });
 
   }

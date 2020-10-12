@@ -162,7 +162,7 @@ export class RegisterCompanyPage implements OnInit {
       .subscribe(response => {
         if (response == 200) {
           // 200 sucess action
-          this.statusAlert('Sucesso', 'Conta cadastrada com sucesso!');
+          this.statusAlert('Sucess', 'Account successfully registered!');
           // Reseting the values, case the user return to this page
           this.email = '';
           this.name = '';
@@ -173,22 +173,20 @@ export class RegisterCompanyPage implements OnInit {
           // this.Move(0);
         } else if (response == 400) {
           // 400 error action
-          this.statusAlert('Erro', 'Esse e-mail já está cadastrado no sistema!');
+          this.statusAlert('Error', 'This email is already registered in the system!');
         } else if (response == 500) {
           // 500 error action
-          this.statusAlert('Erro', 'Ocorreu um erro, por favor tente novamente!');
+          this.statusAlert('Error', 'An error occurred. Please try again!');
         }
       },
         (error) => {
           // 500 error action
-          this.statusAlert('Erro', 'Ocorreu um erro, por favor tente novamente!');
+          this.statusAlert('Error', 'An error occurred. Please try again!');
         }
       );
 
-
-
   }
-  //
+  
   // Action for the 'Next' and 'Previous' buttons
   Move(i) {
     // unlocking the swipe beetween Slides
@@ -221,15 +219,15 @@ export class RegisterCompanyPage implements OnInit {
 
     // Verify if the selected country is Brazil
     // and update the States list with all the brazilian states
-    if (this.country == 'Brasil') {
+    if (this.country == 'Brazil') {
       this.searchAPI();
     }
 
     // Verify if isn't Brazil
-    // and update the States list with the 'Outros' option
+    // and update the States list with the 'Other' option
     else {
       this.state = '';
-      this.states = [{ "nome": "Outro" }];
+      this.states = [{ "nome": "Other" }];
     }
 
   }
@@ -243,7 +241,7 @@ export class RegisterCompanyPage implements OnInit {
         {
           text: 'Ok',
           handler: () => {
-            if (message == 'Conta cadastrada com sucesso!') {
+            if (message == 'Account successfully registered!') {
               this.router.navigate(['/login']);
             }
           }

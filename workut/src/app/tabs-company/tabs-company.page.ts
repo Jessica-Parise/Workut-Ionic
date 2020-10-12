@@ -13,7 +13,7 @@ export class TabsCompanyPage implements OnInit {
 
   email: string;
   password: string;
-  nome: string;
+  name: string;
 
   ngOnInit() {
     this.verifySession();
@@ -25,7 +25,7 @@ export class TabsCompanyPage implements OnInit {
 
     this.httpClient.post("https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyListProfile", company)
       .subscribe((result: any) => {
-        this.nome = result.name
+        this.name = result.name
       });
   }
 
