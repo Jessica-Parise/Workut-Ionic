@@ -2,16 +2,23 @@
   margin: 0;
   padding: 0;
 }
-ion-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+h6 {
+  color: #726e70;
 }
-.bem-vindo {
-  padding: 10px;
+.header-md::after {
+  background: none;
+}
+.logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5px 0px 20px;
+}
+.logo img {
+  width: 30px;
 }
 .logout-icon {
   font-size: 30px;
   margin-right: 15px;
-  color: #b9b9b970;
+  color: #ff6db6;
 }

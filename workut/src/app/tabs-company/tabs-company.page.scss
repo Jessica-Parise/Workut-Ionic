@@ -2,6 +2,9 @@
   margin: 0;
   padding: 0;
 }
+h6 {
+  color: #726e70;
+}
 .header-md::after {
   background: none;
 }
@@ -9,13 +12,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0px 0px 10px;
+  padding: 10px 5px 0px 20px;
 }
 .logo img {
   width: 30px;
-}
-.bem-vindo {
-  padding: 25px 0px 0px 10px;
 }
 .logout-icon {
   font-size: 30px;
