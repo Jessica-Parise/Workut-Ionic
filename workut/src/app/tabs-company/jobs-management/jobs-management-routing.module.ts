@@ -6,8 +6,8 @@ import { JobsManagementPage } from './jobs-management.page';
 const routes: Routes = [
   {
     path: '',
-    component: JobsManagementPage
-  }
+    component: JobsManagementPage,
+  },
 ];
 
 @NgModule({
