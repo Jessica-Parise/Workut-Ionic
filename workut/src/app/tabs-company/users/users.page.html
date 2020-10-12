@@ -1,3 +1,16 @@
-<ion-content>
-  
+<ion-content [fullscreen]="true" class="content">
+  <ion-list class="list">  
+    <ion-item *ngFor="let user of Users" class="item">
+      <div class="container">
+
+        <ion-text class="list-subtitle">Name: {{user.name}}</ion-text>
+        <ion-text class="list-subtitle">Lastname: {{user.lastName}}</ion-text>
+        <ion-text class="list-subtitle">Email: {{user.email}}</ion-text>
+        <ion-text class="list-subtitle">Country: {{user.country}}</ion-text>
+        <ion-text class="list-subtitle">State: {{user.state}}</ion-text>
+      
+      </div>
+
+    </ion-item>  
+</ion-list>
 </ion-content>
