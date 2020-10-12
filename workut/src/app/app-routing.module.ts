@@ -10,7 +10,8 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },  {
+  },
+  {
     path: 'register-user',
     loadChildren: () => import('./register-user/register-user.module').then( m => m.RegisterUserPageModule)
   },
@@ -30,7 +31,6 @@ const routes: Routes = [
     path: 'tabs-user',
     loadChildren: () => import('./tabs-user/tabs-user.module').then( m => m.TabsUserPageModule)
   },
-
 ];
 
 @NgModule({
