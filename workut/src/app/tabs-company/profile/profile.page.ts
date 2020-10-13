@@ -65,7 +65,7 @@ export class ProfilePage implements OnInit {
       .subscribe(
         (response) => {
           if (response == 404) {
-            this.statusAlert('Erro', 'An error occurred. Please try again!');
+            this.statusAlert('Error', 'An error occurred. Please try again!');
           } else {
             this.data = response;
             this.email = this.data.email;
@@ -76,7 +76,7 @@ export class ProfilePage implements OnInit {
           }
         },
         (error) => {
-          this.statusAlert('Erro', 'An error occurred. Please try again!');
+          this.statusAlert('Error', 'An error occurred. Please try again!');
         }
       );
   }
@@ -102,7 +102,7 @@ export class ProfilePage implements OnInit {
           this.countries = response;
         },
         (error) => {
-          this.statusAlert('Erro', 'An error occurred. Please try again!');
+          this.statusAlert('Error', 'An error occurred. Please try again!');
         }
       );
   }
@@ -117,7 +117,7 @@ export class ProfilePage implements OnInit {
           this.states = response;
         },
         (error) => {
-          this.statusAlert('Erro', 'An error occurred. Please try again!');
+          this.statusAlert('Error', 'An error occurred. Please try again!');
         }
       );
   }
@@ -157,13 +157,13 @@ export class ProfilePage implements OnInit {
               //this.statusAlert('Sucess', 'Profile data has been updated successfully!');
               localStorage.setItem('loggedEmail', this.email);
             } else if (response == "404") {
-              this.statusAlert('Erro', 'An error occurred. Please try again!');
+              this.statusAlert('Error', 'An error occurred. Please try again!');
             } else {
-              this.statusAlert('Erro', 'An error occurred. Please try again!');
+              this.statusAlert('Error', 'An error occurred. Please try again!');
             }
           },
           (error) => {
-            this.statusAlert('Erro', 'An error occurred. Please try again!');
+            this.statusAlert('Error', 'An error occurred. Please try again!');
           }
         );
 

@@ -162,7 +162,7 @@ export class RegisterCompanyPage implements OnInit {
       .subscribe(response => {
         if (response == 200) {
           // 200 sucess action
-          this.statusAlert('Sucess', 'Account successfully registered!');
+          this.statusAlert('Success', 'Account successfully registered!');
           // Reseting the values, case the user return to this page
           this.email = '';
           this.name = '';

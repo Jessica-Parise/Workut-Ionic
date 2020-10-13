@@ -93,13 +93,13 @@ export class JobCreatePage implements OnInit {
       .subscribe(
         (response) => {
           if (response == "200") {
-            this.statusAlert('Sucess', 'Job data was sucessfully created');
+            this.statusAlert('Success', 'Job data was sucessfully created');
           } else {
             this.statusAlert('Error', 'Error during the creation ... please try again later');
           }
         },
         (error) => {
-          this.statusAlert('Erro', 'An error occurred. Please try again!');
+          this.statusAlert('Error', 'An error occurred. Please try again!');
         }
       );
 

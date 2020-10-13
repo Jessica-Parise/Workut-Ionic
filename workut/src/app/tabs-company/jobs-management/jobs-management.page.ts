@@ -68,11 +68,11 @@ export class JobsManagementPage implements OnInit {
           if (response == 200) {
             this.searchJobs();
           } else {
-            this.statusAlert('Erro', 'An error occurred. Please try again!');
+            this.statusAlert('Error', 'An error occurred. Please try again!');
           }
         },
         (error) => {
-          this.statusAlert('Erro', 'An error occurred. Please try again!');
+          this.statusAlert('Error', 'An error occurred. Please try again!');
         }
       );
   }
@@ -84,7 +84,7 @@ export class JobsManagementPage implements OnInit {
           this.Jobs = response;
         },
         (error) => {
-          this.statusAlert('Erro', 'An error occurred. Please try again!');
+          this.statusAlert('Error', 'An error occurred. Please try again!');
         }
       );
   }
@@ -112,7 +112,7 @@ export class JobsManagementPage implements OnInit {
           this.Jobs = response;
         },
         (error) => {
-          this.statusAlert('Erro', 'An error occurred. Please try again!');
+          this.statusAlert('Error', 'An error occurred. Please try again!');
         }
       );
   }

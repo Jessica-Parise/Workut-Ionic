@@ -104,13 +104,13 @@ export class JobEditPage implements OnInit {
         (response) => {
           if (response == "200") {
             this.updateTime = new Date().toLocaleTimeString();
-            this.statusAlert('Sucess', 'Job data was sucessfully updated');
+            this.statusAlert('Success', 'Job data was sucessfully updated');
           } else {
             this.statusAlert('Error', 'Error during the update ... please try again later');
           }
         },
         (error) => {
-          this.statusAlert('Erro', 'An error occurred ... please try again later');
+          this.statusAlert('Error', 'An error occurred ... please try again later');
         }
       );
 
