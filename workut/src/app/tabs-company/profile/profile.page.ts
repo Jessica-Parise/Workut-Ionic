@@ -154,7 +154,7 @@ export class ProfilePage implements OnInit {
         .subscribe(
           (response) => {
             if (response == "200") {
-              //this.statusAlert('Sucess', 'Profile data has been updated successfully!');
+              this.statusAlert('Sucess', 'Profile data has been updated successfully!');
               localStorage.setItem('loggedEmail', this.email);
             } else if (response == "404") {
               this.statusAlert('Error', 'An error occurred. Please try again!');

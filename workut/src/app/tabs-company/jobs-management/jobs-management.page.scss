@@ -1,7 +1,8 @@
 .container {
+    max-width: 900px;
     width: 100%;
-    margin: 5%;
-    margin-top: 3%;
+    padding: 15px 10px;
+    margin: 0 auto;
 }
 
 .close-icon{
@@ -31,4 +32,17 @@
 ion-fab-button {
     width: 40px;
     height: 40px;
+}
+ion-searchbar {
+    max-width: 900px;
+    width: 100%;
+    padding: 15px 10px;
+    margin: 45px auto;
+    margin-bottom: 0;
+}
+
+@media (min-width: 1025px) {
+    ion-fab{
+        margin-right: 240px;
+    }
 }
