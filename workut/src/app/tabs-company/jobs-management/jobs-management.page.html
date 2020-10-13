@@ -1,12 +1,14 @@
 <ion-content>
 
-    <ion-searchbar placeholder="Job Title" showCancelButton="focus"></ion-searchbar>
+    <ion-searchbar style="margin-top: 15%;" [(ngModel)]="search" name="search" (ionChange)="searchJobs_Title()" ngModel
+        placeholder="Search by Job Title" showCancelButton="focus">
+    </ion-searchbar>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button>
-            <ion-icon routerLink="/tabs-company/job-create" name="add"></ion-icon>
+        <ion-fab-button color="danger" routerLink="/tabs-company/job-create">
+            <ion-icon name="add"></ion-icon>
         </ion-fab-button>
-    </ion-fab>  
+    </ion-fab>
 
     <ion-list class="list">
         <ion-item *ngFor="let job of Jobs">

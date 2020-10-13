@@ -114,5 +114,13 @@ export class JobCreatePage implements OnInit {
     await alert.present();
   }
 
+  Logout() {
+    localStorage.removeItem('loggedEmail');
+    localStorage.removeItem('loggedPassword');
+    localStorage.removeItem('loggedID');
+    localStorage.removeItem('type');
+    this.navigationRouter.navigate(['/login']);
+  }
+
 
 }

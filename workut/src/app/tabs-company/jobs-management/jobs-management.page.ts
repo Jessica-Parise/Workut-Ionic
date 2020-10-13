@@ -9,6 +9,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./jobs-management.page.scss'],
 })
 export class JobsManagementPage implements OnInit {
+
+  search;
   Jobs;
   body = {
     "company": {
@@ -100,6 +102,27 @@ export class JobsManagementPage implements OnInit {
 
   editJob(job) {
     this.router.navigate(['/tabs-company/job-edit', { id: job._id.$oid }]);
+  }
+
+  searchJobs_Title() {
+    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsSearch_Title?search=' + this.search,
+      this.body)
+      .subscribe(
+        (response) => {
+          this.Jobs = response;
+        },
+        (error) => {
+          this.statusAlert('Erro', 'An error occurred. Please try again!');
+        }
+      );
+  }
+
+  Logout() {
+    localStorage.removeItem('loggedEmail');
+    localStorage.removeItem('loggedPassword');
+    localStorage.removeItem('loggedID');
+    localStorage.removeItem('type');
+    this.router.navigate(['/login']);
   }
 
 }

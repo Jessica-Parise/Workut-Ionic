@@ -16,6 +16,7 @@ export class JobEditPage implements OnInit {
   jobTitle: String; jobDescription: String; salary: String;
   countries: any; states: any;
   country: String; state: String;
+  updateTime: String;
 
   constructor(public http: HttpClient, private router: ActivatedRoute, private navigationRouter: Router, public alertController: AlertController) { }
 
@@ -54,7 +55,7 @@ export class JobEditPage implements OnInit {
         this.jobDescription = data.jobDescription;
         this.salary = data.salary;
         this.country = data.country;
-        if (data.country != "Brasil") {
+        if (data.country != "Brazil") {
           this.states = [];
           this.state = data.state;
         } else {
@@ -68,7 +69,7 @@ export class JobEditPage implements OnInit {
 
     // Verify if the selected country is Brazil
     // and update the States list with all the brazilian states
-    if (this.country == 'Brasil') {
+    if (this.country == 'Brazil') {
       this.bindStateList();
     }
 
@@ -89,7 +90,7 @@ export class JobEditPage implements OnInit {
         "password": localStorage.getItem('loggedPassword')
       },
       "job": {
-        "company": localStorage.getItem('loggedID'),
+        "id": this.id,
         "jobTitle": this.jobTitle,
         "jobDescription": this.jobDescription,
         "salary": this.salary,
@@ -102,13 +103,14 @@ export class JobEditPage implements OnInit {
       .subscribe(
         (response) => {
           if (response == "200") {
+            this.updateTime = new Date().toLocaleTimeString();
             this.statusAlert('Sucess', 'Job data was sucessfully updated');
           } else {
             this.statusAlert('Error', 'Error during the update ... please try again later');
           }
         },
         (error) => {
-          this.statusAlert('Erro', 'An error occurred. Please try again!');
+          this.statusAlert('Erro', 'An error occurred ... please try again later');
         }
       );
 
@@ -118,10 +120,27 @@ export class JobEditPage implements OnInit {
     const alert = await this.alertController.create({
       header: title,
       message: message,
-      buttons: ['OK']
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            if (message == 'Job data was sucessfully updated') {
+              this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.updateTime }]);
+            }
+          }
+        }
+      ]
     });
 
     await alert.present();
+  }
+
+  Logout() {
+    localStorage.removeItem('loggedEmail');
+    localStorage.removeItem('loggedPassword');
+    localStorage.removeItem('loggedID');
+    localStorage.removeItem('type');
+    this.navigationRouter.navigate(['/login']);
   }
 
 }

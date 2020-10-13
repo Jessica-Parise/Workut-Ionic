@@ -27,8 +27,9 @@
       <ion-select class="input" [(ngModel)]="country" name="country" (ionChange)="countrySelected()" required>
         <ion-select-option>Any country</ion-select-option>
         <ion-select-option>Other</ion-select-option>
-        <ion-select-option class="input" *ngFor="let country of countries" [value]="country.nome_pais" selected=true>
-          {{country.nome_pais}}
+        <ion-select-option class="input" *ngFor="let country of countries" [value]="country.nome_pais_int"
+          selected=true>
+          {{country.nome_pais_int}}
         </ion-select-option>
       </ion-select>
 

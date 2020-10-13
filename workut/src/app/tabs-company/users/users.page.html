@@ -1,5 +1,11 @@
 <ion-content [fullscreen]="true" class="content">
-  <ion-list class="list">  
+
+  <ion-list class="list">
+
+    <ion-searchbar [(ngModel)]="search" name="search" (ionChange)="searchUsers_Country()" ngModel
+      placeholder="Search by User country" showCancelButton="focus">
+    </ion-searchbar>
+
     <ion-item *ngFor="let user of Users" class="item">
       <div class="container">
 
@@ -8,9 +14,10 @@
         <ion-text class="list-subtitle">Email: {{user.email}}</ion-text>
         <ion-text class="list-subtitle">Country: {{user.country}}</ion-text>
         <ion-text class="list-subtitle">State: {{user.state}}</ion-text>
-      
+
       </div>
 
-    </ion-item>  
-</ion-list>
+    </ion-item>
+  </ion-list>
+
 </ion-content>

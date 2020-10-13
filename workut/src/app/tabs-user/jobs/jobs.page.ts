@@ -10,19 +10,23 @@ import { AlertController } from '@ionic/angular';
 })
 export class JobsPage implements OnInit {
 
+  search;
   Jobs;
   body = {
-    "email": "jessica@workut.com",
-    "password": "senha"
+    "user": {
+      "email": localStorage.getItem('loggedEmail'),
+      "password": localStorage.getItem('loggedPassword')
+    }
   }
+
   constructor(public http: HttpClient, public alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
     this.searchJobs();
   }
 
-  searchJobs(){
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/listJobs', this.body)
+  searchJobs() {
+    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/listJobs', this.body.user)
       .subscribe(
         (response) => {
           this.Jobs = response;
@@ -49,6 +53,19 @@ export class JobsPage implements OnInit {
     localStorage.removeItem('loggedID');
     localStorage.removeItem('type');
     this.router.navigate(['/home']);
+  }
+
+  searchJobs_Title() {
+    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserJobsSearch_Title?search=' + this.search,
+      this.body)
+      .subscribe(
+        (response) => {
+          this.Jobs = response;
+        },
+        (error) => {
+          this.statusAlert('Erro', 'An error occurred. Please try again!');
+        }
+      );
   }
 
 }

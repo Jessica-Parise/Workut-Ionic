@@ -1,5 +1,10 @@
 <ion-content [fullscreen]="true" class="content">
   <ion-list class="list">
+
+    <ion-searchbar [(ngModel)]="search" name="search" (ionChange)="searchJobs_Title()" ngModel
+      placeholder="Search by Job Title" showCancelButton="focus">
+    </ion-searchbar>
+
     <ion-item *ngFor="let job of Jobs" class="item">
       <div class="container">
 

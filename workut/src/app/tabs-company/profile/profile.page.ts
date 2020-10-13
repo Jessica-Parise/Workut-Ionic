@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IonSlides } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +11,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class ProfilePage implements OnInit {
 
-  constructor(public httpClient: HttpClient, public alertController: AlertController) { }
+  constructor(public httpClient: HttpClient, public alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
     this.search();
@@ -153,7 +154,7 @@ export class ProfilePage implements OnInit {
         .subscribe(
           (response) => {
             if (response == "200") {
-              this.statusAlert('Sucess', 'Profile data has been updated successfully!');
+              //this.statusAlert('Sucess', 'Profile data has been updated successfully!');
               localStorage.setItem('loggedEmail', this.email);
             } else if (response == "404") {
               this.statusAlert('Erro', 'An error occurred. Please try again!');
@@ -184,4 +185,14 @@ export class ProfilePage implements OnInit {
 
     await alert.present();
   }
+
+  Logout() {
+    localStorage.removeItem('loggedEmail');
+    localStorage.removeItem('loggedPassword');
+    localStorage.removeItem('loggedID');
+    localStorage.removeItem('type');
+    this.router.navigate(['/login']);
+  }
+
+
 }
