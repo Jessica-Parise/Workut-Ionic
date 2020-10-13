@@ -28,3 +28,6 @@
 ion-popover {
   margin-top: 5px;
 }
+.popover-translucent.sc-ion-popover-ios-h .popover-content.sc-ion-popover-ios, .popover-translucent.sc-ion-popover-ios-h .popover-arrow.sc-ion-popover-ios::after {
+  background: rgb(202, 202, 202);
+}
