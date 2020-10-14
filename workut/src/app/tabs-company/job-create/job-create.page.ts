@@ -16,6 +16,7 @@ export class JobCreatePage implements OnInit {
   salary: String; startDate: String;
   countries: any; states: any;
   country: String; state: String;
+  createdTime: String;
 
   constructor(public http: HttpClient, private router: ActivatedRoute, private navigationRouter: Router, public alertController: AlertController) { }
 
@@ -93,6 +94,7 @@ export class JobCreatePage implements OnInit {
       .subscribe(
         (response) => {
           if (response == "200") {
+            this.createdTime = new Date().toLocaleTimeString();
             this.statusAlert('Success', 'Job data was sucessfully created');
           } else {
             this.statusAlert('Error', 'Error during the creation ... please try again later');
@@ -108,7 +110,16 @@ export class JobCreatePage implements OnInit {
     const alert = await this.alertController.create({
       header: title,
       message: message,
-      buttons: ['OK']
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            if (message == 'Job data was sucessfully created') {
+              this.navigationRouter.navigate(['/tabs-company/jobs-management', {updated: this.createdTime}]);
+            }
+          }
+        }
+      ]
     });
 
     await alert.present();
