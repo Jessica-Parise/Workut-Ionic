@@ -42,6 +42,21 @@
         </ion-select-option>
       </ion-select>
 
+
+      <div [formGroup]="addmore" style="margin-top: 10%;">
+        <div formArrayName="itemRows">
+          <ion-label>
+            <p>Skills Required:</p>
+          </ion-label>
+          <div *ngFor="let item of addmore.controls.itemRows['controls']; let i=index" [formGroupName]="i">
+            <ion-input class="input" id="skill{{i}}" formControlName="skill"></ion-input>
+          </div>
+        </div>
+      </div>
+      
+      <ion-icon name="add" (click)="addNewRow()" horizontal="end" slot="fixed" class="add-icon"></ion-icon>
+
+
       <ion-button type="submit" expand="block" [disabled]="form.invalid">
         Save
       </ion-button>

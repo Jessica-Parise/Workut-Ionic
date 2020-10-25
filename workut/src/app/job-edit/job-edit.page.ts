@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-job-edit',
@@ -12,18 +13,48 @@ import { Router } from '@angular/router';
 
 export class JobEditPage implements OnInit {
 
+  public addmore: FormGroup;
+
   id: String; job: any;
   jobTitle: String; jobDescription: String; salary: String;
   countries: any; states: any;
   country: String; state: String;
 
-  constructor(public http: HttpClient, private router: ActivatedRoute, private navigationRouter: Router, public alertController: AlertController) { }
+  constructor(
+    public http: HttpClient, private router: ActivatedRoute,
+    private navigationRouter: Router, public alertController: AlertController,
+    private fBuilder: FormBuilder) { }
 
   ngOnInit() {
+
     this.router.params.subscribe(params => {
       this.id = params['id'];
     });
     this.bindCountryList();
+
+    this.addmore = this.fBuilder.group({
+      skill: [''],
+      itemRows: this.fBuilder.array([this.initItemRows()])
+    });
+
+  }
+
+  get formArr() {
+    return this.addmore.get('itemRows') as FormArray;
+  }
+
+  initItemRows() {
+    return this.fBuilder.group({
+      skill: ['']
+    });
+  }
+
+  addNewRow() {
+    this.formArr.push(this.initItemRows());
+  }
+
+  deleteRow(index: number) {
+    this.formArr.removeAt(index);
   }
 
   bindCountryList() {
@@ -61,6 +92,16 @@ export class JobEditPage implements OnInit {
           this.state = data.state;
         }
 
+        if (data.skillsRequired != undefined && data.skillsRequired != null) {
+          this.addmore.value.itemRows = data.skillsRequired;
+          this.addmore = this.fBuilder.group({
+            skill: [''],
+            itemRows: this.fBuilder.array(data.skillsRequired)
+          });
+        } else {
+          this.deleteRow(0);
+        }
+
       });
   }
 
@@ -83,6 +124,12 @@ export class JobEditPage implements OnInit {
 
   saveChanges() {
 
+
+    console.log(this.addmore.value);
+    console.log(this.addmore.value.itemRows);
+
+    /*
+
     const body = {
       "company": {
         "email": "workut@uam.com",
@@ -94,7 +141,8 @@ export class JobEditPage implements OnInit {
         "jobDescription": this.jobDescription,
         "salary": this.salary,
         "country": this.country,
-        "state": this.state
+        "state": this.state,
+        "skillsRequired": this.addmore.value.itemRows.skill
       }
     }
 
@@ -111,6 +159,8 @@ export class JobEditPage implements OnInit {
           console.log('Error: ' + error);
         }
       );
+
+      */
 
   }
 

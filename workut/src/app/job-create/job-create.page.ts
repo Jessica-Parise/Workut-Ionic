@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { stat } from 'fs';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-job-create',
@@ -13,17 +13,52 @@ import { stat } from 'fs';
 
 export class JobCreatePage implements OnInit {
 
+  public addmore: FormGroup;
+
   jobTitle: String; jobDescription: String;
   salary: String; startDate: String;
   countries: any; states: any;
   country: String; state: String;
+  skillsRequired;
 
-  constructor(public http: HttpClient, private router: ActivatedRoute, private navigationRouter: Router, public alertController: AlertController) { }
+  constructor(
+    public http: HttpClient, private router: ActivatedRoute,
+    private navigationRouter: Router, public alertController: AlertController,
+    private fBuilder: FormBuilder) {
+
+
+  }
 
   ngOnInit() {
     this.listInitialValues();
     this.bindCountryList();
     this.bindStateList();
+
+    this.addmore = this.fBuilder.group({
+      skill: [''],
+      itemRows: this.fBuilder.array([this.initItemRows()])
+    });
+
+    this.deleteRow(0);
+
+  }
+
+  get formArr() {
+    return this.addmore.get('itemRows') as FormArray;
+  }
+
+  initItemRows() {
+    return this.fBuilder.group({
+      skill: ['']
+    });
+  }
+
+  addNewRow() {
+    this.formArr.push(this.initItemRows());
+  }
+
+  deleteRow(index: number) {
+    this.formArr.removeAt(index);
   }
 
   bindCountryList() {
@@ -71,9 +106,9 @@ export class JobCreatePage implements OnInit {
 
   saveChanges() {
 
+    this.skillsRequired = this.addmore.value.itemRows;
     this.startDate = new Date().toISOString();
-
-
+  
     const body = {
       "company": {
         "email": "workut@uam.com",
@@ -86,10 +121,11 @@ export class JobCreatePage implements OnInit {
         "salary": this.salary,
         "startDate": this.startDate,
         "country": this.country,
-        "state": this.state
+        "state": this.state,
+        "skillsRequired": this.skillsRequired
       }
     }
-
+  
     this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsInsert', body)
       .subscribe(
         (response) => {
@@ -103,7 +139,7 @@ export class JobCreatePage implements OnInit {
           console.log('Error: ' + error);
         }
       );
-
+  
   }
 
   async statusMessage(title, message) {
