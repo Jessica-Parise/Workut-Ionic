@@ -15,10 +15,10 @@ export class JobEditPage implements OnInit {
 
   public addmore: FormGroup;
 
-  id: String; job: any;
-  jobTitle: String; jobDescription: String; salary: String;
+  id: string; job: any;
+  jobTitle: string; jobDescription: string; salary: string;
   countries: any; states: any;
-  country: String; state: String;
+  country: string; state: string;
 
   constructor(
     public http: HttpClient, private router: ActivatedRoute,
@@ -51,6 +51,16 @@ export class JobEditPage implements OnInit {
 
   addNewRow() {
     this.formArr.push(this.initItemRows());
+  }
+
+  search_initItemRows(value: string) {
+    return this.fBuilder.group({
+      skill: [value]
+    });
+  }
+
+  search_addNewRow(value: string) {
+    this.formArr.push(this.search_initItemRows(value));
   }
 
   deleteRow(index: number) {
@@ -92,14 +102,16 @@ export class JobEditPage implements OnInit {
           this.state = data.state;
         }
 
+        // Removes the first row because its always be empty
+        this.deleteRow(0);
+
         if (data.skillsRequired != undefined && data.skillsRequired != null) {
-          this.addmore.value.itemRows = data.skillsRequired;
-          this.addmore = this.fBuilder.group({
-            skill: [''],
-            itemRows: this.fBuilder.array(data.skillsRequired)
-          });
-        } else {
+
           this.deleteRow(0);
+          data.skillsRequired.forEach(item => {
+            this.search_addNewRow(item.skill);
+          });
+
         }
 
       });
@@ -124,12 +136,6 @@ export class JobEditPage implements OnInit {
 
   saveChanges() {
 
-
-    console.log(this.addmore.value);
-    console.log(this.addmore.value.itemRows);
-
-    /*
-
     const body = {
       "company": {
         "email": "workut@uam.com",
@@ -142,7 +148,7 @@ export class JobEditPage implements OnInit {
         "salary": this.salary,
         "country": this.country,
         "state": this.state,
-        "skillsRequired": this.addmore.value.itemRows.skill
+        "skillsRequired": this.addmore.value.itemRows
       }
     }
 
@@ -159,8 +165,6 @@ export class JobEditPage implements OnInit {
           console.log('Error: ' + error);
         }
       );
-
-      */
 
   }
 

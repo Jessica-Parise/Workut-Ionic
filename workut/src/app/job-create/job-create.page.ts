@@ -108,7 +108,7 @@ export class JobCreatePage implements OnInit {
 
     this.skillsRequired = this.addmore.value.itemRows;
     this.startDate = new Date().toISOString();
-  
+    
     const body = {
       "company": {
         "email": "workut@uam.com",

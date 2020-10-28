@@ -49,7 +49,7 @@
             <p>Skills Required:</p>
           </ion-label>
           <div *ngFor="let item of addmore.controls.itemRows['controls']; let i=index" [formGroupName]="i">
-            <ion-input class="input" id="skill{{i}}" formControlName="skill"></ion-input>
+            <ion-input class="input" id="skill{{i}}" formControlName="skill" type="text" placeholder="skill name"></ion-input>
           </div>
         </div>
       </div>
