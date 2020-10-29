@@ -42,17 +42,40 @@
 
       <div [formGroup]="addmore" style="margin-top: 10%;">
         <div formArrayName="itemRows">
-          <ion-label>
-            <p>Skills Required:</p>
-          </ion-label>
+
+          <ion-toolbar>
+            <ion-label>
+              <p>Skills Required:</p>
+            </ion-label>
+
+            <ion-buttons slot="end" style="margin-top: 3%;">
+              <ion-icon name="add" class="add-icon" (click)="addNewRow()"></ion-icon>
+            </ion-buttons>
+
+            <ion-buttons slot="start">
+              <ion-icon></ion-icon>
+            </ion-buttons>
+            
+          </ion-toolbar>
+
           <div *ngFor="let item of addmore.controls.itemRows['controls']; let i=index" [formGroupName]="i">
-            <ion-input class="input" id="skill{{i}}" formControlName="skill" type="text" placeholder="skill name"></ion-input>
+
+            <ion-toolbar>
+              <ion-input class="input" id="skill{{i}}" formControlName="skill" type="text" placeholder="skill name">
+              </ion-input>
+
+              <ion-buttons slot="end" style="margin-top: 1%;" (click)="deleteRow(i)">
+                <ion-icon name="close" class="remove-icon"></ion-icon>
+              </ion-buttons>
+
+              <ion-buttons slot="start">
+                <ion-icon></ion-icon>
+              </ion-buttons>
+            </ion-toolbar>
+
           </div>
         </div>
       </div>
-
-      <ion-icon name="add" (click)="addNewRow()" horizontal="end" slot="fixed" class="add-icon"></ion-icon>
-
 
       <ion-button type="submit" expand="block">
         Save
