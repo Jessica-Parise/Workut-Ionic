@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-job-edit',
@@ -12,19 +13,56 @@ import { Router } from '@angular/router';
 
 export class JobEditPage implements OnInit {
 
-  id: String; job: any;
-  jobTitle: String; jobDescription: String; salary: String;
+  public addmore: FormGroup;
+  id: string; job: any;
+  jobTitle: string; jobDescription: string; salary: string;
   countries: any; states: any;
-  country: String; state: String;
-  updateTime: String;
+  country: string; state: string;
+  updateTime: string;
 
-  constructor(public http: HttpClient, private router: ActivatedRoute, private navigationRouter: Router, public alertController: AlertController) { }
+  constructor(
+    public http: HttpClient, private router: ActivatedRoute,
+    private navigationRouter: Router, public alertController: AlertController,
+    private fBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.router.params.subscribe(params => {
       this.id = params['id'];
     });
     this.bindCountryList();
+
+    this.addmore = this.fBuilder.group({
+      skill: [''],
+      itemRows: this.fBuilder.array([this.initItemRows()])
+    });
+  }
+
+  get formArr() {
+    return this.addmore.get('itemRows') as FormArray;
+  }
+
+  initItemRows() {
+    return this.fBuilder.group({
+      skill: ['']
+    });
+  }
+
+  addNewRow() {
+    this.formArr.push(this.initItemRows());
+  }
+
+  search_initItemRows(value: string) {
+    return this.fBuilder.group({
+      skill: [value]
+    });
+  }
+
+  search_addNewRow(value: string) {
+    this.formArr.push(this.search_initItemRows(value));
+  }
+
+  deleteRow(index: number) {
+    this.formArr.removeAt(index);
   }
 
   bindCountryList() {
@@ -62,6 +100,18 @@ export class JobEditPage implements OnInit {
           this.state = data.state;
         }
 
+        // Removes the first row because its always be empty
+        this.deleteRow(0);
+
+        if (data.skillsRequired != undefined && data.skillsRequired != null) {
+
+          this.deleteRow(0);
+          data.skillsRequired.forEach(item => {
+            this.search_addNewRow(item.skill);
+          });
+
+        }
+
       });
   }
 
@@ -95,7 +145,8 @@ export class JobEditPage implements OnInit {
         "jobDescription": this.jobDescription,
         "salary": this.salary,
         "country": this.country,
-        "state": this.state
+        "state": this.state,
+        "skillsRequired": this.addmore.value.itemRows
       }
     }
 

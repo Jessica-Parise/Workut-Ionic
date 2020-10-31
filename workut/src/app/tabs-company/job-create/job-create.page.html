@@ -29,7 +29,8 @@
       <ion-select class="input" [(ngModel)]="country" name="country" (ionChange)="countrySelected()" required>
         <ion-select-option>Any country</ion-select-option>
         <ion-select-option>Other</ion-select-option>
-        <ion-select-option class="input" *ngFor="let country of countries" [value]="country.nome_pais_int" selected=true>
+        <ion-select-option class="input" *ngFor="let country of countries" [value]="country.nome_pais_int"
+          selected=true>
           {{country.nome_pais_int}}
         </ion-select-option>
       </ion-select>
@@ -41,6 +42,43 @@
           {{state.nome}}
         </ion-select-option>
       </ion-select>
+
+      <div [formGroup]="addmore" style="margin-top: 10%;">
+        <div formArrayName="itemRows">
+
+          <ion-toolbar>
+            <ion-label>
+              <p>Skills Required:</p>
+            </ion-label>
+
+            <ion-buttons slot="end" style="margin-top: 3%;">
+              <ion-icon name="add" class="add-icon" (click)="addNewRow()"></ion-icon>
+            </ion-buttons>
+
+            <ion-buttons slot="start">
+              <ion-icon></ion-icon>
+            </ion-buttons>
+
+          </ion-toolbar>
+
+          <div *ngFor="let item of addmore.controls.itemRows['controls']; let i=index" [formGroupName]="i">
+
+            <ion-toolbar>
+              <ion-input class="input" id="skill{{i}}" formControlName="skill" type="text" placeholder="skill name">
+              </ion-input>
+
+              <ion-buttons slot="end" style="margin-top: 1%;" (click)="deleteRow(i)">
+                <ion-icon name="close" class="remove-icon"></ion-icon>
+              </ion-buttons>
+
+              <ion-buttons slot="start">
+                <ion-icon></ion-icon>
+              </ion-buttons>
+            </ion-toolbar>
+
+          </div>
+        </div>
+      </div>
 
       <ion-button type="submit" expand="block" [disabled]="form.invalid">
         Save
