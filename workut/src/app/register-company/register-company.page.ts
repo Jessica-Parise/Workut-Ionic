@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { IonSlides } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AuthorizationService } from '../services/authorization.service';
 
 @Component({
   selector: 'app-register-company',
@@ -113,9 +114,9 @@ export class RegisterCompanyPage implements OnInit {
   countries: any; states: any;
 
   // Constructor
-  constructor(public http: HttpClient, public alertController: AlertController, private router: Router) {
-
-  }
+  constructor(
+    public http: HttpClient, public alertController: AlertController,
+    private router: Router, private authService: AuthorizationService) { }
 
   // Init
   ngOnInit() {
@@ -128,65 +129,55 @@ export class RegisterCompanyPage implements OnInit {
   }
 
   verifySession() {
-    const email = localStorage.getItem('loggedEmail');
-    const password = localStorage.getItem('loggedPassword');
-    const id = localStorage.getItem('loggedID');
-    const type = localStorage.getItem('type');
-    
-    if (email != null || password != null || id != null || type != null) {
-      if(type=="1") {
-        this.router.navigate(['/tabs-user']);
-      }else{
-        this.router.navigate(['/tabs-company']);
-      }
+    if (this.authService.isLogged()) {
+      this.authService.AutoLogin();
     }
-
   }
 
   // Inserts a new Company into the Mondo datebase
   SignUp() {
 
     // Creating the company object to send to MondoDB
-    let company = {
-      "email": this.email,
-      "name": this.name,
-      "cep": this.cep,
-      "password": this.password,
-      "country": this.country,
-      "state": this.state
-    }
+    const company = {
+      email: this.email,
+      name: this.name,
+      cep: this.cep,
+      password: this.password,
+      country: this.country,
+      state: this.state
+    };
 
     // Sending the user object to MondoDB via POST request
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanySignUp', company)
-
-      .subscribe(response => {
-        if (response == 200) {
-          // 200 sucess action
-          this.statusAlert('Success', 'Account successfully registered!');
-          // Reseting the values, case the user return to this page
-          this.email = '';
-          this.name = '';
-          this.cep = '';
-          this.password = '';
-          this.country = '';
-          this.state = '';
-          // this.Move(0);
-        } else if (response == 400) {
-          // 400 error action
-          this.statusAlert('Error', 'This email is already registered in the system!');
-        } else if (response == 500) {
-          // 500 error action
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      },
-        (error) => {
-          // 500 error action
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+    this.http.post(
+      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanySignUp', company
+    ).subscribe(response => {
+      if (response == 200) {
+        // 200 sucess action
+        this.statusAlert('Success', 'Account successfully registered!');
+        // Reseting the values, case the user return to this page
+        this.email = '';
+        this.name = '';
+        this.cep = '';
+        this.password = '';
+        this.country = '';
+        this.state = '';
+        // this.Move(0);
+      } else if (response == 400) {
+        // 400 error action
+        this.statusAlert('Error', 'This email is already registered in the system!');
+      } else if (response == 500) {
+        // 500 error action
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    },
+      (error) => {
+        // 500 error action
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
 
   }
-  
+
   // Action for the 'Next' and 'Previous' buttons
   Move(i) {
     // unlocking the swipe beetween Slides
@@ -227,7 +218,7 @@ export class RegisterCompanyPage implements OnInit {
     // and update the States list with the 'Other' option
     else {
       this.state = '';
-      this.states = [{ "nome": "Other" }];
+      this.states = [{ nome: 'Other' }];
     }
 
   }

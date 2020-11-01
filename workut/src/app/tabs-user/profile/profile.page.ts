@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IonSlides } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,21 +11,37 @@ import { AlertController } from '@ionic/angular';
 })
 export class ProfilePage implements OnInit {
 
-  constructor(public httpClient: HttpClient, public alertController: AlertController) { }
+  // MAIN PAGE --------------------------------------------
+  // Linking variable 'slides' to the slides in hmtl page
+  @ViewChild('slides', { static: true }) slides: IonSlides;
+  segment: any;
+  slidePosition: any;
+
+  // USER DATA PAGE ----------------------------------------
+  iconName = 'lock-closed';
+  emailDisabled: boolean;
+  nameDisabled: boolean; lastnameDisabled: boolean;
+  countryDisabled: boolean; stateDisabled: boolean;
+
+  countries: any;
+  states: any;
+
+  user = this.authService.getCurrentLogin();
+
+  data: any; email: string;
+  name: string; lastname: string;
+  country: string; state: string;
+
+  constructor(
+    public httpClient: HttpClient, public alertController: AlertController,
+    private authService: AuthorizationService) { }
 
   ngOnInit() {
+    this.authService.verifySession('1');
     this.search();
     this.getCountries();
     this.getStates();
   }
-
-  // MAIN PAGE --------------------------------------------
-  // Linking variable 'slides' to the slides in hmtl page
-  @ViewChild('slides', { static: true }) slides: IonSlides;
-  segment;
-  slidePosition;
-
-
 
   segmentChanged(ev: any) {
     this.slides.slideTo(ev.detail.value);
@@ -37,31 +54,12 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  // USER DATA PAGE ----------------------------------------
-  iconName = "lock-closed";
-  emailDisabled: boolean;
-  nameDisabled: boolean; lastnameDisabled: boolean;
-  countryDisabled: boolean; stateDisabled: boolean;
-
-  countries: any;
-  states: any;
-
-  user = {
-    email: localStorage.getItem('loggedEmail'),
-    password: localStorage.getItem('loggedPassword'),
-  };
-
-  data: any; email: string;
-  name: string; lastname: string;
-  country: String; state: String;
-
   search() {
     this.httpClient
       .post(
-        "https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserListProfile",
+        'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserListProfile',
         this.user
-      )
-      .subscribe(
+      ).subscribe(
         (response) => {
           if (response == 404) {
             this.statusAlert('Error', 'An error occurred. Please try again!');
@@ -81,12 +79,12 @@ export class ProfilePage implements OnInit {
   }
 
   countrySelected() {
-    if (this.country == "Brazil") {
+    if (this.country == 'Brazil') {
       this.getStates();
     } else {
-      if (this.state != "Other" || this.state != "Any state") {
+      if (this.state != 'Other' && this.state != 'Any state') {
         this.states = [];
-        this.state = "Other";
+        this.state = 'Other';
       }
     }
   }
@@ -184,5 +182,5 @@ export class ProfilePage implements OnInit {
 
     await alert.present();
   }
-  
+
 }

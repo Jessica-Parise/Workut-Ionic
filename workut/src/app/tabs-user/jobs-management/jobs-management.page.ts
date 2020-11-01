@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-jobs-management',
@@ -8,17 +9,10 @@ import { Router } from '@angular/router';
 })
 export class JobsManagementPage implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthorizationService) { }
 
   ngOnInit() {
-  }
-
-  Logout(){
-    localStorage.removeItem('loggedEmail');
-    localStorage.removeItem('loggedPassword');
-    localStorage.removeItem('loggedID');
-    localStorage.removeItem('type');
-    this.router.navigate(['/home']);
+    this.authService.verifySession('1');
   }
 
 }

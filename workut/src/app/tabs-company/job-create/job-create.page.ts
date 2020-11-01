@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-job-create',
@@ -14,18 +15,19 @@ import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 export class JobCreatePage implements OnInit {
 
   public addmore: FormGroup;
-  jobTitle: String; jobDescription: String;
-  salary: String; startDate: String;
+  jobTitle: string; jobDescription: string;
+  salary: string; startDate: string;
   countries: any; states: any;
-  country: String; state: String;
-  createdTime: String; skillsRequired;
+  country: string; state: string;
+  createdTime: string; skillsRequired: any;
 
   constructor(
-    public http: HttpClient, private router: ActivatedRoute, 
+    public http: HttpClient, private router: ActivatedRoute,
     private navigationRouter: Router, public alertController: AlertController,
-    private fBuilder: FormBuilder) { }
+    private fBuilder: FormBuilder, private authService: AuthorizationService) { }
 
   ngOnInit() {
+    this.authService.verifySession('2');
     this.listInitialValues();
     this.bindCountryList();
     this.bindStateList();
@@ -104,38 +106,38 @@ export class JobCreatePage implements OnInit {
     this.startDate = new Date().toDateString();
 
     const body = {
-      "company": {
-        "email": localStorage.getItem('loggedEmail'),
-        "password": localStorage.getItem('loggedPassword')
-      },
-      "job": {
-        "company": localStorage.getItem('loggedID'),
-        "jobTitle": this.jobTitle,
-        "jobDescription": this.jobDescription,
-        "salary": this.salary,
-        "startDate": this.startDate,
-        "country": this.country,
-        "state": this.state,
-        "skillsRequired": this.skillsRequired
+      company: this.authService.getCurrentLogin(),
+      job: {
+        company: this.authService.getCurrentLoginID(),
+        jobTitle: this.jobTitle,
+        jobDescription: this.jobDescription,
+        salary: this.salary,
+        startDate: this.startDate,
+        country: this.country,
+        state: this.state,
+        skillsRequired: this.skillsRequired
       }
-    }
+    };
 
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsInsert', body)
-      .subscribe(
-        (response) => {
-          if (response == "200") {
-            this.createdTime = new Date().toLocaleTimeString();
-            this.statusAlert('Success', 'Job data was sucessfully created');
-          } else {
-            this.statusAlert('Error', 'Error during the creation ... please try again later');
-          }
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
+    this.http.post(
+      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsInsert',
+      body
+    ).subscribe(
+      (response) => {
+        if (response == '200') {
+          this.createdTime = new Date().toLocaleTimeString();
+          this.statusAlert('Success', 'Job data was sucessfully created');
+        } else {
+          this.statusAlert('Error', 'Error during the creation ... please try again later');
         }
-      );
+      },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
 
   }
+
   async statusAlert(title, message) {
     const alert = await this.alertController.create({
       header: title,
@@ -145,7 +147,7 @@ export class JobCreatePage implements OnInit {
           text: 'Ok',
           handler: () => {
             if (message == 'Job data was sucessfully created') {
-              this.navigationRouter.navigate(['/tabs-company/jobs-management', {updated: this.createdTime}]);
+              this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.createdTime }]);
             }
           }
         }
@@ -154,14 +156,5 @@ export class JobCreatePage implements OnInit {
 
     await alert.present();
   }
-
-  Logout() {
-    localStorage.removeItem('loggedEmail');
-    localStorage.removeItem('loggedPassword');
-    localStorage.removeItem('loggedID');
-    localStorage.removeItem('type');
-    this.navigationRouter.navigate(['/login']);
-  }
-
 
 }

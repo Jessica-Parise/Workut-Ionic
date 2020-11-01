@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IonSlides } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-import { convertUpdateArguments } from '@angular/compiler/src/compiler_util/expression_converter';
 import { Router } from '@angular/router';
+import { AuthorizationService } from '../services/authorization.service';
 
 @Component({
   selector: 'app-register-user',
@@ -113,9 +113,9 @@ export class RegisterUserPage implements OnInit {
   countries: any; states: any;
 
   // Constructor
-  constructor(public http: HttpClient, public alertController: AlertController, private router: Router) {
-
-  }
+  constructor(
+    public http: HttpClient, public alertController: AlertController,
+    private router: Router, private authService: AuthorizationService) { }
 
   // Init
   ngOnInit() {
@@ -128,33 +128,23 @@ export class RegisterUserPage implements OnInit {
   }
 
   verifySession() {
-    const email = localStorage.getItem('loggedEmail');
-    const password = localStorage.getItem('loggedPassword');
-    const id = localStorage.getItem('loggedID');
-    const type = localStorage.getItem('type');
-    
-    if (email != null || password != null || id != null || type != null) {
-      if(type=="1") {
-        this.router.navigate(['/tabs-user']);
-      }else{
-        this.router.navigate(['/tabs-company']);
-      }
+    if (this.authService.isLogged()) {
+      this.authService.AutoLogin();
     }
-
   }
 
   // Inserts a new User into the Mondo datebase
   SignUp() {
 
     // Creating the user object to send to MondoDB
-    let user = {
-      "email": this.email,
-      "name": this.name,
-      "lastname": this.lastname,
-      "password": this.password,
-      "country": this.country,
-      "state": this.state
-    }
+    const user = {
+      email: this.email,
+      name: this.name,
+      lastname: this.lastname,
+      password: this.password,
+      country: this.country,
+      state: this.state
+    };
 
     // Sending the user object to MondoDB via POST request
     this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserSignUp', user)
@@ -227,7 +217,7 @@ export class RegisterUserPage implements OnInit {
     // and update the States list with the 'Other' option
     else {
       this.state = '';
-      this.states = [{ "nome": "Other" }];
+      this.states = [{ nome: 'Other' }];
     }
 
   }

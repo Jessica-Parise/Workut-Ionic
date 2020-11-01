@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-users',
@@ -10,18 +11,18 @@ import { Router } from '@angular/router';
 })
 export class UsersPage implements OnInit {
 
-  search;
-  Users;
+  search: any;
+  Users: any;
   body = {
-    "company": {
-      "email": localStorage.getItem('loggedEmail'),
-      "password": localStorage.getItem('loggedPassword'),
-      "id": localStorage.getItem('loggedID')
-    }
-  }
-  constructor(public http: HttpClient, public alertController: AlertController, private router: Router) { }
+    company: this.authService.getCurrentLogin()
+  };
+
+  constructor(
+    public http: HttpClient, public alertController: AlertController,
+    private router: Router, private authService: AuthorizationService) { }
 
   ngOnInit() {
+    this.authService.verifySession('2');
     this.searchUsers();
   }
 
@@ -36,6 +37,7 @@ export class UsersPage implements OnInit {
         }
       );
   }
+
   async statusAlert(title, message) {
     const alert = await this.alertController.create({
       header: title,
@@ -44,14 +46,6 @@ export class UsersPage implements OnInit {
     });
 
     await alert.present();
-  }
-
-  Logout() {
-    localStorage.removeItem('loggedEmail');
-    localStorage.removeItem('loggedPassword');
-    localStorage.removeItem('loggedID');
-    localStorage.removeItem('type');
-    this.router.navigate(['/login']);
   }
 
   searchUsers_Country() {

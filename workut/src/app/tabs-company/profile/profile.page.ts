@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { IonSlides } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,21 +12,37 @@ import { Router } from '@angular/router';
 })
 export class ProfilePage implements OnInit {
 
-  constructor(public httpClient: HttpClient, public alertController: AlertController, private router: Router) { }
-
-  ngOnInit() {
-    this.search();
-    this.getCountries();
-    this.getStates();
-  }
-
   // MAIN PAGE --------------------------------------------
   // Linking variable 'slides' to the slides in hmtl page
   @ViewChild('slides', { static: true }) slides: IonSlides;
   segment;
   slidePosition;
 
+  // COMPANY DATA PAGE ----------------------------------------
+  iconName = 'lock-closed';
+  emailDisabled: boolean;
+  nameDisabled: boolean; cepDisabled: boolean;
+  countryDisabled: boolean; stateDisabled: boolean;
 
+  countries: any;
+  states: any;
+
+  company = this.authService.getCurrentLogin();
+
+  data: any; email: string;
+  name: string; cep: string;
+  country: String; state: String;
+
+  constructor(
+    public httpClient: HttpClient, public alertController: AlertController,
+    private router: Router, private authService: AuthorizationService) { }
+
+  ngOnInit() {
+    this.authService.verifySession('2');
+    this.search();
+    this.getCountries();
+    this.getStates();
+  }
 
   segmentChanged(ev: any) {
     this.slides.slideTo(ev.detail.value);
@@ -37,24 +54,6 @@ export class ProfilePage implements OnInit {
       this.segment = this.slidePosition;
     });
   }
-
-  // COMPANY DATA PAGE ----------------------------------------
-  iconName = "lock-closed";
-  emailDisabled: boolean;
-  nameDisabled: boolean; cepDisabled: boolean;
-  countryDisabled: boolean; stateDisabled: boolean;
-
-  countries: any;
-  states: any;
-
-  company = {
-    email: localStorage.getItem('loggedEmail'),
-    password: localStorage.getItem('loggedPassword'),
-  };
-
-  data: any; email: string;
-  name: string; cep: string;
-  country: String; state: String;
 
   search() {
     this.httpClient
@@ -82,12 +81,12 @@ export class ProfilePage implements OnInit {
   }
 
   countrySelected() {
-    if (this.country == "Brazil") {
+    if (this.country == 'Brazil') {
       this.getStates();
     } else {
-      if (this.state != "Other" || this.state != "Any state") {
+      if (this.state != 'Other' && this.state != 'Any state') {
         this.states = [];
-        this.state = "Other";
+        this.state = 'Other';
       }
     }
   }
@@ -130,13 +129,10 @@ export class ProfilePage implements OnInit {
 
   editProfile() {
 
-    if (this.iconName == "lock-open") {
+    if (this.iconName == 'lock-open') {
 
       const body = {
-        company: {
-          email: localStorage.getItem('loggedEmail'),
-          password: localStorage.getItem('loggedPassword'),
-        },
+        company: this.authService.getCurrentLogin(),
         newData: {
           email: this.email,
           name: this.name,
@@ -148,15 +144,15 @@ export class ProfilePage implements OnInit {
 
       this.httpClient
         .post(
-          "https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyEditProfile",
+          'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyEditProfile',
           body
         )
         .subscribe(
           (response) => {
-            if (response == "200") {
+            if (response == '200') {
               this.statusAlert('Sucess', 'Profile data has been updated successfully!');
-              localStorage.setItem('loggedEmail', this.email);
-            } else if (response == "404") {
+              this.authService.setCurrentLogin(this.email, null, null, null);
+            } else if (response == '404') {
               this.statusAlert('Error', 'An error occurred. Please try again!');
             } else {
               this.statusAlert('Error', 'An error occurred. Please try again!');
@@ -167,11 +163,11 @@ export class ProfilePage implements OnInit {
           }
         );
 
-      this.iconName = "lock-closed";
+      this.iconName = 'lock-closed';
       this.updateControls(true);
     }
     else {
-      this.iconName = "lock-open";
+      this.iconName = 'lock-open';
       this.updateControls(false);
     }
   }
@@ -185,14 +181,5 @@ export class ProfilePage implements OnInit {
 
     await alert.present();
   }
-
-  Logout() {
-    localStorage.removeItem('loggedEmail');
-    localStorage.removeItem('loggedPassword');
-    localStorage.removeItem('loggedID');
-    localStorage.removeItem('type');
-    this.router.navigate(['/login']);
-  }
-
 
 }

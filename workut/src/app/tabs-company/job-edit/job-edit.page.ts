@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-job-edit',
@@ -23,9 +24,10 @@ export class JobEditPage implements OnInit {
   constructor(
     public http: HttpClient, private router: ActivatedRoute,
     private navigationRouter: Router, public alertController: AlertController,
-    private fBuilder: FormBuilder) { }
+    private fBuilder: FormBuilder, private authService: AuthorizationService) { }
 
   ngOnInit() {
+    this.authService.verifySession('2');
     this.router.params.subscribe(params => {
       this.id = params['id'];
     });
@@ -135,18 +137,15 @@ export class JobEditPage implements OnInit {
   saveChanges() {
 
     const body = {
-      "company": {
-        "email": localStorage.getItem('loggedEmail'),
-        "password": localStorage.getItem('loggedPassword')
-      },
-      "job": {
-        "id": this.id,
-        "jobTitle": this.jobTitle,
-        "jobDescription": this.jobDescription,
-        "salary": this.salary,
-        "country": this.country,
-        "state": this.state,
-        "skillsRequired": this.addmore.value.itemRows
+      company: this.authService.getCurrentLogin(),
+      job: {
+        id: this.id,
+        jobTitle: this.jobTitle,
+        jobDescription: this.jobDescription,
+        salary: this.salary,
+        country: this.country,
+        state: this.state,
+        skillsRequired: this.addmore.value.itemRows
       }
     }
 
@@ -184,14 +183,6 @@ export class JobEditPage implements OnInit {
     });
 
     await alert.present();
-  }
-
-  Logout() {
-    localStorage.removeItem('loggedEmail');
-    localStorage.removeItem('loggedPassword');
-    localStorage.removeItem('loggedID');
-    localStorage.removeItem('type');
-    this.navigationRouter.navigate(['/login']);
   }
 
 }

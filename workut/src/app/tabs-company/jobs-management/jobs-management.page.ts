@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-jobs-management',
@@ -13,16 +14,15 @@ export class JobsManagementPage implements OnInit {
   search;
   Jobs;
   body = {
-    "company": {
-      "email": localStorage.getItem('loggedEmail'),
-      "password": localStorage.getItem('loggedPassword'),
-      "id": localStorage.getItem('loggedID')
-    }
+    company: this.authService.getCurrentLogin()
   }
 
-  constructor(public http: HttpClient, private router: Router, public alertController: AlertController) { }
+  constructor(
+    public http: HttpClient, private router: Router,
+    public alertController: AlertController, private authService: AuthorizationService) { }
 
   ngOnInit() {
+    this.authService.verifySession('2');
     this.searchJobs();
   }
 
@@ -99,7 +99,6 @@ export class JobsManagementPage implements OnInit {
     await alert.present();
   }
 
-
   editJob(job) {
     this.router.navigate(['/tabs-company/job-edit', { id: job._id.$oid }]);
   }
@@ -115,14 +114,6 @@ export class JobsManagementPage implements OnInit {
           this.statusAlert('Error', 'An error occurred. Please try again!');
         }
       );
-  }
-
-  Logout() {
-    localStorage.removeItem('loggedEmail');
-    localStorage.removeItem('loggedPassword');
-    localStorage.removeItem('loggedID');
-    localStorage.removeItem('type');
-    this.router.navigate(['/login']);
   }
 
 }
