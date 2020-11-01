@@ -127,6 +127,8 @@ export class JobCreatePage implements OnInit {
         if (response == '200') {
           this.createdTime = new Date().toLocaleTimeString();
           this.statusAlert('Success', 'Job data was sucessfully created');
+        } else if (response == '404') {
+          this.authService.Logout();
         } else {
           this.statusAlert('Error', 'Error during the creation ... please try again later');
         }

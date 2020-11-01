@@ -22,7 +22,11 @@ export class TabsCompanyPage implements OnInit {
       'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyListProfile',
       this.authService.getCurrentLogin()
     ).subscribe((result: any) => {
-      this.name = result.name;
+      if (result == '404') {
+        this.authService.Logout();
+      } else {
+        this.name = result.name;
+      }
     });
   }
 

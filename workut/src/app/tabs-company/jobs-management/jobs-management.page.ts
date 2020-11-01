@@ -62,6 +62,8 @@ export class JobsManagementPage implements OnInit {
         (response) => {
           if (response == 200) {
             this.searchJobs();
+          } else if (response == 404) {
+            this.authService.Logout();
           } else {
             this.statusAlert('Error', 'An error occurred. Please try again!');
           }
@@ -77,7 +79,11 @@ export class JobsManagementPage implements OnInit {
       'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsSearch', this.body
     ).subscribe(
       (response) => {
-        this.Jobs = response;
+        if (response == '404') {
+          this.authService.Logout();
+        } else {
+          this.Jobs = response;
+        }
       },
       (error) => {
         this.statusAlert('Error', 'An error occurred. Please try again!');
@@ -105,7 +111,11 @@ export class JobsManagementPage implements OnInit {
       + this.search, this.body
     ).subscribe(
       (response) => {
-        this.Jobs = response;
+        if (response == '404') {
+          this.authService.Logout();
+        } else {
+          this.Jobs = response;
+        }
       },
       (error) => {
         this.statusAlert('Error', 'An error occurred. Please try again!');

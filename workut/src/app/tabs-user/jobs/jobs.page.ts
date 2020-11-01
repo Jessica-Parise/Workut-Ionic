@@ -29,7 +29,11 @@ export class JobsPage implements OnInit {
       'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/listJobs', this.body
     ).subscribe(
       (response) => {
-        this.Jobs = response;
+        if(response == '404'){
+          this.authService.Logout();
+        } else {
+          this.Jobs = response;
+        }
       },
       (error) => {
         this.statusAlert('Error', 'An error occurred. Please try again!');
@@ -52,7 +56,11 @@ export class JobsPage implements OnInit {
       this.body)
       .subscribe(
         (response) => {
-          this.Jobs = response;
+          if(response == '404'){
+            this.authService.Logout();
+          } else {
+            this.Jobs = response;
+          }
         },
         (error) => {
           this.statusAlert('Error', 'An error occurred. Please try again!');

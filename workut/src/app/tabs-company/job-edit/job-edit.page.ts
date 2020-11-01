@@ -90,28 +90,30 @@ export class JobEditPage implements OnInit {
   searchData() {
     this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getJob?id=' + this.id)
       .subscribe((data: any) => {
-        this.job = data;
-        this.jobTitle = data.jobTitle;
-        this.jobDescription = data.jobDescription;
-        this.salary = data.salary;
-        this.country = data.country;
-        if (data.country != "Brazil") {
-          this.states = [];
-          this.state = data.state;
+
+        if (data == '404') {
+          this.authService.Logout();
         } else {
-          this.state = data.state;
-        }
+          this.job = data;
+          this.jobTitle = data.jobTitle;
+          this.jobDescription = data.jobDescription;
+          this.salary = data.salary;
+          this.country = data.country;
+          if (data.country != "Brazil") {
+            this.states = [];
+            this.state = data.state;
+          } else {
+            this.state = data.state;
+          }
 
-        // Removes the first row because its always be empty
-        this.deleteRow(0);
-
-        if (data.skillsRequired != undefined && data.skillsRequired != null) {
-
+          // Removes the first row because its always be empty
           this.deleteRow(0);
-          data.skillsRequired.forEach(item => {
-            this.search_addNewRow(item.skill);
-          });
-
+          if (data.skillsRequired != undefined && data.skillsRequired != null) {
+            this.deleteRow(0);
+            data.skillsRequired.forEach(item => {
+              this.search_addNewRow(item.skill);
+            });
+          }
         }
 
       });
@@ -152,9 +154,11 @@ export class JobEditPage implements OnInit {
     this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsEdit', body)
       .subscribe(
         (response) => {
-          if (response == "200") {
+          if (response == '200') {
             this.updateTime = new Date().toLocaleTimeString();
             this.statusAlert('Success', 'Job data was sucessfully updated');
+          } else if (response == '404') {
+            this.authService.Logout();
           } else {
             this.statusAlert('Error', 'Error during the update ... please try again later');
           }
