@@ -130,10 +130,7 @@ export class ProfilePage implements OnInit {
     if (this.iconName == "lock-open") {
 
       const body = {
-        user: {
-          email: localStorage.getItem('loggedEmail'),
-          password: localStorage.getItem('loggedPassword'),
-        },
+        user: this.user,
         newData: {
           email: this.email,
           name: this.name,
@@ -145,14 +142,14 @@ export class ProfilePage implements OnInit {
 
       this.httpClient
         .post(
-          "https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserEditProfile",
+          'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserEditProfile',
           body
         )
         .subscribe(
           (response) => {
             if (response == "200") {
               this.statusAlert('Success', 'Profile data has been updated successfully!');
-              localStorage.setItem('loggedEmail', this.email);
+              this.authService.setCurrentLogin(this.email, null, null, null);
             } else if (response == "404") {
               this.statusAlert('Error', 'An error occurred. Please try again!');
             } else {

@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
 
         // User Login
         if (result.status == '200.1') {
-          this.authService.setCurrentLogin(this.email, this.password, result.id.$oid, '1');
+          this.authService.setCurrentLogin(this.email, result.TOKEN, result.id.$oid, '1');
           this.email = '';
           this.password = '';
           this.router.navigate(['/tabs-user']);
@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
 
         // Company Login
         else if (result.status == '200.2') {
-          this.authService.setCurrentLogin(this.email, this.password, result.id.$oid, '2');
+          this.authService.setCurrentLogin(this.email, result.TOKEN, result.id.$oid, '2');
           this.email = '';
           this.password = '';
           this.router.navigate(['/tabs-company']);

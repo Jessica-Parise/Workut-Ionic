@@ -108,7 +108,7 @@ export class JobCreatePage implements OnInit {
     const body = {
       company: this.authService.getCurrentLogin(),
       job: {
-        company: this.authService.getCurrentLoginID(),
+        company: this.authService.getCurrentLogin().ID,
         jobTitle: this.jobTitle,
         jobDescription: this.jobDescription,
         salary: this.salary,

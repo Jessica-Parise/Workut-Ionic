@@ -13,9 +13,7 @@ export class JobsManagementPage implements OnInit {
 
   search;
   Jobs;
-  body = {
-    company: this.authService.getCurrentLogin()
-  }
+  body = this.authService.getCurrentLogin();
 
   constructor(
     public http: HttpClient, private router: Router,
@@ -57,11 +55,8 @@ export class JobsManagementPage implements OnInit {
   delete(job) {
     this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsDelete',
       {
-        "company": {
-          "email": this.body.company.email,
-          "password": this.body.company.password
-        },
-        "id": job._id.$oid
+        company: this.body,
+        id: job._id.$oid
       })
       .subscribe(
         (response) => {
@@ -78,15 +73,16 @@ export class JobsManagementPage implements OnInit {
   }
 
   searchJobs() {
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsSearch', this.body)
-      .subscribe(
-        (response) => {
-          this.Jobs = response;
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+    this.http.post(
+      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsSearch', this.body
+    ).subscribe(
+      (response) => {
+        this.Jobs = response;
+      },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
   async statusAlert(title, message) {
@@ -104,16 +100,17 @@ export class JobsManagementPage implements OnInit {
   }
 
   searchJobs_Title() {
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsSearch_Title?search=' + this.search,
-      this.body)
-      .subscribe(
-        (response) => {
-          this.Jobs = response;
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+    this.http.post(
+      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsSearch_Title?search='
+      + this.search, this.body
+    ).subscribe(
+      (response) => {
+        this.Jobs = response;
+      },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
 }

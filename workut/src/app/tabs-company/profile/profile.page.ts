@@ -31,7 +31,7 @@ export class ProfilePage implements OnInit {
 
   data: any; email: string;
   name: string; cep: string;
-  country: String; state: String;
+  country: string; state: string;
 
   constructor(
     public httpClient: HttpClient, public alertController: AlertController,

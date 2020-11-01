@@ -18,9 +18,9 @@ export class TabsCompanyPage implements OnInit {
   name: string;
 
   ngOnInit() {
-    const company = this.authService.getCurrentLogin();
     this.httpClient.post(
-      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyListProfile', company
+      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyListProfile',
+      this.authService.getCurrentLogin()
     ).subscribe((result: any) => {
       this.name = result.name;
     });

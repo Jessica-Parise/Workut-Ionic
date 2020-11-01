@@ -13,9 +13,7 @@ export class UsersPage implements OnInit {
 
   search: any;
   Users: any;
-  body = {
-    company: this.authService.getCurrentLogin()
-  };
+  body = this.authService.getCurrentLogin();
 
   constructor(
     public http: HttpClient, public alertController: AlertController,
@@ -27,15 +25,16 @@ export class UsersPage implements OnInit {
   }
 
   searchUsers() {
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/ListadeUsuarios', this.body.company)
-      .subscribe(
-        (response) => {
-          this.Users = response;
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+    this.http.post(
+      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/ListadeUsuarios', this.body
+    ).subscribe(
+      (response) => {
+        this.Users = response;
+      },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
   async statusAlert(title, message) {

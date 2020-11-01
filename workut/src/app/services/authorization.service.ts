@@ -8,9 +8,9 @@ export class AuthorizationService {
 
   constructor(private router: Router) { }
 
-  setCurrentLogin(Email: string, Password: string, ID: string, type: string) {
+  setCurrentLogin(Email: string, TOKEN: string, ID: string, type: string) {
     if (Email != null) { localStorage.setItem('loggedEmail', Email); }
-    if (Password != null) { localStorage.setItem('loggedPassword', Password); }
+    if (TOKEN != null) { localStorage.setItem('loggedTOKEN', TOKEN); }
     if (ID != null) { localStorage.setItem('loggedID', ID); }
     if (type != null) { localStorage.setItem('type', type); }
   }
@@ -18,15 +18,15 @@ export class AuthorizationService {
   getCurrentLogin() {
     return {
       email: localStorage.getItem('loggedEmail'),
-      password: localStorage.getItem('loggedPassword'),
-      id: localStorage.getItem('loggedID'),
+      TOKEN: localStorage.getItem('loggedTOKEN'),
+      ID: localStorage.getItem('loggedID'),
       type: localStorage.getItem('type')
     }
   }
 
   Logout() {
     localStorage.removeItem('loggedEmail');
-    localStorage.removeItem('loggedPassword');
+    localStorage.removeItem('loggedTOKEN');
     localStorage.removeItem('loggedID');
     localStorage.removeItem('type');
     this.router.navigate(['/login']);
@@ -34,10 +34,10 @@ export class AuthorizationService {
 
   isLogged() {
     const email = localStorage.getItem('loggedEmail');
-    const password = localStorage.getItem('loggedPassword');
-    const id = localStorage.getItem('loggedID');
+    const TOKEN = localStorage.getItem('loggedTOKEN');
+    const ID = localStorage.getItem('loggedID');
     const type = localStorage.getItem('type');
-    if (email == null || password == null || id == null || type == null) {
+    if (email == null || TOKEN == null || ID == null || type == null) {
       return false;
     } else {
       return true;

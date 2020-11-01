@@ -13,9 +13,7 @@ export class JobsPage implements OnInit {
 
   search;
   Jobs;
-  body = {
-    user: this.authService.getCurrentLogin()
-  };
+  body = this.authService.getCurrentLogin();
 
   constructor(
     public http: HttpClient, public alertController: AlertController,
@@ -28,7 +26,7 @@ export class JobsPage implements OnInit {
 
   searchJobs() {
     this.http.post(
-      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/listJobs', this.body.user
+      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/listJobs', this.body
     ).subscribe(
       (response) => {
         this.Jobs = response;
