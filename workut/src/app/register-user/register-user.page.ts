@@ -128,9 +128,9 @@ export class RegisterUserPage implements OnInit {
   }
 
   verifySession() {
-    if (this.authService.isLogged()) {
-      this.authService.AutoLogin();
-    }
+    this.authService.AutoLogin().then(x => {
+      if (x !== 'cancel') { this.router.navigate([x]); }
+    });
   }
 
   // Inserts a new User into the Mondo datebase

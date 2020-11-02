@@ -26,7 +26,7 @@ export class ProfilePage implements OnInit {
   countries: any;
   states: any;
 
-  user = this.authService.getCurrentLogin();
+  body = this.authService.getCurrentLogin();
 
   data: any; email: string;
   name: string; lastname: string;
@@ -37,10 +37,14 @@ export class ProfilePage implements OnInit {
     private authService: AuthorizationService) { }
 
   ngOnInit() {
-    this.authService.verifySession('1');
-    this.search();
-    this.getCountries();
-    this.getStates();
+    this.authService.verifySession('1').then(() => {
+      this.authService.getCurrentLogin().then(LOGIN => {
+        this.body = LOGIN;
+        this.search();
+        this.getCountries();
+        this.getStates();
+      });
+    });
   }
 
   segmentChanged(ev: any) {
@@ -58,7 +62,7 @@ export class ProfilePage implements OnInit {
     this.httpClient
       .post(
         'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserListProfile',
-        this.user
+        this.body
       ).subscribe(
         (response) => {
           if (response == 404) {
@@ -130,7 +134,7 @@ export class ProfilePage implements OnInit {
     if (this.iconName == "lock-open") {
 
       const body = {
-        user: this.user,
+        user: this.body,
         newData: {
           email: this.email,
           name: this.name,

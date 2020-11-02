@@ -13,15 +13,19 @@ export class UsersPage implements OnInit {
 
   search: any;
   Users: any;
-  body = this.authService.getCurrentLogin();
+  body;
 
   constructor(
     public http: HttpClient, public alertController: AlertController,
     private router: Router, private authService: AuthorizationService) { }
 
   ngOnInit() {
-    this.authService.verifySession('2');
-    this.searchUsers();
+    this.authService.verifySession('2').then(() => {
+      this.authService.getCurrentLogin().then(LOGIN => {
+        this.body = LOGIN;
+        this.searchUsers();
+      });
+    });
   }
 
   searchUsers() {

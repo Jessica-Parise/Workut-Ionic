@@ -13,15 +13,19 @@ export class JobsPage implements OnInit {
 
   search;
   Jobs;
-  body = this.authService.getCurrentLogin();
+  body;
 
   constructor(
     public http: HttpClient, public alertController: AlertController,
     private router: Router, private authService: AuthorizationService) { }
 
   ngOnInit() {
-    this.authService.verifySession('1');
-    this.searchJobs();
+    this.authService.verifySession('1').then(() => {
+      this.authService.getCurrentLogin().then(LOGIN => {
+        this.body = LOGIN;
+        this.searchJobs();
+      });
+    });
   }
 
   searchJobs() {
@@ -29,7 +33,7 @@ export class JobsPage implements OnInit {
       'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/listJobs', this.body
     ).subscribe(
       (response) => {
-        if(response == '404'){
+        if (response === '404') {
           this.authService.Logout();
         } else {
           this.Jobs = response;
@@ -56,7 +60,7 @@ export class JobsPage implements OnInit {
       this.body)
       .subscribe(
         (response) => {
-          if(response == '404'){
+          if (response === '404') {
             this.authService.Logout();
           } else {
             this.Jobs = response;

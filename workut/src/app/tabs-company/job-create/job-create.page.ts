@@ -20,6 +20,7 @@ export class JobCreatePage implements OnInit {
   countries: any; states: any;
   country: string; state: string;
   createdTime: string; skillsRequired: any;
+  body;
 
   constructor(
     public http: HttpClient, private router: ActivatedRoute,
@@ -27,10 +28,17 @@ export class JobCreatePage implements OnInit {
     private fBuilder: FormBuilder, private authService: AuthorizationService) { }
 
   ngOnInit() {
-    this.authService.verifySession('2');
-    this.listInitialValues();
-    this.bindCountryList();
-    this.bindStateList();
+    this.authService.verifySession('2').then(() => {
+      this.authService.getCurrentLogin().then(LOGIN => {
+
+        this.body = LOGIN;
+
+        this.listInitialValues();
+        this.bindCountryList();
+        this.bindStateList();
+
+      });
+    });
     this.addmore = this.fBuilder.group({
       skill: [''],
       itemRows: this.fBuilder.array([this.initItemRows()])
@@ -106,9 +114,9 @@ export class JobCreatePage implements OnInit {
     this.startDate = new Date().toDateString();
 
     const body = {
-      company: this.authService.getCurrentLogin(),
+      company: this.body,
       job: {
-        company: this.authService.getCurrentLogin().ID,
+        company: this.body.ID,
         jobTitle: this.jobTitle,
         jobDescription: this.jobDescription,
         salary: this.salary,

@@ -129,9 +129,9 @@ export class RegisterCompanyPage implements OnInit {
   }
 
   verifySession() {
-    if (this.authService.isLogged()) {
-      this.authService.AutoLogin();
-    }
+    this.authService.AutoLogin().then(x => {
+      if (x !== 'cancel') { this.router.navigate([x]); }
+    });
   }
 
   // Inserts a new Company into the Mondo datebase

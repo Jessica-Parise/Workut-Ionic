@@ -27,7 +27,7 @@ export class ProfilePage implements OnInit {
   countries: any;
   states: any;
 
-  company = this.authService.getCurrentLogin();
+  body;
 
   data: any; email: string;
   name: string; cep: string;
@@ -38,10 +38,14 @@ export class ProfilePage implements OnInit {
     private router: Router, private authService: AuthorizationService) { }
 
   ngOnInit() {
-    this.authService.verifySession('2');
-    this.search();
-    this.getCountries();
-    this.getStates();
+    this.authService.verifySession('2').then(() => {
+      this.authService.getCurrentLogin().then(LOGIN => {
+        this.body = LOGIN;
+        this.search();
+        this.getCountries();
+        this.getStates();
+      });
+    });
   }
 
   segmentChanged(ev: any) {
@@ -59,7 +63,7 @@ export class ProfilePage implements OnInit {
     this.httpClient
       .post(
         "https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyListProfile",
-        this.company
+        this.body
       )
       .subscribe(
         (response) => {
@@ -132,7 +136,7 @@ export class ProfilePage implements OnInit {
     if (this.iconName == 'lock-open') {
 
       const body = {
-        company: this.authService.getCurrentLogin(),
+        company: this.body,
         newData: {
           email: this.email,
           name: this.name,

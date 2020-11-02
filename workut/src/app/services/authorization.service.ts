@@ -1,69 +1,91 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private storage: Storage) { }
 
-  setCurrentLogin(Email: string, TOKEN: string, ID: string, type: string) {
-    if (Email != null) { localStorage.setItem('loggedEmail', Email); }
-    if (TOKEN != null) { localStorage.setItem('loggedTOKEN', TOKEN); }
-    if (ID != null) { localStorage.setItem('loggedID', ID); }
-    if (type != null) { localStorage.setItem('type', type); }
-  }
+  setCurrentLogin(paramEmail: string, paramTOKEN: string, paramID: string, paramtype: string): any {
+    return this.getCurrentLogin().then(session => {
 
-  getCurrentLogin() {
-    return {
-      email: localStorage.getItem('loggedEmail'),
-      TOKEN: localStorage.getItem('loggedTOKEN'),
-      ID: localStorage.getItem('loggedID'),
-      type: localStorage.getItem('type')
-    }
+      let _email = paramEmail;
+      let _TOKEN = paramTOKEN;
+      let _ID = paramID;
+      let _type = paramtype;
+
+      if (session != null) {
+        _email = paramEmail != null ? paramEmail : session.email;
+        _TOKEN = paramTOKEN != null ? paramTOKEN : session.TOKEN;
+        _ID = paramID != null ? paramID : session.ID;
+        _type = paramtype != null ? paramtype : session.type;
+      }
+
+      this.storage.set('session', {
+        'email': _email,
+        'TOKEN': _TOKEN,
+        'ID': _ID,
+        'type': _type
+      });
+    });
   }
 
   Logout() {
-    localStorage.removeItem('loggedEmail');
-    localStorage.removeItem('loggedTOKEN');
-    localStorage.removeItem('loggedID');
-    localStorage.removeItem('type');
-    this.router.navigate(['/login']);
+    this.storage.remove('session').then(() => {
+      this.router.navigate(['/login']);
+    });
   }
 
-  isLogged() {
-    const email = localStorage.getItem('loggedEmail');
-    const TOKEN = localStorage.getItem('loggedTOKEN');
-    const ID = localStorage.getItem('loggedID');
-    const type = localStorage.getItem('type');
-    if (email == null || TOKEN == null || ID == null || type == null) {
-      return false;
-    } else {
-      return true;
-    }
+  getCurrentLogin(): any {
+    return this.storage.get('session').then(session => {
+      return session;
+    });
   }
 
-  AutoLogin() {
-    if (localStorage.getItem('type') === '1') {
-      this.router.navigate(['/tabs-user']);
-    } else {
-      this.router.navigate(['/tabs-company']);
-    }
+  isLogged(): any {
+    return this.storage.get('session').then(session => {
+      if (session === null) {
+        return false;
+      } else {
+        return true;
+      }
+    });
   }
 
-  verifySession(currentPageType: string) {
+  AutoLogin(): any {
+    return this.storage.get('session').then(session => {
+      if (session == null) {
+        return 'cancel';
+      } else {
+        if (session.type === '1') {
+          return '/tabs-user';
+        } else if (session.type === '2') {
+          return '/tabs-company';
+        } else {
+          return 'cancel';
+        }
+      }
+    });
+  }
 
-    const currentUserType = this.getCurrentLogin().type;
-
-    if (this.isLogged()) {
-
-      if (currentPageType !== currentUserType) { this.AutoLogin(); }
-
-    } else {
-      this.Logout();
-    }
-
+  verifySession(currentPageType: string): any {
+    return this.storage.get('session').then(session => {
+      return this.isLogged().then(islogged => {
+        if (islogged) {
+          if (currentPageType !== session.type) {
+            return this.AutoLogin();
+          }
+          else {
+            return 'cancel';
+          }
+        } else {
+          this.Logout();
+        }
+      });
+    });
   }
 
 }

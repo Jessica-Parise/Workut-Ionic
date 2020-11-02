@@ -13,19 +13,28 @@ export class JobsManagementPage implements OnInit {
 
   search;
   Jobs;
-  body = this.authService.getCurrentLogin();
+  body;
 
   constructor(
     public http: HttpClient, private router: Router,
     public alertController: AlertController, private authService: AuthorizationService) { }
 
   ngOnInit() {
-    this.authService.verifySession('2');
-    this.searchJobs();
+    this.authService.verifySession('2').then(() => {
+      this.authService.getCurrentLogin().then(LOGIN => {
+        this.body = LOGIN;
+        this.searchJobs();
+      });
+    });
   }
 
   ionViewDidEnter() {
-    this.searchJobs();
+    this.authService.verifySession('2').then(() => {
+      this.authService.getCurrentLogin().then(LOGIN => {
+        this.body = LOGIN;
+        this.searchJobs();
+      });
+    });
   }
 
   async deleteJob(job) {

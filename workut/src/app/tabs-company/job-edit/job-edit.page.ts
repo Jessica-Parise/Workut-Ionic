@@ -20,6 +20,7 @@ export class JobEditPage implements OnInit {
   countries: any; states: any;
   country: string; state: string;
   updateTime: string;
+  body;
 
   constructor(
     public http: HttpClient, private router: ActivatedRoute,
@@ -27,12 +28,17 @@ export class JobEditPage implements OnInit {
     private fBuilder: FormBuilder, private authService: AuthorizationService) { }
 
   ngOnInit() {
-    this.authService.verifySession('2');
-    this.router.params.subscribe(params => {
-      this.id = params['id'];
-    });
-    this.bindCountryList();
+    this.authService.verifySession('2').then(() => {
+      this.authService.getCurrentLogin().then(LOGIN => {
+        this.body = LOGIN;
 
+        this.router.params.subscribe(params => {
+          this.id = params['id'];
+        });
+        this.bindCountryList();
+
+      });
+    });
     this.addmore = this.fBuilder.group({
       skill: [''],
       itemRows: this.fBuilder.array([this.initItemRows()])
@@ -139,7 +145,7 @@ export class JobEditPage implements OnInit {
   saveChanges() {
 
     const body = {
-      company: this.authService.getCurrentLogin(),
+      company: this.body,
       job: {
         id: this.id,
         jobTitle: this.jobTitle,
