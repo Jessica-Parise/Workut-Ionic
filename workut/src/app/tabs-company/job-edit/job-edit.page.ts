@@ -30,13 +30,16 @@ export class JobEditPage implements OnInit {
   ngOnInit() {
     this.authService.verifySession('2').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
-        this.body = LOGIN;
+        if (LOGIN != null) {
+          this.body = LOGIN;
 
-        this.router.params.subscribe(params => {
-          this.id = params['id'];
-        });
-        this.bindCountryList();
-
+          this.router.params.subscribe(params => {
+            this.id = params['id'];
+          });
+          this.bindCountryList();
+        } else {
+          this.authService.Logout();
+        }
       });
     });
     this.addmore = this.fBuilder.group({

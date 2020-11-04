@@ -30,13 +30,14 @@ export class JobCreatePage implements OnInit {
   ngOnInit() {
     this.authService.verifySession('2').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
-
-        this.body = LOGIN;
-
-        this.listInitialValues();
-        this.bindCountryList();
-        this.bindStateList();
-
+        if (LOGIN != null) {
+          this.body = LOGIN;
+          this.listInitialValues();
+          this.bindCountryList();
+          this.bindStateList();
+        } else {
+          this.authService.Logout();
+        }
       });
     });
     this.addmore = this.fBuilder.group({

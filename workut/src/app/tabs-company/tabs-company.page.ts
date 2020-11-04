@@ -18,36 +18,27 @@ export class TabsCompanyPage implements OnInit {
   name: string;
 
   ngOnInit() {
+    this.init();
+  }
+
+  init() {
     this.authService.getCurrentLogin().then(session => {
 
       if (session != null) {
 
-        this.authService.AutoLogin().then(sessionPage => {
+        this.httpClient.post(
+          'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyListProfile',
+          session
+        ).subscribe((result: any) => {
 
-          if (sessionPage === 'tabs-user') {
-            this.router.navigate([sessionPage]);
+          if (result === '404') {
+            this.authService.Logout();
+          } else {
+            this.name = result.name;
           }
 
-          else {
-            this.httpClient.post(
-              'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyListProfile',
-              session
-            ).subscribe((result: any) => {
-
-              if (result === '404') {
-                this.authService.Logout();
-              } else {
-                this.name = result.name;
-              }
-
-            });
-
-          }
         });
-      }
 
-      else {
-        this.authService.Logout();
       }
 
     });

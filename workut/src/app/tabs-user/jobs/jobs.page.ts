@@ -20,10 +20,18 @@ export class JobsPage implements OnInit {
     private router: Router, private authService: AuthorizationService) { }
 
   ngOnInit() {
+    this.init();
+  }
+
+  init() {
     this.authService.verifySession('1').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
-        this.body = LOGIN;
-        this.searchJobs();
+        if (LOGIN != null) {
+          this.body = LOGIN;
+          this.searchJobs();
+        } else {
+          this.authService.Logout();
+        }
       });
     });
   }

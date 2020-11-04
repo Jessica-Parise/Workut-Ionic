@@ -37,12 +37,20 @@ export class ProfilePage implements OnInit {
     private authService: AuthorizationService) { }
 
   ngOnInit() {
+    this.init();
+  }
+
+  init() {
     this.authService.verifySession('1').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
-        this.body = LOGIN;
-        this.search();
-        this.getCountries();
-        this.getStates();
+        if (LOGIN != null) {
+          this.body = LOGIN;
+          this.search();
+          this.getCountries();
+          this.getStates();
+        } else {
+          this.authService.Logout();
+        }
       });
     });
   }
@@ -153,7 +161,6 @@ export class ProfilePage implements OnInit {
           (response) => {
             if (response == "200") {
               this.statusAlert('Success', 'Profile data has been updated successfully!');
-              this.authService.setCurrentLogin(this.email, null, null, null);
             } else if (response == "404") {
               this.authService.Logout();
             } else {

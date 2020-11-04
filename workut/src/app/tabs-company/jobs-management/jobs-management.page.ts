@@ -20,19 +20,18 @@ export class JobsManagementPage implements OnInit {
     public alertController: AlertController, private authService: AuthorizationService) { }
 
   ngOnInit() {
-    this.authService.verifySession('2').then(() => {
-      this.authService.getCurrentLogin().then(LOGIN => {
-        this.body = LOGIN;
-        this.searchJobs();
-      });
-    });
+    this.init();
   }
 
-  ionViewDidEnter() {
+  init() {
     this.authService.verifySession('2').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
-        this.body = LOGIN;
-        this.searchJobs();
+        if (LOGIN != null) {
+          this.body = LOGIN;
+          this.searchJobs();
+        } else {
+          this.authService.Logout();
+        }
       });
     });
   }

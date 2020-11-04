@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
 
         // User Login @Douglas trocou == por ===
         if (result.status === '200.1') {
-          this.authService.setCurrentLogin(this.email, result.TOKEN, result.id.$oid, '1').then((x) => {
+          this.authService.setCurrentLogin(result.TOKEN, result.id.$oid, '1').then((x) => {
             this.email = '';
             this.password = '';
             this.router.navigate(['/tabs-user']);
@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
 
         // Company Login @Douglas trocou == por ===
         else if (result.status === '200.2') {
-          this.authService.setCurrentLogin(this.email, result.TOKEN, result.id.$oid, '2').then((x) => {
+          this.authService.setCurrentLogin(result.TOKEN, result.id.$oid, '2').then((x) => {
             this.email = '';
             this.password = '';
             this.router.navigate(['/tabs-company']);

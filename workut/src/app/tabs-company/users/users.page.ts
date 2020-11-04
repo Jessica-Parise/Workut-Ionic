@@ -20,10 +20,18 @@ export class UsersPage implements OnInit {
     private router: Router, private authService: AuthorizationService) { }
 
   ngOnInit() {
+    this.init();
+  }
+
+  init() {
     this.authService.verifySession('2').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
-        this.body = LOGIN;
-        this.searchUsers();
+        if (LOGIN != null) {
+          this.body = LOGIN;
+          this.searchUsers();
+        } else {
+          this.authService.Logout();
+        }
       });
     });
   }
