@@ -76,7 +76,74 @@
         </ion-slide>
 
 
-        <ion-slide>
+        <ion-slide><ion-content>
+            <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)=' editCV()'>
+                <ion-fab-button color="danger">
+                    <ion-icon name="{{iconName_CV}}"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+
+                <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="birth" name="birth" placeholder="Birth Date" disabled="{{birthDisabled}}"></ion-datetime>
+
+                <ion-input [(ngModel)]="phone" name="phone" type="text" placeholder="Phone number" disabled="{{phoneDisabled}}"></ion-input>
+
+                <ion-item>
+                    <ion-label>Gender</ion-label>
+                    <ion-select class="input" [(ngModel)]="gender" name="gender" required  disabled="{{genderDisabled}}">
+                        <ion-select-option>Female</ion-select-option>
+                        <ion-select-option>Male</ion-select-option>
+                        <ion-select-option>Other</ion-select-option>
+                    </ion-select>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>Marital Status</ion-label>
+                    <ion-select class="input" [(ngModel)]="mstatus" name="mstatus" required  disabled="{{mstatusDisabled}}">
+                        <ion-select-option>Single</ion-select-option>
+                        <ion-select-option>Married</ion-select-option>
+                        <ion-select-option>Divorced</ion-select-option>
+                        <ion-select-option>Widowed</ion-select-option>
+                    </ion-select>
+                </ion-item>
+
+                <ion-input [(ngModel)]="portfolio" name="portfolio" type="text" placeholder="Portfolio Link"  disabled="{{portfolioDisabled}}"></ion-input>
+
+                <ion-input [(ngModel)]="careergoal" name="careergoal" type="text" placeholder="Career Goal" disabled="{{careergoalDisabled}}"></ion-input>
+
+                <ion-input [(ngModel)]="salary" name="salary" type="text" placeholder="Desired Salary"  disabled="{{salaryDisabled}}"></ion-input>
+
+                <ion-item>
+                    <ion-label>Experience Level</ion-label>
+                    <ion-select class="input" [(ngModel)]="xplvl" name="xplvl" required  disabled="{{xplvlDisabled}}">
+                        <ion-select-option>Intern</ion-select-option>
+                        <ion-select-option>Trainee</ion-select-option>
+                        <ion-select-option>Junior</ion-select-option>
+                        <ion-select-option>Mid-Level</ion-select-option>
+                        <ion-select-option>Senior</ion-select-option>
+                    </ion-select>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>Schooling</ion-label>
+                    <ion-select class="input" [(ngModel)]="schooling" name="schooling" required  disabled="{{schoolingDisabled}}">
+                        <ion-select-option>Elementary School</ion-select-option>
+                        <ion-select-option>Middle School</ion-select-option>
+                        <ion-select-option>High School</ion-select-option>
+                        <ion-select-option>BTech</ion-select-option>
+                        <ion-select-option>Bachelor</ion-select-option>
+                        <ion-select-option>Master</ion-select-option>
+                        <ion-select-option>Doctoral</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                
+            <!-- 
+
+            
+        
+            work history
+            education
+            skill -->
+        </ion-content>
 
         </ion-slide>
 
