@@ -19,9 +19,15 @@ export class ProfilePage implements OnInit {
 
   // USER DATA PAGE ----------------------------------------
   iconName = 'lock-closed';
+  iconName_CV = 'lock-closed';
   emailDisabled: boolean;
   nameDisabled: boolean; lastnameDisabled: boolean;
   countryDisabled: boolean; stateDisabled: boolean;
+  birthDisabled: boolean;
+  genderDisabled: boolean; phoneDisabled: boolean;
+  mstatusDisabled: boolean; portfolioDisabled: boolean;
+  careergoalDisabled: boolean; salaryDisabled: boolean;
+  xplvlDisabled: boolean; schoolingDisabled: boolean;
 
   countries: any;
   states: any;
@@ -31,6 +37,11 @@ export class ProfilePage implements OnInit {
   data: any; email: string;
   name: string; lastname: string;
   country: string; state: string;
+  birth: string;
+  gender: string; phone: string;
+  mstatus: string; portfolio: string;
+  careergoal: string; salary: string;
+  xplvl: string; schooling: string;
 
   constructor(
     public httpClient: HttpClient, public alertController: AlertController,
@@ -137,48 +148,62 @@ export class ProfilePage implements OnInit {
     this.countryDisabled = status; this.stateDisabled = status;
   }
 
-  editProfile() {
+  updateControls_CV(status: boolean) {
+    this.birthDisabled = status;
+    this.genderDisabled = status;
+    this.phoneDisabled = status;
+    this.mstatusDisabled = status;
+    this.portfolioDisabled = status;
+    this.careergoalDisabled = status;
+    this.salaryDisabled = status;
+    this.xplvlDisabled = status;
+    this.schoolingDisabled = status;
+  }
 
-    if (this.iconName == "lock-open") {
+  update() {
 
-      const body = {
-        user: this.body,
-        newData: {
-          email: this.email,
-          name: this.name,
-          lastName: this.lastname,
-          country: this.country,
-          state: this.state,
-        },
-      };
+    const body = {
+      user: this.body,
+      newData: {
+        email: this.email,
+        name: this.name,
+        lastName: this.lastname,
+        country: this.country,
+        state: this.state,
+        birth: this.birth,
+        gender: this.gender, 
+        phone: this.phone,
+        mstatus: this.mstatus, 
+        portfolio: this.portfolio,
+        careergoal: this.careergoal, 
+        salary: this.salary,
+        xplvl: this.xplvl,
+        schooling: this.schooling,
 
-      this.httpClient
-        .post(
-          'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserEditProfile',
-          body
-        )
-        .subscribe(
-          (response) => {
-            if (response == "200") {
-              this.statusAlert('Success', 'Profile data has been updated successfully!');
-            } else if (response == "404") {
-              this.authService.Logout();
-            } else {
-              this.statusAlert('Error', 'An error occurred. Please try again!');
-            }
-          },
-          (error) => {
+      },
+    };
+
+    this.httpClient
+      .post(
+        'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserEditProfile',
+        body
+      )
+      .subscribe(
+        (response) => {
+          if (response == "200") {
+            this.statusAlert('Success', 'Profile data has been updated successfully!');
+          } else if (response == "404") {
+            this.authService.Logout();
+          } else {
             this.statusAlert('Error', 'An error occurred. Please try again!');
           }
-        );
+        },
+        (error) => {
+          this.statusAlert('Error', 'An error occurred. Please try again!');
+        }
+      );
 
-      this.iconName = "lock-closed";
-      this.updateControls(true);
-    }
-    else {
-      this.iconName = "lock-open";
-      this.updateControls(false);
-    }
+  
   }
 
   async statusAlert(title, message) {
@@ -189,6 +214,32 @@ export class ProfilePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  editProfile() {
+
+    if (this.iconName == "lock-open") {
+      this.update();
+      this.iconName = "lock-closed";
+      this.updateControls(true);
+    }
+    else {
+      this.iconName = "lock-open";
+      this.updateControls(false);
+    }
+  }
+
+  editCV() {
+    if (this.iconName_CV == "lock-open") {
+      this.update();
+      this.iconName_CV = "lock-closed";
+      this.updateControls_CV(true);
+    } 
+    else {
+      this.iconName_CV = "lock-open";
+      this.updateControls_CV(false);
+    }
+
   }
 
 }
