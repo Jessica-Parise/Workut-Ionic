@@ -93,6 +93,16 @@ export class ProfilePage implements OnInit {
             this.lastname = this.data.lastName;
             this.country = this.data.country;
             this.state = this.data.state;
+            this.birth = this.data.birth;
+            this.gender = this.data.gender;
+            this.phone = this.data.phone;
+            this.mstatus = this.data.mstatus;
+            this.portfolio = this.data.portfolio;
+            this.careergoal = this.data.careergoal;
+            this.salary = this.data.salary;
+            this.xplvl = this.data.xplvl;
+            this.schooling = this.data.schooling;
+
           }
         },
         (error) => {
@@ -171,11 +181,11 @@ export class ProfilePage implements OnInit {
         country: this.country,
         state: this.state,
         birth: this.birth,
-        gender: this.gender, 
+        gender: this.gender,
         phone: this.phone,
-        mstatus: this.mstatus, 
+        mstatus: this.mstatus,
         portfolio: this.portfolio,
-        careergoal: this.careergoal, 
+        careergoal: this.careergoal,
         salary: this.salary,
         xplvl: this.xplvl,
         schooling: this.schooling,
@@ -203,7 +213,7 @@ export class ProfilePage implements OnInit {
         }
       );
 
-  
+
   }
 
   async statusAlert(title, message) {
@@ -234,7 +244,7 @@ export class ProfilePage implements OnInit {
       this.update();
       this.iconName_CV = "lock-closed";
       this.updateControls_CV(true);
-    } 
+    }
     else {
       this.iconName_CV = "lock-open";
       this.updateControls_CV(false);
