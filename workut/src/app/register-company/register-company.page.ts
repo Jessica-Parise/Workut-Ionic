@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IonSlides } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../services/authorization.service';
 
@@ -115,7 +115,7 @@ export class RegisterCompanyPage implements OnInit {
 
   // Constructor
   constructor(
-    public http: HttpClient, public alertController: AlertController,
+    public http: HttpClient, public toastController: ToastController,
     private router: Router, private authService: AuthorizationService) { }
 
   // Init
@@ -224,15 +224,15 @@ export class RegisterCompanyPage implements OnInit {
   }
 
   // Presents an alert for status
-  async statusAlert(title, message) {
-    const alert = await this.alertController.create({
+  async statusAlert(title, mensagem) {
+    const alert = await this.toastController.create({
       header: title,
-      message: message,
+      message: mensagem,
       buttons: [
         {
           text: 'Ok',
           handler: () => {
-            if (message == 'Account successfully registered!') {
+            if (mensagem == 'Account successfully registered!') {
               this.router.navigate(['/login']);
             }
           }

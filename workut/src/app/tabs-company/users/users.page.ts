@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
@@ -16,7 +16,7 @@ export class UsersPage implements OnInit {
   body;
 
   constructor(
-    public http: HttpClient, public alertController: AlertController,
+    public http: HttpClient, public toastController: ToastController,
     private router: Router, private authService: AuthorizationService) { }
 
   ngOnInit() {
@@ -53,10 +53,10 @@ export class UsersPage implements OnInit {
     );
   }
 
-  async statusAlert(title, message) {
-    const alert = await this.alertController.create({
+  async statusAlert(title, mensagem) {
+    const alert = await this.toastController.create({
       header: title,
-      message: message,
+      message: mensagem,
       buttons: ['OK']
     });
 

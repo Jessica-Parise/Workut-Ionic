@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class JobsManagementPage implements OnInit {
 
   constructor(
     public http: HttpClient, private router: Router,
-    public alertController: AlertController, private authService: AuthorizationService) { }
+    public toastController: ToastController, private authService: AuthorizationService) { }
 
   ngOnInit() {
     this.init();
@@ -37,7 +37,7 @@ export class JobsManagementPage implements OnInit {
   }
 
   async deleteJob(job) {
-    const alert = await this.alertController.create({
+    const alert = await this.toastController.create({
       cssClass: 'my-custom-class',
       header: 'Are you sure?',
       message: 'If you delete this Job, it will be lost forever',
@@ -99,10 +99,9 @@ export class JobsManagementPage implements OnInit {
     );
   }
 
-  async statusAlert(title, message) {
-    const alert = await this.alertController.create({
-      header: title,
-      message: message,
+  async statusAlert(title, mensagem) {
+    const alert = await this.toastController.create({     
+      message: mensagem, 
       buttons: ['OK']
     });
 

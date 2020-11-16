@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AuthorizationService } from 'src/app/services/authorization.service';
@@ -24,7 +24,7 @@ export class JobCreatePage implements OnInit {
 
   constructor(
     public http: HttpClient, private router: ActivatedRoute,
-    private navigationRouter: Router, public alertController: AlertController,
+    private navigationRouter: Router, public toastController: ToastController,
     private fBuilder: FormBuilder, private authService: AuthorizationService) { }
 
   ngOnInit() {
@@ -149,15 +149,15 @@ export class JobCreatePage implements OnInit {
 
   }
 
-  async statusAlert(title, message) {
-    const alert = await this.alertController.create({
+  async statusAlert(title, mensagem) {
+    const alert = await this.toastController.create({
       header: title,
-      message: message,
+      message: mensagem,
       buttons: [
         {
           text: 'Ok',
           handler: () => {
-            if (message == 'Job data was sucessfully created') {
+            if (mensagem == 'Job data was sucessfully created') {
               this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.createdTime }]);
             }
           }
