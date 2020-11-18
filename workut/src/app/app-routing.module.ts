@@ -30,7 +30,11 @@ const routes: Routes = [
   {
     path: 'tabs-user',
     loadChildren: () => import('./tabs-user/tabs-user.module').then( m => m.TabsUserPageModule)
+  },  {
+    path: 'drive',
+    loadChildren: () => import('./drive/drive.module').then( m => m.DrivePageModule)
   },
+
 ];
 
 @NgModule({

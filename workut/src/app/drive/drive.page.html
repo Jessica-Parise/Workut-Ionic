@@ -1,0 +1,10 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>drive</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-input type="file" accept="image/*" (click)="changeListener($event)"></ion-input>
+<ion-img src={{image}}></ion-img>
+</ion-content>
