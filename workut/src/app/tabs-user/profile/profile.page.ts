@@ -201,6 +201,7 @@ export class ProfilePage implements OnInit {
         (response) => {
           if (response == "200") {
             this.statusAlert('Success', 'Profile data has been updated successfully!');
+            location.reload();
           } else if (response == "404") {
             this.authService.Logout();
           } else {
@@ -215,12 +216,11 @@ export class ProfilePage implements OnInit {
 
   }
 
-  // Presents an alert for status
-  async statusAlert(title, mensagem) {
+  async statusAlert(title, message) {
     const alert = await this.toastController.create({
       header: title,
-      message: mensagem,
-      duration: 1000
+      message: message,
+      duration: 1500
     });
 
     await alert.present();
