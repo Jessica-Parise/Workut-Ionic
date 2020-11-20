@@ -5,6 +5,6 @@
 </ion-header>
 
 <ion-content>
-<ion-input type="file" accept="image/*" (click)="changeListener($event)"></ion-input>
+<ion-input type="file" accept="image/*" (change)="changeListener($event)"></ion-input>
 <ion-img src={{image}}></ion-img>
 </ion-content>
