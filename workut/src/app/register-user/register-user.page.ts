@@ -160,6 +160,7 @@ export class RegisterUserPage implements OnInit {
             this.password = '';
             this.country = '';
             this.state = '';
+            this.router.navigate(['/login']);
             // this.Move(0);
           } else if (response == 400) {
             // 400 error action
@@ -226,17 +227,8 @@ export class RegisterUserPage implements OnInit {
   async statusAlert(title, mensagem) {
     const alert = await this.toastController.create({
       header: title,
-      message:mensagem,
-      buttons: [
-        {
-          text: 'Ok',
-          handler: () => {
-            if (mensagem == 'Account successfully registered!') {
-              this.router.navigate(['/login']);
-            }
-          }
-        }
-      ]
+      message: mensagem,
+      duration: 1500
     });
 
     await alert.present();

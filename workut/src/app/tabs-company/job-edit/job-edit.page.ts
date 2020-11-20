@@ -166,6 +166,7 @@ export class JobEditPage implements OnInit {
           if (response == '200') {
             this.updateTime = new Date().toLocaleTimeString();
             this.statusAlert('Success', 'Job data was sucessfully updated');
+            this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.updateTime }]);
           } else if (response == '404') {
             this.authService.Logout();
           } else {
@@ -179,20 +180,12 @@ export class JobEditPage implements OnInit {
 
   }
 
+  // Presents an alert for status
   async statusAlert(title, mensagem) {
     const alert = await this.toastController.create({
       header: title,
       message: mensagem,
-      buttons: [
-        {
-          text: 'Ok',
-          handler: () => {
-            if (mensagem == 'Job data was sucessfully updated') {
-              this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.updateTime }]);
-            }
-          }
-        }
-      ]
+      duration: 1000
     });
 
     await alert.present();

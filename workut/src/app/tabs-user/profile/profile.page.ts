@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IonSlides } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
+import { IonSlides, ToastController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
@@ -44,7 +43,7 @@ export class ProfilePage implements OnInit {
   xplvl: string; schooling: string;
 
   constructor(
-    public httpClient: HttpClient, public alertController: AlertController,
+    public httpClient: HttpClient, public toastController: ToastController,
     private authService: AuthorizationService) { }
 
   ngOnInit() {
@@ -216,11 +215,12 @@ export class ProfilePage implements OnInit {
 
   }
 
-  async statusAlert(title, message) {
-    const alert = await this.alertController.create({
+  // Presents an alert for status
+  async statusAlert(title, mensagem) {
+    const alert = await this.toastController.create({
       header: title,
-      message: message,
-      buttons: ['OK']
+      message: mensagem,
+      duration: 1000
     });
 
     await alert.present();

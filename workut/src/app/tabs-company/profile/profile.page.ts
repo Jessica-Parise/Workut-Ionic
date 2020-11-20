@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IonSlides } from '@ionic/angular';
-import { ToastController } from '@ionic/angular';
+import { IonSlides, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 
@@ -183,11 +182,12 @@ export class ProfilePage implements OnInit {
     }
   }
 
+  // Presents an alert for status
   async statusAlert(title, mensagem) {
     const alert = await this.toastController.create({
       header: title,
       message: mensagem,
-      buttons: ['OK']
+      duration: 1000
     });
 
     await alert.present();
