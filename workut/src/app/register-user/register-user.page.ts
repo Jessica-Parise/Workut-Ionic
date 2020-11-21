@@ -4,6 +4,7 @@ import { IonSlides } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../services/authorization.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-register-user',
@@ -115,7 +116,7 @@ export class RegisterUserPage implements OnInit {
   // Constructor
   constructor(
     public http: HttpClient, public toastController: ToastController,
-    private router: Router, private authService: AuthorizationService) { }
+    private router: Router, private authService: AuthorizationService, private db: DbService) { }
 
   // Init
   ngOnInit() {
@@ -147,34 +148,27 @@ export class RegisterUserPage implements OnInit {
     };
 
     // Sending the user object to MondoDB via POST request
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserSignUp', user)
-      .subscribe(
-        (response) => {
-          if (response == 200) {
-            // 200 sucess action
-            this.statusAlert('Success', 'Account successfully registered!');
-            // Reseting the values, case the user return to this page
-            this.email = '';
-            this.name = '';
-            this.lastname = '';
-            this.password = '';
-            this.country = '';
-            this.state = '';
-            this.router.navigate(['/login']);
-            // this.Move(0);
-          } else if (response == 400) {
-            // 400 error action
-            this.statusAlert('Error', 'This email is already registered in the system!');
-          } else if (response == 500) {
-            // 500 error action
-            this.statusAlert('Error', 'An error occurred. Please try again!');
-          }
-        },
-        (error) => {
-          // 500 error action
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+    this.db.UserSingUp(user).then(response => {
+      if (response === '200') {
+        this.statusAlert('Success', 'Account successfully registered!');
+        // Reseting the values, case the user return to this page
+        this.email = '';
+        this.name = '';
+        this.lastname = '';
+        this.password = '';
+        this.country = '';
+        this.state = '';
+        this.router.navigate(['/login']);
+      } else if (response === '400') {
+        this.statusAlert('Error', 'This email is already registered in the system!');
+      } else if (response === '500') {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
 
   }
 
@@ -191,17 +185,13 @@ export class RegisterUserPage implements OnInit {
   // Search Countries and States data from api
   searchAPI() {
 
-    // Searching the Countries
-    this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getCountries')
-      .subscribe((data) => {
-        this.countries = data;
-      });
+    this.db.getCountries().then(countries => {
+      this.countries = countries;
+    });
 
-    // Searching the States
-    this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getStates')
-      .subscribe((data) => {
-        this.states = data;
-      });
+    this.db.getStates().then(states => {
+      this.states = states;
+    });
 
   }
 
@@ -210,7 +200,7 @@ export class RegisterUserPage implements OnInit {
 
     // Verify if the selected country is Brazil
     // and update the States list with all the brazilian states
-    if (this.country == 'Brazil') {
+    if (this.country === 'Brazil') {
       this.searchAPI();
     }
 

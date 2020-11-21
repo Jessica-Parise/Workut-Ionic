@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     public httpClient: HttpClient, public toastController: ToastController,
-    private router: Router, private authService: AuthorizationService) { }
+    private router: Router, private authService: AuthorizationService, private db: DbService) { }
 
   ngOnInit() {
     this.verifySession();
@@ -35,42 +36,30 @@ export class LoginPage implements OnInit {
       password: this.password
     };
 
-    this.httpClient.post("https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/Login", user)
-      .subscribe((result: any) => {
-
-        // User Login @Douglas trocou == por ===
-        if (result.status === '200.1') {
-          this.authService.setCurrentLogin(result.TOKEN, result.id.$oid, '1').then((x) => {
-            this.email = '';
-            this.password = '';
-            this.router.navigate(['/tabs-user']);
-          });
-        }
-
-        // Company Login @Douglas trocou == por ===
-        else if (result.status === '200.2') {
-          this.authService.setCurrentLogin(result.TOKEN, result.id.$oid, '2').then((x) => {
-            this.email = '';
-            this.password = '';
-            this.router.navigate(['/tabs-company']);
-          });
-        }
-
-        // Login Errors
-        else if (result.status === '404') {
-          this.statusAlert('Error', 'Account not found!');
-        } else {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-
-      }, error => {
+    this.db.Login(user).then(response => {
+      if (response.status === '200.1') {
+        this.authService.setCurrentLogin(response.TOKEN, response.id.$oid, '1').then(() => {
+          this.router.navigate(['/tabs-user']);
+          this.email = '';
+          this.password = '';
+        });
+      } else if (response.status === '200.2') {
+        this.authService.setCurrentLogin(response.TOKEN, response.id.$oid, '2').then(() => {
+          this.router.navigate(['/tabs-company']);
+          this.email = '';
+          this.password = '';
+        });
+      } else if (response.status === '404') {
+        this.statusAlert('Error', 'Account not found!');
+      } else {
         this.statusAlert('Error', 'An error occurred. Please try again!');
-      });
+      }
+    });
 
   }
 
   // Presents an alert for status
-  async statusAlert (titlulo, mensagem) {
+  async statusAlert(titlulo, mensagem) {
     const toast = await this.toastController.create({
       message: mensagem,
       duration: 2000
@@ -78,6 +67,6 @@ export class LoginPage implements OnInit {
     toast.present();
   }
 
-   
+
 
 }

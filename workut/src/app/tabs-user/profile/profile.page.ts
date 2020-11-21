@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IonSlides, ToastController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-profile',
@@ -44,7 +45,7 @@ export class ProfilePage implements OnInit {
 
   constructor(
     public httpClient: HttpClient, public toastController: ToastController,
-    private authService: AuthorizationService) { }
+    private authService: AuthorizationService, private db: DbService) { }
 
   ngOnInit() {
     this.init();
@@ -77,44 +78,38 @@ export class ProfilePage implements OnInit {
   }
 
   search() {
-    this.httpClient
-      .post(
-        'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserListProfile',
-        this.body
-      ).subscribe(
-        (response) => {
-          if (response == 404) {
-            this.authService.Logout();
-          } else {
-            this.data = response;
-            this.email = this.data.email;
-            this.name = this.data.name;
-            this.lastname = this.data.lastName;
-            this.country = this.data.country;
-            this.state = this.data.state;
-            this.birth = this.data.birth;
-            this.gender = this.data.gender;
-            this.phone = this.data.phone;
-            this.mstatus = this.data.mstatus;
-            this.portfolio = this.data.portfolio;
-            this.careergoal = this.data.careergoal;
-            this.salary = this.data.salary;
-            this.xplvl = this.data.xplvl;
-            this.schooling = this.data.schooling;
-
-          }
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+    this.db.UserListProfile(this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.data = response;
+        this.email = this.data.email;
+        this.name = this.data.name;
+        this.lastname = this.data.lastName;
+        this.country = this.data.country;
+        this.state = this.data.state;
+        this.birth = this.data.birth;
+        this.gender = this.data.gender;
+        this.phone = this.data.phone;
+        this.mstatus = this.data.mstatus;
+        this.portfolio = this.data.portfolio;
+        this.careergoal = this.data.careergoal;
+        this.salary = this.data.salary;
+        this.xplvl = this.data.xplvl;
+        this.schooling = this.data.schooling;
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
   countrySelected() {
-    if (this.country == 'Brazil') {
+    if (this.country === 'Brazil') {
       this.getStates();
     } else {
-      if (this.state != 'Other' && this.state != 'Any state') {
+      if (this.state !== 'Other' && this.state !== 'Any state') {
         this.states = [];
         this.state = 'Other';
       }
@@ -122,33 +117,23 @@ export class ProfilePage implements OnInit {
   }
 
   getCountries() {
-    this.httpClient
-      .get(
-        "https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getCountries"
-      )
-      .subscribe(
-        (response) => {
-          this.countries = response;
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+    this.db.getCountries().then(response => {
+      this.countries = response;
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
   getStates() {
-    this.httpClient
-      .get(
-        "https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getStates"
-      )
-      .subscribe(
-        (response) => {
-          this.states = response;
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+    this.db.getStates().then(response => {
+      this.states = response;
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
   updateControls(status: boolean) {
@@ -192,28 +177,20 @@ export class ProfilePage implements OnInit {
       },
     };
 
-    this.httpClient
-      .post(
-        'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserEditProfile',
-        body
-      )
-      .subscribe(
-        (response) => {
-          if (response == "200") {
-            this.statusAlert('Success', 'Profile data has been updated successfully!');
-            location.reload();
-          } else if (response == "404") {
-            this.authService.Logout();
-          } else {
-            this.statusAlert('Error', 'An error occurred. Please try again!');
-          }
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
-
-
+    this.db.UserUpdateProfile(body).then(response => {
+      if (response === '200') {
+        this.statusAlert('Success', 'Profile data has been updated successfully!');
+        location.reload();
+      } else if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
   async statusAlert(title, message) {

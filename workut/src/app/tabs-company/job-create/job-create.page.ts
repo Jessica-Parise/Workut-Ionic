@@ -5,6 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-job-create',
@@ -25,7 +26,7 @@ export class JobCreatePage implements OnInit {
   constructor(
     public http: HttpClient, private router: ActivatedRoute,
     private navigationRouter: Router, public toastController: ToastController,
-    private fBuilder: FormBuilder, private authService: AuthorizationService) { }
+    private fBuilder: FormBuilder, private authService: AuthorizationService, private db: DbService) { }
 
   ngOnInit() {
     this.authService.verifySession('2').then(() => {
@@ -68,21 +69,19 @@ export class JobCreatePage implements OnInit {
 
   bindCountryList() {
     // Searching the Countries
-    this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getCountries')
-      .subscribe((data) => {
-        this.countries = data;
-        this.bindStateList();
-      });
+    this.db.getCountries().then(response => {
+      this.countries = response;
+      this.bindStateList();
+    });
   }
 
   bindStateList() {
     // Searching the States
-    this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getStates')
-      .subscribe((data) => {
-        if (this.country == "Brasil") {
-          this.states = data;
-        }
-      });
+    this.db.getStates().then(response => {
+      if (this.country === 'Brazil') {
+        this.states = response;
+      }
+    });
   }
 
   listInitialValues() {
@@ -94,7 +93,7 @@ export class JobCreatePage implements OnInit {
 
     // Verify if the selected country is Brazil
     // and update the States list with all the brazilian states
-    if (this.country == 'Brasil') {
+    if (this.country === 'Brazil') {
       this.bindStateList();
     }
 
@@ -102,7 +101,7 @@ export class JobCreatePage implements OnInit {
     // and update the States list with the 'Outros' option
     else {
       this.states = [];
-      if (this.state != 'Other' && this.state != 'Any state') {
+      if (this.state !== 'Other' && this.state !== 'Any state') {
         this.state = 'Any state';
       }
     }
@@ -128,21 +127,17 @@ export class JobCreatePage implements OnInit {
       }
     };
 
-    this.http.post(
-      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsInsert',
-      body
-    ).subscribe(
-      (response) => {
-        if (response == '200') {
-          this.createdTime = new Date().toLocaleTimeString();
-          this.statusAlert('Success', 'Job data was sucessfully created');
-          this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.createdTime }]);
-        } else if (response == '404') {
-          this.authService.Logout();
-        } else {
-          this.statusAlert('Error', 'Error during the creation ... please try again later');
-        }
-      },
+    this.db.CreateJob(body).then(response => {
+      if (response === '200') {
+        this.createdTime = new Date().toLocaleTimeString();
+        this.statusAlert('Success', 'Job data was sucessfully created');
+        this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.createdTime }]);
+      } else if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.statusAlert('Error', 'Error during the creation ... please try again later');
+      }
+    },
       (error) => {
         this.statusAlert('Error', 'An error occurred. Please try again!');
       }

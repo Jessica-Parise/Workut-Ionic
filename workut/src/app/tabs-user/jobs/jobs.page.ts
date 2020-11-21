@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-jobs',
@@ -17,7 +18,7 @@ export class JobsPage implements OnInit {
 
   constructor(
     public http: HttpClient, public alertController: AlertController,
-    private router: Router, private authService: AuthorizationService) { }
+    private router: Router, private authService: AuthorizationService, private db: DbService) { }
 
   ngOnInit() {
     this.init();
@@ -37,16 +38,13 @@ export class JobsPage implements OnInit {
   }
 
   searchJobs() {
-    this.http.post(
-      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/listJobs', this.body
-    ).subscribe(
-      (response) => {
-        if (response === '404') {
-          this.authService.Logout();
-        } else {
-          this.Jobs = response;
-        }
-      },
+    this.db.ListJobs(this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.Jobs = response;
+      }
+    },
       (error) => {
         this.statusAlert('Error', 'An error occurred. Please try again!');
       }
@@ -64,20 +62,17 @@ export class JobsPage implements OnInit {
   }
 
   searchJobs_Title() {
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/UserJobsSearch_Title?search=' + this.search,
-      this.body)
-      .subscribe(
-        (response) => {
-          if (response === '404') {
-            this.authService.Logout();
-          } else {
-            this.Jobs = response;
-          }
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+    this.db.SearchJobs(this.search, this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.Jobs = response;
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
 }

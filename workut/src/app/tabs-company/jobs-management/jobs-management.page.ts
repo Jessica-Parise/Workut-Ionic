@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-jobs-management',
@@ -16,8 +17,8 @@ export class JobsManagementPage implements OnInit {
   body;
 
   constructor(
-    public http: HttpClient, private router: Router,
-    public alertController: AlertController, public toastController: ToastController, private authService: AuthorizationService) { }
+    public http: HttpClient, private router: Router, public alertController: AlertController,
+    public toastController: ToastController, private authService: AuthorizationService, private db: DbService) { }
 
   ngOnInit() {
     this.init();
@@ -61,38 +62,35 @@ export class JobsManagementPage implements OnInit {
   }
 
   delete(job) {
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsDelete',
-      {
-        company: this.body,
-        id: job._id.$oid
-      })
-      .subscribe(
-        (response) => {
-          if (response == 200) {
-            this.searchJobs();
-          } else if (response == 404) {
-            this.authService.Logout();
-          } else {
-            this.statusAlert('Error', 'An error occurred. Please try again!');
-          }
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+
+    const body = {
+      company: this.body,
+      id: job._id.$oid
+    };
+
+    this.db.DeleteJob(body).then(response => {
+      if (response === '200') {
+        this.searchJobs();
+      } else if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
   searchJobs() {
-    this.http.post(
-      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsSearch', this.body
-    ).subscribe(
-      (response) => {
-        if (response == '404') {
-          this.authService.Logout();
-        } else {
-          this.Jobs = response;
-        }
-      },
+    this.db.CompanyListJobs(this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.Jobs = response;
+      }
+    },
       (error) => {
         this.statusAlert('Error', 'An error occurred. Please try again!');
       }
@@ -115,17 +113,13 @@ export class JobsManagementPage implements OnInit {
   }
 
   searchJobs_Title() {
-    this.http.post(
-      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsSearch_Title?search='
-      + this.search, this.body
-    ).subscribe(
-      (response) => {
-        if (response == '404') {
-          this.authService.Logout();
-        } else {
-          this.Jobs = response;
-        }
-      },
+    this.db.CompanySearchJobs(this.search, this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.Jobs = response;
+      }
+    },
       (error) => {
         this.statusAlert('Error', 'An error occurred. Please try again!');
       }

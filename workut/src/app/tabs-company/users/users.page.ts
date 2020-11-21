@@ -3,6 +3,7 @@ import { ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-users',
@@ -17,7 +18,7 @@ export class UsersPage implements OnInit {
 
   constructor(
     public http: HttpClient, public toastController: ToastController,
-    private router: Router, private authService: AuthorizationService) { }
+    private router: Router, private authService: AuthorizationService, private db: DbService) { }
 
   ngOnInit() {
     this.init();
@@ -37,16 +38,13 @@ export class UsersPage implements OnInit {
   }
 
   searchUsers() {
-    this.http.post(
-      'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/ListadeUsuarios', this.body
-    ).subscribe(
-      (response) => {
-        if (response == '404') {
-          this.authService.Logout();
-        } else {
-          this.Users = response;
-        }
-      },
+    this.db.ListUsers(this.body).then(response => {
+      if (response == '404') {
+        this.authService.Logout();
+      } else {
+        this.Users = response;
+      }
+    },
       (error) => {
         this.statusAlert('Error', 'An error occurred. Please try again!');
       }
@@ -64,20 +62,17 @@ export class UsersPage implements OnInit {
   }
 
   searchUsers_Country() {
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyUsersSearch_Country?search=' + this.search,
-      this.body)
-      .subscribe(
-        (response) => {
-          if (response == '404') {
-            this.authService.Logout();
-          } else {
-            this.Users = response;
-          }
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
+    this.db.SearchUsers(this.search, this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.Users = response;
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
 }

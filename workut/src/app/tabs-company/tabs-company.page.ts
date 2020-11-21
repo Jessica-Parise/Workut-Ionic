@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../services/authorization.service';
+import { DbService } from '../services/db.service';
 
 @Component({
   selector: 'app-tabs-company',
@@ -11,7 +12,8 @@ import { AuthorizationService } from '../services/authorization.service';
 export class TabsCompanyPage implements OnInit {
 
   constructor(
-    private router: Router, public httpClient: HttpClient, private authService: AuthorizationService) { }
+    private router: Router, public httpClient: HttpClient,
+    private authService: AuthorizationService, private db: DbService) { }
 
   email: string;
   password: string;
@@ -23,24 +25,15 @@ export class TabsCompanyPage implements OnInit {
 
   init() {
     this.authService.getCurrentLogin().then(session => {
-
       if (session != null) {
-
-        this.httpClient.post(
-          'https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyListProfile',
-          session
-        ).subscribe((result: any) => {
-
+        this.db.CompanyListProfile(session).then(result => {
           if (result === '404') {
             this.authService.Logout();
           } else {
             this.name = result.name;
           }
-
         });
-
       }
-
     });
   }
 

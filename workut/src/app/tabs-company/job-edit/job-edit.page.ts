@@ -5,6 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-job-edit',
@@ -25,7 +26,7 @@ export class JobEditPage implements OnInit {
   constructor(
     public http: HttpClient, private router: ActivatedRoute,
     private navigationRouter: Router, public toastController: ToastController,
-    private fBuilder: FormBuilder, private authService: AuthorizationService) { }
+    private fBuilder: FormBuilder, private authService: AuthorizationService, private db: DbService) { }
 
   ngOnInit() {
     this.authService.verifySession('2').then(() => {
@@ -78,54 +79,50 @@ export class JobEditPage implements OnInit {
 
   bindCountryList() {
     // Searching the Countries
-    this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getCountries')
-      .subscribe((data) => {
-        this.countries = data;
-        this.bindStateList();
-      });
+    this.db.getCountries().then(response => {
+      this.countries = response;
+      this.bindStateList();
+    });
   }
 
   bindStateList() {
     // Searching the States
-    this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getStates')
-      .subscribe((data) => {
-        this.states = data;
-        if (this.state == null) {
-          this.searchData();
-        }
-      });
+    this.db.getStates().then(response => {
+      this.states = response;
+      if (this.state == null) {
+        this.searchData();
+      }
+    });
   }
 
   searchData() {
-    this.http.get('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/getJob?id=' + this.id)
-      .subscribe((data: any) => {
-
-        if (data == '404') {
-          this.authService.Logout();
+    this.db.CompanySearchJob(this.id).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.job = response;
+        this.jobTitle = response.jobTitle;
+        this.jobDescription = response.jobDescription;
+        this.salary = response.salary;
+        this.country = response.country;
+        if (response.country !== 'Brazil') {
+          this.states = [];
+          this.state = response.state;
         } else {
-          this.job = data;
-          this.jobTitle = data.jobTitle;
-          this.jobDescription = data.jobDescription;
-          this.salary = data.salary;
-          this.country = data.country;
-          if (data.country != "Brazil") {
-            this.states = [];
-            this.state = data.state;
-          } else {
-            this.state = data.state;
-          }
-
-          // Removes the first row because its always be empty
-          this.deleteRow(0);
-          if (data.skillsRequired != undefined && data.skillsRequired != null) {
-            this.deleteRow(0);
-            data.skillsRequired.forEach(item => {
-              this.search_addNewRow(item.skill);
-            });
-          }
+          this.state = response.state;
         }
 
-      });
+        // Removes the first row because its always be empty
+        this.deleteRow(0);
+        if (response.skillsRequired != undefined && response.skillsRequired != null) {
+          this.deleteRow(0);
+          response.skillsRequired.forEach(item => {
+            this.search_addNewRow(item.skill);
+          });
+        }
+      }
+
+    });
   }
 
   countrySelected() {
@@ -158,25 +155,23 @@ export class JobEditPage implements OnInit {
         state: this.state,
         skillsRequired: this.addmore.value.itemRows
       }
-    }
+    };
 
-    this.http.post('https://webhooks.mongodb-realm.com/api/client/v2.0/app/workut-nbyci/service/API/incoming_webhook/CompanyJobsEdit', body)
-      .subscribe(
-        (response) => {
-          if (response == '200') {
-            this.updateTime = new Date().toLocaleTimeString();
-            this.statusAlert('Success', 'Job data was sucessfully updated');
-            this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.updateTime }]);
-          } else if (response == '404') {
-            this.authService.Logout();
-          } else {
-            this.statusAlert('Error', 'Error during the update ... please try again later');
-          }
-        },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred ... please try again later');
-        }
-      );
+    this.db.EditJob(body).then(response => {
+      if (response === '200') {
+        this.updateTime = new Date().toLocaleTimeString();
+        this.statusAlert('Success', 'Job data was sucessfully updated');
+        this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.updateTime }]);
+      } else if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.statusAlert('Error', 'Error during the update ... please try again later');
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred ... please try again later');
+      }
+    );
 
   }
 
