@@ -43,6 +43,8 @@ export class ProfilePage implements OnInit {
   careergoal: string; salary: string;
   xplvl: string; schooling: string;
 
+  oldName: string;
+
   constructor(
     public httpClient: HttpClient, public toastController: ToastController,
     private authService: AuthorizationService, private db: DbService) { }
@@ -97,6 +99,7 @@ export class ProfilePage implements OnInit {
         this.salary = this.data.salary;
         this.xplvl = this.data.xplvl;
         this.schooling = this.data.schooling;
+        this.oldName = this.name;
       }
     },
       (error) => {
@@ -180,7 +183,9 @@ export class ProfilePage implements OnInit {
     this.db.UserUpdateProfile(body).then(response => {
       if (response === '200') {
         this.statusAlert('Success', 'Profile data has been updated successfully!');
-        location.reload();
+        if (this.oldName !== this.name) {
+          location.reload();
+        }
       } else if (response === '404') {
         this.authService.Logout();
       } else {

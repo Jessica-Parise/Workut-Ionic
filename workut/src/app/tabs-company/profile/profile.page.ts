@@ -33,6 +33,8 @@ export class ProfilePage implements OnInit {
   name: string; cep: string;
   country: string; state: string;
 
+  oldName: string;
+
   constructor(
     public httpClient: HttpClient, public toastController: ToastController,
     private router: Router, private authService: AuthorizationService, private db: DbService) { }
@@ -78,6 +80,7 @@ export class ProfilePage implements OnInit {
         this.cep = this.data.cep;
         this.country = this.data.country;
         this.state = this.data.state;
+        this.oldName = this.name;
       }
     },
       (error) => {
@@ -141,6 +144,9 @@ export class ProfilePage implements OnInit {
       this.db.CompanyUpdateProfile(body).then(response => {
         if (response === '200') {
           this.statusAlert('Sucess', 'Profile data has been updated successfully!');
+          if (this.oldName !== this.name) {
+            location.reload();
+          }
         } else if (response === '404') {
           this.authService.Logout();
         } else {
