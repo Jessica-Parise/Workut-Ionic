@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DbService } from '../services/db.service';
@@ -27,14 +28,18 @@ export class JobDetailsPage implements OnInit {
   }
 
   searchJob() {
-    console.log(this.id);
     this.db.CompanySearchJob(this.id).then(response => {
-      console.log(response);
       this.title = response.jobTitle;
       this.description = response.jobDescription;
       this.subtitle = response.salary + ' | ' + response.country + ' | ' + response.state;
       this.date = response.startDate;
-      this.Skills = response.skillsRequired;
+
+      if (response.skillsRequired[0].skill == null) {
+        this.Skills = null;
+      } else {
+        this.Skills = response.skillsRequired;
+      }
+
     });
   }
 

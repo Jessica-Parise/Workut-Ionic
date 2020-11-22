@@ -105,4 +105,8 @@ export class JobsPage implements OnInit {
     });
   }
 
+  showJob(job){
+    this.router.navigate(['/job-details', { id: job._id.$oid }]);
+  }
+
 }
