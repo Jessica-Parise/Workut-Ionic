@@ -43,6 +43,18 @@ export class JobsPage implements OnInit {
         this.authService.Logout();
       } else {
         this.Jobs = response;
+        this.Jobs.forEach(value => {
+
+          this.db.verifyAppliedStatus(this.body.ID, value._id.$oid).then(applyStatus => {
+            if (applyStatus == null) {
+              value.applied = false;
+            } else {
+              value.applied = true;
+            }
+          });
+
+        });
+
       }
     },
       (error) => {
@@ -84,6 +96,7 @@ export class JobsPage implements OnInit {
     this.db.UserApplyForJob(body).then(response => {
       if (response === '200') {
         this.statusAlert('Sucess', 'You have been applied for that job, wait an company contact in your email!');
+        this.searchJobs();
       } else if (response === '404') {
         this.authService.Logout();
       } else {
