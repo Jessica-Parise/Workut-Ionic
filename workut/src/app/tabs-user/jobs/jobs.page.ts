@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { DbService } from 'src/app/services/db.service';
 
@@ -17,7 +17,7 @@ export class JobsPage implements OnInit {
   body;
 
   constructor(
-    public http: HttpClient, public alertController: AlertController,
+    public http: HttpClient, public toastController: ToastController,
     private router: Router, private authService: AuthorizationService, private db: DbService) { }
 
   ngOnInit() {
@@ -52,7 +52,7 @@ export class JobsPage implements OnInit {
   }
 
   async statusAlert(title, message) {
-    const alert = await this.alertController.create({
+    const alert = await this.toastController.create({
       header: title,
       message: message,
       buttons: ['OK']
@@ -75,8 +75,21 @@ export class JobsPage implements OnInit {
     );
   }
 
-  applyJob() {
-
+  applyJob(job) {
+    const body = {
+      session: this.body,
+      job: job._id.$oid,
+      date: new Date().toDateString()
+    };
+    this.db.UserApplyForJob(body).then(response => {
+      if (response === '200') {
+        this.statusAlert('Sucess', 'You have been applied for that job, wait an company contact in your email!');
+      } else if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    });
   }
 
 }

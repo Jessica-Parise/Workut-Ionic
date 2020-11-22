@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { VirtualTimeScheduler } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -121,6 +122,12 @@ export class DbService {
   public CompanySearchJobs(search: string, body: any): Promise<any> {
     return this.http.post(
       this.API + '/CompanyJobsSearch_Title?search=' + search, body
+    ).toPromise();
+  }
+
+  public UserApplyForJob(body: any): Promise<any> {
+    return this.http.post(
+      this.API + '/UserApplyForJob', body
     ).toPromise();
   }
 
