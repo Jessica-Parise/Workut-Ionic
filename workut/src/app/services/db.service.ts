@@ -124,4 +124,16 @@ export class DbService {
     ).toPromise();
   }
 
+  public UserApplyForJob(body: any): Promise<any> {
+    return this.http.post(
+      this.API + '/UserApplyForJob', body
+    ).toPromise();
+  }
+
+  public verifyAppliedStatus(user: string, job: string): Promise<any> {
+    return this.http.get(
+      this.API + '/verifyAppliedStatus?user=' + user + '&job=' + job
+    ).toPromise();
+  }
+
 }
