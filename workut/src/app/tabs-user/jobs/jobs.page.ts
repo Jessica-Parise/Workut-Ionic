@@ -75,4 +75,8 @@ export class JobsPage implements OnInit {
     );
   }
 
+  applyJob() {
+
+  }
+
 }
