@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar style="text-align: center;">
+    <div>
+      <ion-title>Workut - Job Detail</ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content">
+
+    <div class="title">
+      <ion-label>{{title}}</ion-label>
+    </div>
+
+    <div class="subtitle">
+      <ion-label>{{subtitle}}</ion-label>
+    </div>
+
+    <div>
+      <ion-label>Data de publicação: {{date}}</ion-label>
+    </div>
+
+    <div class="description">
+      <ion-label class="title">Job Description:</ion-label><br>
+      <ion-label>{{description}}</ion-label>
+    </div>
+
+    <div class="description">
+      <ion-label class="title">Skills required:</ion-label><br>
+      <ul *ngFor="let skill of Skills">
+        <li>{{skill.skill}}</li>
+      </ul>
+    </div>
+
+  </div>
+</ion-content>
