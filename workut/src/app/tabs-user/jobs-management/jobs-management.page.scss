@@ -1,0 +1,48 @@
+.container {
+    max-width: 900px;
+    width: 100%;
+    padding: 15px 10px;
+    margin: 0 auto;
+}
+
+.close-icon{
+    float: right;
+    font-size: 25px;
+}
+
+.edit-icon{
+    float: right;
+    font-size: 23px;
+}
+
+.list{
+    margin-top: 5px;
+}
+
+.list-subtitle{
+    font-size: 14px;
+    color: gray;
+    margin: 0;
+}
+
+.list-title{
+    font-size:16px;
+    color: black;
+}
+ion-fab-button {
+    width: 40px;
+    height: 40px;
+}
+ion-searchbar {
+    max-width: 900px;
+    width: 100%;
+    padding: 15px 10px;
+    margin: 45px auto;
+    margin-bottom: 0;
+}
+
+@media (min-width: 1025px) {
+    ion-fab{
+        margin-right: 240px;
+    }
+}

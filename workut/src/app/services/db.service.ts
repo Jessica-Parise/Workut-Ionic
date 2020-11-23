@@ -118,9 +118,21 @@ export class DbService {
     ).toPromise();
   }
 
+  public UserAppliedJobsSearch(body: any): Promise<any> {
+    return this.http.post(
+      this.API + '/UserAppliedJobsSearch', body
+    ).toPromise();
+  }
+
   public CompanySearchJobs(search: string, body: any): Promise<any> {
     return this.http.post(
       this.API + '/CompanyJobsSearch_Title?search=' + search, body
+    ).toPromise();
+  }
+
+  public UserAppliedJobSearch(search: string, body: any): Promise<any> {
+    return this.http.post(
+      this.API + '/UserAppliedJobsSearch_Title?search=' + search, body
     ).toPromise();
   }
 

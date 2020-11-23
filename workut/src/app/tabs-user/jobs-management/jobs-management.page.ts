@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-jobs-management',
@@ -9,10 +11,78 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 })
 export class JobsManagementPage implements OnInit {
 
-  constructor(private router: Router, private authService: AuthorizationService) { }
+  search;
+  Jobs;
+  body;
+
+  constructor(
+    private router: Router, private authService: AuthorizationService,
+    private toastController: ToastController, private db: DbService) { }
 
   ngOnInit() {
-    this.authService.verifySession('1');
+    this.init();
+  }
+
+  init() {
+    this.authService.verifySession('1').then(() => {
+      this.authService.getCurrentLogin().then(LOGIN => {
+        if (LOGIN != null) {
+          this.body = LOGIN;
+          this.searchJobs();
+        } else {
+          this.authService.Logout();
+        }
+      });
+    });
+  }
+
+  searchJobs() {
+    this.db.UserAppliedJobsSearch(this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.Jobs = response;
+        for (let i = 0; i < this.Jobs.length; i++) {
+          this.db.CompanySearchJob(this.Jobs[i].job).then(jobFound => {
+            this.Jobs[i] = jobFound;
+          });
+        }
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
+  }
+
+  searchJobs_Title() {
+    this.db.UserAppliedJobSearch(this.search, this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.Jobs = response;
+        for (let i = 0; i < this.Jobs.length; i++) {
+          this.db.CompanySearchJob(this.Jobs[i].job).then(jobFound => {
+            this.Jobs[i] = jobFound;
+          });
+        }
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
+  }
+
+  // Presents an alert for status
+  async statusAlert(title, mensagem) {
+    const alert = await this.toastController.create({
+      header: title,
+      message: mensagem,
+      duration: 1000
+    });
+
+    await alert.present();
   }
 
 }
