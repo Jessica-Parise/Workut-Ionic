@@ -44,6 +44,8 @@ export class JobsManagementPage implements OnInit {
         this.Jobs = response;
         for (let i = 0; i < this.Jobs.length; i++) {
           this.db.CompanySearchJob(this.Jobs[i].job).then(jobFound => {
+            const applyID = this.Jobs[i]._id.$oid;
+            jobFound.applyID = applyID;
             this.Jobs[i] = jobFound;
           });
         }
@@ -63,6 +65,8 @@ export class JobsManagementPage implements OnInit {
         this.Jobs = response;
         for (let i = 0; i < this.Jobs.length; i++) {
           this.db.CompanySearchJob(this.Jobs[i].job).then(jobFound => {
+            const applyID = this.Jobs[i]._id.$oid;
+            jobFound.applyID = applyID;
             this.Jobs[i] = jobFound;
           });
         }
@@ -83,6 +87,27 @@ export class JobsManagementPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  deleteJob(job) {
+    const body = {
+      company: this.body,
+      id: job.applyID
+    };
+
+    this.db.UserDeleteAppliedJob(body).then(response => {
+      if (response === '200') {
+        this.searchJobs();
+      } else if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
   }
 
 }

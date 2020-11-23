@@ -112,6 +112,12 @@ export class DbService {
     ).toPromise();
   }
 
+  public UserDeleteAppliedJob(body: any): Promise<any> {
+    return this.http.post(
+      this.API + '/UserAppliedJobsDelete', body
+    ).toPromise();
+  }
+
   public CompanyListJobs(body: any): Promise<any> {
     return this.http.post(
       this.API + '/CompanyJobsSearch', body
