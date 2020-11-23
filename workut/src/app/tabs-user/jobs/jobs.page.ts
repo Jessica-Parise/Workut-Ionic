@@ -67,7 +67,7 @@ export class JobsPage implements OnInit {
     const alert = await this.toastController.create({
       header: title,
       message: message,
-      buttons: ['OK']
+      duration: 2000
     });
 
     await alert.present();
