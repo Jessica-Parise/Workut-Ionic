@@ -12,6 +12,7 @@ import { DbService } from 'src/app/services/db.service';
 })
 export class JobsPage implements OnInit {
 
+  data: any;
   search;
   Jobs;
   body;
@@ -35,6 +36,16 @@ export class JobsPage implements OnInit {
         }
       });
     });
+  }
+
+  ionViewWillEnter() {
+    setTimeout(() => {
+      this.data = {
+        'heading': 'Normal text',
+        'para1': 'Lorem ipsum dolor sit amet, consectetur',
+        'para2': 'adipiscing elit.'
+      };
+    }, 1000);
   }
 
   searchJobs() {
@@ -105,7 +116,7 @@ export class JobsPage implements OnInit {
     });
   }
 
-  showJob(job){
+  showJob(job) {
     this.router.navigate(['/job-details', { id: job._id.$oid }]);
   }
 

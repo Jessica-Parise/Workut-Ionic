@@ -1,25 +1,109 @@
 <ion-content [fullscreen]="true" class="content">
+
+  <!-- List -->
   <ion-list class="list">
 
     <ion-searchbar [(ngModel)]="search" name="search" (ionChange)="searchJobs_Title()" ngModel
       placeholder="Search by Job Title" showCancelButton="focus">
     </ion-searchbar>
 
-    <ion-item *ngFor="let job of Jobs" class="item">
-      <div class="container">
+    <div *ngIf="data">
+      <ion-item *ngFor="let job of Jobs" class="item">
+        <div class="container">
 
-        <ion-text class="list-subtitle">Job Title: {{job.jobTitle}}</ion-text>
-        <ion-text class="list-subtitle">Job Description: {{job.jobDescription}}</ion-text>
-        <ion-text class="list-subtitle">Salary: {{job.salary}}</ion-text>
-        <ion-text class="list-subtitle">Start Date: {{job.startDate}}</ion-text>
-        <ion-text class="list-subtitle">Country: {{job.country}}</ion-text>
-        <ion-text class="list-subtitle">State: {{job.state}}</ion-text>
-        <ion-button fill="outline" style="width: 35%; margin-left: 60%;" color="primary" (click)="showJob(job)">Details</ion-button>
-        <ion-button fill="outline" style="width: 35%; margin-left: 60%;" color="primary" (click)="applyJob(job)"
-          [disabled]="job.applied">{{job.applied ? 'Applied' : 'Apply'}}</ion-button>
+          <ion-text class="list-subtitle">Job Title: {{job.jobTitle}}</ion-text>
+          <ion-text class="list-subtitle">Job Description: {{job.jobDescription}}</ion-text>
+          <ion-text class="list-subtitle">Salary: {{job.salary}}</ion-text>
+          <ion-text class="list-subtitle">Start Date: {{job.startDate}}</ion-text>
+          <ion-text class="list-subtitle">Country: {{job.country}}</ion-text>
+          <ion-text class="list-subtitle">State: {{job.state}}</ion-text>
+          <ion-button fill="outline" style="width: 35%; margin-left: 60%;" color="primary" (click)="showJob(job)">
+            Details
+          </ion-button>
+          <ion-button fill="outline" style="width: 35%; margin-left: 60%;" color="primary" (click)="applyJob(job)"
+            [disabled]="job.applied">{{job.applied ? 'Applied' : 'Apply'}}</ion-button>
 
-      </div>
+        </div>
 
-    </ion-item>
+      </ion-item>
+    </div>
   </ion-list>
+
+  <!-- Skeleton screen -->
+  <div *ngIf="!data">
+    <ion-list>
+
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+  </div>
+
 </ion-content>
