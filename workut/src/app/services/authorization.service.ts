@@ -32,6 +32,12 @@ export class AuthorizationService {
 
   Logout() {
     this.storage.remove('session').then(() => {
+      location.reload();
+    });
+  }
+
+  RedirectToLogin() {
+    this.storage.remove('session').then(() => {
       this.router.navigate(['/login']);
     });
   }
@@ -79,7 +85,7 @@ export class AuthorizationService {
             return 'cancel';
           }
         } else {
-          this.Logout();
+          this.RedirectToLogin();
         }
       });
     });
