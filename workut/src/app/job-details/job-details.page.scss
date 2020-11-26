@@ -1,7 +1,7 @@
 .content{
     // text-align: center;
-    margin: 100px 0;
-    background-color: aqua;
+    margin: 25px 0;
+    // background-color: aqua;
     line-height: 1.5em;
 }
 .title-job {
@@ -21,12 +21,19 @@
     margin: 30px 0px;
 }
 
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 250px;
+    margin: 5px auto;
+}
 ul{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin: 0 auto;
-    background-color: yellow;
+    // background-color: yellow;
     max-width: 250px;
 }
 
@@ -36,10 +43,25 @@ ul{
     color: var(--color-primary);
     font-size: 20px;
     font-weight: 100%;
+    margin-top: 15px;
   }
 
   ion-label {
-      background-color: red;
+    //   background-color: red;
       display: flex;
+      justify-content: center;
+  }
+
+  .toolbar {
+    display: flex;
+    justify-content: center;
+    color: var(--color-primary);
+    font-size: 20px;
+    font-weight: 100%;
+    margin-top: 15px;
+  }
+  ion-header {
+      display: flex;
+      align-items: center;
       justify-content: center;
   }

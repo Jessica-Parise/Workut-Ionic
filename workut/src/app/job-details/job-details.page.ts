@@ -14,7 +14,9 @@ export class JobDetailsPage implements OnInit {
 
   title: string;
   description: string;
-  subtitle: string;
+  salary: string;
+  country: string;
+  state: string;
   date: string;
   Skills: any;
 
@@ -31,7 +33,9 @@ export class JobDetailsPage implements OnInit {
     this.db.CompanySearchJob(this.id).then(response => {
       this.title = response.jobTitle;
       this.description = response.jobDescription;
-      this.subtitle = response.salary + ' | ' + response.country + ' | ' + response.state;
+      this.salary = response.salary;
+      this.country = response.country;
+      this.state = response.state;
       this.date = response.startDate;
 
       if (response.skillsRequired[0].skill == null) {
