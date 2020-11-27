@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { DbService } from 'src/app/services/db.service';
 
@@ -17,7 +17,7 @@ export class JobsManagementPage implements OnInit {
 
   constructor(
     private router: Router, private authService: AuthorizationService,
-    private toastController: ToastController, private db: DbService) { }
+    private toastController: ToastController, private db: DbService, private alertController: AlertController) { }
 
   ngOnInit() {
     this.init();
@@ -39,7 +39,7 @@ export class JobsManagementPage implements OnInit {
 
   ionViewDidEnter() {
     this.init();
-  } 
+  }
 
   searchJobs() {
     this.db.UserAppliedJobsSearch(this.body).then(response => {
@@ -94,7 +94,7 @@ export class JobsManagementPage implements OnInit {
     await alert.present();
   }
 
-  deleteJob(job) {
+  delete(job) {
     const body = {
       company: this.body,
       id: job.applyID
@@ -119,4 +119,25 @@ export class JobsManagementPage implements OnInit {
     this.router.navigate(['/job-details', { id: job._id.$oid }]);
   }
 
+  async deleteJob(job) {
+    const alert = await this.alertController.create({
+      header: "Are you sure?",
+      message: "If you press 'OK' you will cancel your apply for this job!",
+      buttons: [{
+        text: "Cancel",
+        role: "cancel",
+        handler: () => {
+
+        }
+      },
+      {
+        text: "Ok", 
+        handler: () => {
+          this.delete(job);
+        }
+      }]
+    });
+
+    await alert.present();
+  }
 }
