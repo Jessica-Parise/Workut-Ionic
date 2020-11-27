@@ -99,6 +99,11 @@ export class DbService {
       this.API + '/getJob?id=' + id
     ).toPromise();
   }
+  public CompanySearchUser(id: string): Promise<any> {
+    return this.http.get(
+      this.API + '/getUser?id=' + id
+    ).toPromise();
+  }
 
   public EditJob(job: any): Promise<any> {
     return this.http.post(
@@ -139,6 +144,11 @@ export class DbService {
   public UserAppliedJobSearch(search: string, body: any): Promise<any> {
     return this.http.post(
       this.API + '/UserAppliedJobsSearch_Title?search=' + search, body
+    ).toPromise();
+  }
+  public CompanyAppliedJobSearch(body: any): Promise<any> {
+    return this.http.post(
+      this.API + '/CompanyAppliedJobsSearch', body
     ).toPromise();
   }
 

@@ -27,6 +27,7 @@ export class ProfilePage implements OnInit {
   countries: any;
   states: any;
 
+  Applies;
   body;
 
   data: any; email: string;
@@ -51,6 +52,7 @@ export class ProfilePage implements OnInit {
           this.search();
           this.getCountries();
           this.getStates();
+          this.searchApplies();
         } else {
           this.authService.Logout();
         }
@@ -177,4 +179,29 @@ export class ProfilePage implements OnInit {
     await alert.present();
   }
 
+  searchApplies() {
+    this.db.CompanyAppliedJobSearch(this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.Applies = response;
+        for (let i = 0; i < this.Applies.length; i++) {
+          this.db.CompanySearchJob(this.Applies[i].job).then(jobFound => {
+            this.Applies[i].jobTitle = jobFound.jobTitle;  
+          });
+          this.db.CompanySearchUser(this.Applies[i].user).then(userFound => {
+            this.Applies[i].userLastname = userFound.lastName;  
+            this.Applies[i].userName = userFound.name;  
+            this.Applies[i].userEmail = userFound.email;
+            
+          });
+        }
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
+  }
 }
+
