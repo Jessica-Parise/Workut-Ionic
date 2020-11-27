@@ -7,7 +7,7 @@
       placeholder="Search by Job Title" showCancelButton="focus">
     </ion-searchbar>
 
-    <div *ngIf="data">
+    <div *ngIf="Jobs">
       <ion-item *ngFor="let job of Jobs" class="item">
         <div class="container">
 
@@ -30,7 +30,7 @@
   </ion-list>
 
   <!-- Skeleton screen -->
-  <div *ngIf="!data">
+  <div *ngIf="!Jobs">
     <ion-list>
 
       <ion-item>

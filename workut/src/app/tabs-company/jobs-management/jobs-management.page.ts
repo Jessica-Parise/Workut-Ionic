@@ -25,6 +25,7 @@ export class JobsManagementPage implements OnInit {
   }
 
   init() {
+    this.Jobs = null;
     this.authService.verifySession('2').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
         if (LOGIN != null) {
@@ -36,6 +37,10 @@ export class JobsManagementPage implements OnInit {
       });
     });
   }
+
+  ionViewDidEnter() {
+    this.init();
+  } 
 
   async deleteJob(job) {
     const alert = await this.alertController.create({

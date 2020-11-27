@@ -25,6 +25,7 @@ export class UsersPage implements OnInit {
   }
 
   init() {
+    this.Users = null;
     this.authService.verifySession('2').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
         if (LOGIN != null) {
@@ -37,6 +38,9 @@ export class UsersPage implements OnInit {
     });
   }
 
+  ionViewDidEnter() {
+    this.init();
+  } 
   searchUsers() {
     this.db.ListUsers(this.body).then(response => {
       if (response == '404') {

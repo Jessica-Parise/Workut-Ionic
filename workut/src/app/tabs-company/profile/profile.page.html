@@ -15,8 +15,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides #slides (ionSlideDidChange)="slidesChanged(slides)"
-    (ionSlidesDidLoad)="slidesChanged(slides)">
+  <ion-slides #slides (ionSlideDidChange)="slidesChanged(slides)" (ionSlidesDidLoad)="slidesChanged(slides)">
 
     <ion-slide>
       <ion-content>
@@ -72,27 +71,28 @@
       </ion-content>
     </ion-slide>
 
-
     <ion-slide>
       <ion-list class="list">
 
         <!-- <ion-searchbar [(ngModel)]="search" name="search" (ionChange)="searchUsers_Country()" ngModel
           placeholder="Search ..." showCancelButton="focus">
         </ion-searchbar> -->
-    
-        <ion-item *ngFor="let apply of Applies" class="item">
-          <div class="container">
-    
-            <ion-text class="list-subtitle">Job Title: {{apply.jobTitle}}</ion-text><br>
-            <ion-text class="list-subtitle">Name: {{apply.userName}} {{apply.userLastname}}</ion-text><br>
-            <ion-text class="list-subtitle">Email: {{apply.userEmail}}</ion-text>
-    
-            <ion-button fill="outline" style="width: 35%; margin-left: 60%;" color="primary">View CV</ion-button>
-          </div>
-          
-        </ion-item>
+        <div *ngIf="Applies">
+          <ion-item *ngFor="let apply of Applies" class="item">
+            <div class="container">
+
+              <ion-text class="list-subtitle">Job Title: {{apply.jobTitle}}</ion-text><br>
+              <ion-text class="list-subtitle">Name: {{apply.userName}} {{apply.userLastname}}</ion-text><br>
+              <ion-text class="list-subtitle">Email: {{apply.userEmail}}</ion-text>
+
+              <ion-button fill="outline" style="width: 35%; margin-left: 60%;" color="primary">View CV</ion-button>
+            </div>
+          </ion-item>
+        </div>
       </ion-list>
+
     </ion-slide>
 
   </ion-slides>
+
 </ion-content>

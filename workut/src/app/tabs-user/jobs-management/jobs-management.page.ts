@@ -24,6 +24,7 @@ export class JobsManagementPage implements OnInit {
   }
 
   init() {
+    this.Jobs = null;
     this.authService.verifySession('1').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
         if (LOGIN != null) {
@@ -35,6 +36,10 @@ export class JobsManagementPage implements OnInit {
       });
     });
   }
+
+  ionViewDidEnter() {
+    this.init();
+  } 
 
   searchJobs() {
     this.db.UserAppliedJobsSearch(this.body).then(response => {
