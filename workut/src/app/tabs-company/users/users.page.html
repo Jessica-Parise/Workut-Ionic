@@ -6,22 +6,24 @@
       placeholder="Search by User country" showCancelButton="focus">
     </ion-searchbar>
 
-    <ion-item *ngFor="let user of Users" class="item">
-      <div class="container">
-
-        <ion-text class="list-subtitle">Name: {{user.name}}</ion-text>
-        <ion-text class="list-subtitle">Lastname: {{user.lastName}}</ion-text>
-        <ion-text class="list-subtitle">Email: {{user.email}}</ion-text>
-        <ion-text class="list-subtitle">Country: {{user.country}}</ion-text>
-        <ion-text class="list-subtitle">State: {{user.state}}</ion-text>
-
-      </div>
-
-    </ion-item>
+    <div *ngIf="Users">
+      <ion-item *ngFor="let user of Users" class="item">
+        <div class="container">
+  
+          <ion-text class="list-subtitle">Name: {{user.name}}</ion-text>
+          <ion-text class="list-subtitle">Lastname: {{user.lastName}}</ion-text>
+          <ion-text class="list-subtitle">Email: {{user.email}}</ion-text>
+          <ion-text class="list-subtitle">Country: {{user.country}}</ion-text>
+          <ion-text class="list-subtitle">State: {{user.state}}</ion-text>
+  
+        </div>
+  
+      </ion-item>
+    </div>
   </ion-list>
 
   <!-- Skeleton screen -->
-  <div *ngIf="!Jobs">
+  <div *ngIf="!Users">
     <ion-list>
 
       <ion-item>
