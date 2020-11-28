@@ -187,13 +187,13 @@ export class ProfilePage implements OnInit {
         this.Applies = response;
         for (let i = 0; i < this.Applies.length; i++) {
 
-          this.db.CompanySearchUser(this.Applies[i].user).then(userFound => {
+          this.db.SearchUser(this.Applies[i].user).then(userFound => {
             if (userFound != null) {
               this.Applies[i].userLastname = userFound.lastName;
               this.Applies[i].userName = userFound.name;
               this.Applies[i].userEmail = userFound.email;
 
-              this.db.CompanySearchJob(this.Applies[i].job).then(jobFound => {
+              this.db.SearchJob(this.Applies[i].job).then(jobFound => {
                 if (jobFound != null) {
                   this.Applies[i].jobTitle = jobFound.jobTitle;
                 } else {

@@ -30,7 +30,7 @@ export class JobDetailsPage implements OnInit {
   }
 
   searchJob() {
-    this.db.CompanySearchJob(this.id).then(response => {
+    this.db.SearchJob(this.id).then(response => {
       this.title = response.jobTitle;
       this.description = response.jobDescription;
       this.salary = response.salary;

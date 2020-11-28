@@ -96,7 +96,7 @@ export class JobEditPage implements OnInit {
   }
 
   searchData() {
-    this.db.CompanySearchJob(this.id).then(response => {
+    this.db.SearchJob(this.id).then(response => {
       if (response === '404') {
         this.authService.Logout();
       } else {

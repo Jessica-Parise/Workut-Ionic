@@ -111,7 +111,7 @@ export class JobsPage implements OnInit {
 
           this.db.SearchCompany(value.company).then(companyFound => {
             if (companyFound == null) {
-              this.Jobs.splice(i);
+
             } else {
               value.companyName = companyFound.name;
               value.companyEmail = companyFound.email;

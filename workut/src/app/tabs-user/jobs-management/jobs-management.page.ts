@@ -5,14 +5,13 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 import { DbService } from 'src/app/services/db.service';
 
 @Component({
-  selector: 'app-Jobs-management',
+  selector: 'app-jobs-management',
   templateUrl: './jobs-management.page.html',
   styleUrls: ['./Jobs-management.page.scss'],
 })
 export class JobsManagementPage implements OnInit {
 
   search;
-  preJobs;
   Jobs;
   body;
 
@@ -25,7 +24,7 @@ export class JobsManagementPage implements OnInit {
   }
 
   init() {
-    this.preJobs = null;
+    this.Jobs = null;
     this.authService.verifySession('1').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
         if (LOGIN != null) {
@@ -47,22 +46,22 @@ export class JobsManagementPage implements OnInit {
       if (response === '404') {
         this.authService.Logout();
       } else {
-        this.preJobs = response;
-        for (let i = 0; i < this.preJobs.length; i++) {
-          this.db.SearchJob(this.preJobs[i].job).then(jobFound => {
+        this.Jobs = response;
+        for (let i = 0; i < this.Jobs.length; i++) {
+          this.db.SearchJob(this.Jobs[i].job).then(jobFound => {
             if (jobFound == null || jobFound == undefined) {
-              this.preJobs.splice(i);
+              this.Jobs.splice(i);
             } else {
-              jobFound.applyID = this.preJobs[i]._id.$oid;
-              this.preJobs[i] = jobFound;
+              jobFound.applyID = this.Jobs[i]._id.$oid;
+              this.Jobs[i] = jobFound;
 
               this.db.SearchCompany(jobFound.company).then(companyFound => {
-                if (companyFound != null && this.preJobs[i] != null) {
-                  this.preJobs[i].companyName = companyFound.name;
-                  this.preJobs[i].companyEmail = companyFound.email;
-                  this.Jobs = this.preJobs;
+                if (companyFound != null && this.Jobs[i] != null) {
+                  this.Jobs[i].companyName = companyFound.name;
+                  this.Jobs[i].companyEmail = companyFound.email;
+                  this.Jobs = this.Jobs;
                 } else {
-                  this.preJobs.splice(i);
+                  this.Jobs.splice(i);
                 }
               });
             }
