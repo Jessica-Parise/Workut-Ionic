@@ -19,6 +19,8 @@ export class JobDetailsPage implements OnInit {
   state: string;
   date: string;
   Skills: any;
+  companyName: string;
+  companyEmail: string;
 
   constructor(public actRoute: ActivatedRoute, private db: DbService) { }
 
@@ -31,18 +33,25 @@ export class JobDetailsPage implements OnInit {
 
   searchJob() {
     this.db.SearchJob(this.id).then(response => {
-      this.title = response.jobTitle;
-      this.description = response.jobDescription;
-      this.salary = response.salary;
-      this.country = response.country;
-      this.state = response.state;
-      this.date = response.startDate;
 
-      if (response.skillsRequired[0].skill == null) {
-        this.Skills = null;
-      } else {
-        this.Skills = response.skillsRequired;
-      }
+      this.db.SearchCompany(response.company).then(companyFound => {
+
+        this.title = response.jobTitle;
+        this.description = response.jobDescription;
+        this.salary = response.salary;
+        this.country = response.country;
+        this.state = response.state;
+        this.date = response.startDate;
+        this.companyName = companyFound.name;
+        this.companyEmail = companyFound.email;
+
+        if (response.skillsRequired[0].skill == null) {
+          this.Skills = null;
+        } else {
+          this.Skills = response.skillsRequired;
+        }
+
+      });
 
     });
   }
