@@ -49,9 +49,13 @@ export class JobsManagementPage implements OnInit {
         this.Jobs = response;
         for (let i = 0; i < this.Jobs.length; i++) {
           this.db.CompanySearchJob(this.Jobs[i].job).then(jobFound => {
-            const applyID = this.Jobs[i]._id.$oid;
-            jobFound.applyID = applyID;
-            this.Jobs[i] = jobFound;
+            if (jobFound != null) {
+              const applyID = this.Jobs[i]._id.$oid;
+              jobFound.applyID = applyID;
+              this.Jobs[i] = jobFound;
+            } else {
+              this.Jobs.splice(i);
+            }
           });
         }
       }
@@ -131,7 +135,7 @@ export class JobsManagementPage implements OnInit {
         }
       },
       {
-        text: "Ok", 
+        text: "Ok",
         handler: () => {
           this.delete(job);
         }
