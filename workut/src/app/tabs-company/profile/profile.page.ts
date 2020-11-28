@@ -186,15 +186,25 @@ export class ProfilePage implements OnInit {
       } else {
         this.Applies = response;
         for (let i = 0; i < this.Applies.length; i++) {
-          this.db.CompanySearchJob(this.Applies[i].job).then(jobFound => {
-            this.Applies[i].jobTitle = jobFound.jobTitle;  
-          });
+
           this.db.CompanySearchUser(this.Applies[i].user).then(userFound => {
-            this.Applies[i].userLastname = userFound.lastName;  
-            this.Applies[i].userName = userFound.name;  
-            this.Applies[i].userEmail = userFound.email;
-            
+            if (userFound != null) {
+              this.Applies[i].userLastname = userFound.lastName;
+              this.Applies[i].userName = userFound.name;
+              this.Applies[i].userEmail = userFound.email;
+
+              this.db.CompanySearchJob(this.Applies[i].job).then(jobFound => {
+                if (jobFound != null) {
+                  this.Applies[i].jobTitle = jobFound.jobTitle;
+                } else {
+                  this.Applies.splice(i);
+                }
+              });
+            } else {
+              this.Applies.splice(i);
+            }
           });
+
         }
       }
     },
