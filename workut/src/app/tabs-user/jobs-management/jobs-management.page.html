@@ -1,9 +1,6 @@
 <ion-content>
-    <ion-searchbar [(ngModel)]="search" name="search" (ionChange)="searchJobs_Title()" ngModel
-        placeholder="Search by Job Title" showCancelButton="focus">
-    </ion-searchbar>
 
-    <ion-list class="list">
+    <ion-list class="list" style="margin-top: 15%;">
         
         <ion-item *ngFor="let job of Jobs">
             <div class="container">
@@ -12,6 +9,9 @@
                 <ion-icon name="help" color="secondary" class="edit-icon" (click)="showJob(job)"></ion-icon>
 
                 <ion-text class="list-title">{{job.jobTitle}}</ion-text><br>
+
+                <ion-text class="list-subtitle">Company Email: {{job.companyEmail}}</ion-text><br>
+                <ion-text class="list-subtitle">Company Name: {{job.companyName}}</ion-text><br>
 
                 <div style="margin-bottom: 5px;"></div>
 

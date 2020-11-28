@@ -25,7 +25,7 @@ export class JobsPage implements OnInit {
   }
 
   init() {
-    this.Jobs = null; 
+    this.Jobs = null;
     this.authService.verifySession('1').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
         if (LOGIN != null) {
@@ -40,7 +40,7 @@ export class JobsPage implements OnInit {
 
   ionViewDidEnter() {
     this.init();
-  } 
+  }
 
   searchJobs() {
     this.db.ListJobs(this.body).then(response => {
@@ -48,13 +48,25 @@ export class JobsPage implements OnInit {
         this.authService.Logout();
       } else {
         this.Jobs = response;
+        let i = -1;
+
         this.Jobs.forEach(value => {
+          i++;
 
           this.db.verifyAppliedStatus(this.body.ID, value._id.$oid).then(applyStatus => {
             if (applyStatus == null) {
               value.applied = false;
             } else {
               value.applied = true;
+            }
+          });
+
+          this.db.SearchCompany(value.company).then(companyFound => {
+            if (companyFound == null) {
+              this.Jobs.splice(i);
+            } else {
+              value.companyName = companyFound.name;
+              value.companyEmail = companyFound.email;
             }
           });
 
@@ -84,6 +96,29 @@ export class JobsPage implements OnInit {
         this.authService.Logout();
       } else {
         this.Jobs = response;
+        let i = -1;
+
+        this.Jobs.forEach(value => {
+          i++;
+
+          this.db.verifyAppliedStatus(this.body.ID, value._id.$oid).then(applyStatus => {
+            if (applyStatus == null) {
+              value.applied = false;
+            } else {
+              value.applied = true;
+            }
+          });
+
+          this.db.SearchCompany(value.company).then(companyFound => {
+            if (companyFound == null) {
+              this.Jobs.splice(i);
+            } else {
+              value.companyName = companyFound.name;
+              value.companyEmail = companyFound.email;
+            }
+          });
+
+        });
       }
     },
       (error) => {

@@ -5,13 +5,14 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 import { DbService } from 'src/app/services/db.service';
 
 @Component({
-  selector: 'app-jobs-management',
+  selector: 'app-Jobs-management',
   templateUrl: './jobs-management.page.html',
-  styleUrls: ['./jobs-management.page.scss'],
+  styleUrls: ['./Jobs-management.page.scss'],
 })
 export class JobsManagementPage implements OnInit {
 
   search;
+  preJobs;
   Jobs;
   body;
 
@@ -24,7 +25,7 @@ export class JobsManagementPage implements OnInit {
   }
 
   init() {
-    this.Jobs = null;
+    this.preJobs = null;
     this.authService.verifySession('1').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
         if (LOGIN != null) {
@@ -46,16 +47,27 @@ export class JobsManagementPage implements OnInit {
       if (response === '404') {
         this.authService.Logout();
       } else {
-        this.Jobs = response;
-        for (let i = 0; i < this.Jobs.length; i++) {
-          this.db.CompanySearchJob(this.Jobs[i].job).then(jobFound => {
-            if (jobFound != null) {
-              const applyID = this.Jobs[i]._id.$oid;
-              jobFound.applyID = applyID;
-              this.Jobs[i] = jobFound;
+        this.preJobs = response;
+        for (let i = 0; i < this.preJobs.length; i++) {
+          this.db.SearchJob(this.preJobs[i].job).then(jobFound => {
+            if (jobFound == null || jobFound == undefined) {
+              this.preJobs.splice(i);
             } else {
-              this.Jobs.splice(i);
+              jobFound.applyID = this.preJobs[i]._id.$oid;
+              this.preJobs[i] = jobFound;
+
+              this.db.SearchCompany(jobFound.company).then(companyFound => {
+                if (companyFound != null && this.preJobs[i] != null) {
+                  this.preJobs[i].companyName = companyFound.name;
+                  this.preJobs[i].companyEmail = companyFound.email;
+                  this.Jobs = this.preJobs;
+                } else {
+                  this.preJobs.splice(i);
+                }
+              });
             }
+          }).catch(err => {
+
           });
         }
       }
@@ -65,28 +77,7 @@ export class JobsManagementPage implements OnInit {
       }
     );
   }
-
-  searchJobs_Title() {
-    this.db.UserAppliedJobSearch(this.search, this.body).then(response => {
-      if (response === '404') {
-        this.authService.Logout();
-      } else {
-        this.Jobs = response;
-        for (let i = 0; i < this.Jobs.length; i++) {
-          this.db.CompanySearchJob(this.Jobs[i].job).then(jobFound => {
-            const applyID = this.Jobs[i]._id.$oid;
-            jobFound.applyID = applyID;
-            this.Jobs[i] = jobFound;
-          });
-        }
-      }
-    },
-      (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
-      }
-    );
-  }
-
+  
   // Presents an alert for status
   async statusAlert(title, mensagem) {
     const alert = await this.toastController.create({

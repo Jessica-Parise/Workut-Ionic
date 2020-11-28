@@ -94,14 +94,20 @@ export class DbService {
     ).toPromise();
   }
 
-  public CompanySearchJob(id: string): Promise<any> {
+  public SearchJob(id: string): Promise<any> {
     return this.http.get(
       this.API + '/getJob?id=' + id
     ).toPromise();
   }
-  public CompanySearchUser(id: string): Promise<any> {
+  public SearchUser(id: string): Promise<any> {
     return this.http.get(
       this.API + '/getUser?id=' + id
+    ).toPromise();
+  }
+
+  public SearchCompany(id: string): Promise<any> {
+    return this.http.get(
+      this.API + '/getCompany?id=' + id
     ).toPromise();
   }
 
