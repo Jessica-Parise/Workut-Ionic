@@ -30,9 +30,15 @@ const routes: Routes = [
   {
     path: 'tabs-user',
     loadChildren: () => import('./tabs-user/tabs-user.module').then( m => m.TabsUserPageModule)
-  },  {
+  },
+  {
     path: 'job-details',
     loadChildren: () => import('./job-details/job-details.module').then( m => m.JobDetailsPageModule)
+  },
+
+  {
+    path: 'user-curriculum',
+    loadChildren: () => import('./user-curriculum/user-curriculum.module').then( m => m.UserCurriculumPageModule)
   },
 
 ];

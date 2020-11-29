@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-icon style="padding: 12px; font-size: 25px;" name="arrow-back-outline" routerLink="/home"></ion-icon>
+    </ion-buttons>
+
+    <div class="toolbar">
+      <label>Workut - Job Detail</label>
+      <ion-icon class="ion-margin-end"></ion-icon>
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content">
+
+    <div class="title-job">
+      <ion-label>{{title}}</ion-label>
+    </div>
+
+    <div class="subtitle box">
+      <ion-label>Salary: {{salary}}</ion-label>
+      <ion-label>Country: {{country}}</ion-label>
+      <ion-label>State: {{state}}</ion-label>
+    </div>
+
+    <div>
+      <ion-label class="box">Start Date: {{date}}</ion-label>
+    </div>
+
+
+    <div class="description">
+      <ion-label class="title title-job">Company</ion-label>
+      <ion-label class="box">Name: {{companyName}}</ion-label>
+      <ion-label class="box">Email: {{companyEmail}}</ion-label><br>
+    </div>
+
+
+    <div class="description">
+      <ion-label class="title">Job Description:</ion-label><br>
+      <ion-label class="box">{{description}}</ion-label>
+    </div>
+
+    <div class="description">
+      <ion-label class="title">Skills required:</ion-label><br>
+      <ul *ngFor="let skill of Skills">
+        <li>{{skill.skill}}</li>
+      </ul>
+    </div>
+
+  </div>
+</ion-content>

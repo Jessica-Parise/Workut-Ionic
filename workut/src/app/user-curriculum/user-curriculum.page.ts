@@ -1,14 +1,12 @@
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DbService } from '../services/db.service';
-
 @Component({
-  selector: 'app-job-details',
-  templateUrl: './job-details.page.html',
-  styleUrls: ['./job-details.page.scss'],
+  selector: 'app-user-curriculum',
+  templateUrl: './user-curriculum.page.html',
+  styleUrls: ['./user-curriculum.page.scss'],
 })
-export class JobDetailsPage implements OnInit {
+export class UserCurriculumPage implements OnInit {
 
   id: string;
 
