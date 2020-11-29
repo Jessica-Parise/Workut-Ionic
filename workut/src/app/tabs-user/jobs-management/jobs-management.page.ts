@@ -7,7 +7,7 @@ import { DbService } from 'src/app/services/db.service';
 @Component({
   selector: 'app-jobs-management',
   templateUrl: './jobs-management.page.html',
-  styleUrls: ['./Jobs-management.page.scss'],
+  styleUrls: ['./jobs-management.page.scss'],
 })
 export class JobsManagementPage implements OnInit {
 
