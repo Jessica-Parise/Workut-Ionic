@@ -12,3 +12,27 @@ ion-slides {
 ion-label{
 text-align: center;
 }
+.editForm{
+    text-align: center;
+    margin: 6%;
+}
+
+.input{
+    width: 100%;
+    background-color: #f1f1f1;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.add-icon{
+    font-size: 22px;
+    float: right;
+    margin-bottom: 15px;
+}
+
+.remove-icon{
+    font-size: 22px;
+    float: right;
+    margin-bottom: 15px;
+    color: red;
+}

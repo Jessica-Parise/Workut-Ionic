@@ -76,74 +76,211 @@
         </ion-slide>
 
 
-        <ion-slide><ion-content>
-            <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)=' editCV()'>
-                <ion-fab-button color="danger">
-                    <ion-icon name="{{iconName_CV}}"></ion-icon>
-                </ion-fab-button>
-            </ion-fab>
+        <ion-slide>
+            <ion-content>
 
-                <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="birth" name="birth" placeholder="Birth Date" disabled="{{birthDisabled}}"></ion-datetime>
+                <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)='editCV()'>
+                    <ion-fab-button color="danger">
+                        <ion-icon name="{{iconName_CV}}"></ion-icon>
+                    </ion-fab-button>
+                </ion-fab>
 
-                <ion-input [(ngModel)]="phone" name="phone" type="text" placeholder="Phone number" disabled="{{phoneDisabled}}"></ion-input>
+                <div class="container">
 
-                <ion-item>
-                    <ion-label>Gender</ion-label>
-                    <ion-select class="input" [(ngModel)]="gender" name="gender" required  disabled="{{genderDisabled}}">
-                        <ion-select-option>Female</ion-select-option>
-                        <ion-select-option>Male</ion-select-option>
-                        <ion-select-option>Other</ion-select-option>
-                    </ion-select>
-                </ion-item>
+                    <ion-item>
+                        <ion-input [(ngModel)]="phone" name="phone" type="text" placeholder="Phone number"
+                            disabled="{{phoneDisabled}}"></ion-input>
+                    </ion-item>
 
-                <ion-item>
-                    <ion-label>Marital Status</ion-label>
-                    <ion-select class="input" [(ngModel)]="mstatus" name="mstatus" required  disabled="{{mstatusDisabled}}">
-                        <ion-select-option>Single</ion-select-option>
-                        <ion-select-option>Married</ion-select-option>
-                        <ion-select-option>Divorced</ion-select-option>
-                        <ion-select-option>Widowed</ion-select-option>
-                    </ion-select>
-                </ion-item>
+                    <ion-item>
+                        <ion-input [(ngModel)]="portfolio" name="portfolio" type="text" placeholder="Portfolio Link"
+                            disabled="{{portfolioDisabled}}"></ion-input>
+                    </ion-item>
 
-                <ion-input [(ngModel)]="portfolio" name="portfolio" type="text" placeholder="Portfolio Link"  disabled="{{portfolioDisabled}}"></ion-input>
+                    <ion-item>
+                        <ion-input [(ngModel)]="careergoal" name="careergoal" type="text" placeholder="Career Goal"
+                            disabled="{{careergoalDisabled}}"></ion-input>
+                    </ion-item>
 
-                <ion-input [(ngModel)]="careergoal" name="careergoal" type="text" placeholder="Career Goal" disabled="{{careergoalDisabled}}"></ion-input>
+                    <ion-item>
+                        <ion-input [(ngModel)]="salary" name="salary" type="text" placeholder="Desired Salary"
+                            disabled="{{salaryDisabled}}"></ion-input>
+                    </ion-item>
 
-                <ion-input [(ngModel)]="salary" name="salary" type="text" placeholder="Desired Salary"  disabled="{{salaryDisabled}}"></ion-input>
+                    <ion-item>
+                        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="birth" name="birth"
+                            placeholder="Birth Date" disabled="{{birthDisabled}}"></ion-datetime>
+                    </ion-item>
 
-                <ion-item>
-                    <ion-label>Experience Level</ion-label>
-                    <ion-select class="input" [(ngModel)]="xplvl" name="xplvl" required  disabled="{{xplvlDisabled}}">
-                        <ion-select-option>Intern</ion-select-option>
-                        <ion-select-option>Trainee</ion-select-option>
-                        <ion-select-option>Junior</ion-select-option>
-                        <ion-select-option>Mid-Level</ion-select-option>
-                        <ion-select-option>Senior</ion-select-option>
-                    </ion-select>
-                </ion-item>
+                    <br>
 
-                <ion-item>
-                    <ion-label>Schooling</ion-label>
-                    <ion-select class="input" [(ngModel)]="schooling" name="schooling" required  disabled="{{schoolingDisabled}}">
-                        <ion-select-option>Elementary School</ion-select-option>
-                        <ion-select-option>Middle School</ion-select-option>
-                        <ion-select-option>High School</ion-select-option>
-                        <ion-select-option>BTech</ion-select-option>
-                        <ion-select-option>Bachelor</ion-select-option>
-                        <ion-select-option>Master</ion-select-option>
-                        <ion-select-option>Doctoral</ion-select-option>
-                    </ion-select>
-                </ion-item>
-                
-            <!-- 
+                    <ion-item>
+                        <ion-label>Gender</ion-label>
+                        <ion-select [(ngModel)]="gender" name="gender" required disabled="{{genderDisabled}}">
+                            <ion-select-option>Female</ion-select-option>
+                            <ion-select-option>Male</ion-select-option>
+                            <ion-select-option>Other</ion-select-option>
+                        </ion-select>
+                    </ion-item>
 
-            
-        
-            work history
-            education
-            skill -->
-        </ion-content>
+                    <ion-item>
+                        <ion-label>Marital Status</ion-label>
+                        <ion-select [(ngModel)]="mstatus" name="mstatus" required disabled="{{mstatusDisabled}}">
+                            <ion-select-option>Single</ion-select-option>
+                            <ion-select-option>Married</ion-select-option>
+                            <ion-select-option>Divorced</ion-select-option>
+                            <ion-select-option>Widowed</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Experience Level</ion-label>
+                        <ion-select [(ngModel)]="xplvl" name="xplvl" required disabled="{{xplvlDisabled}}">
+                            <ion-select-option>Intern</ion-select-option>
+                            <ion-select-option>Trainee</ion-select-option>
+                            <ion-select-option>Junior</ion-select-option>
+                            <ion-select-option>Mid-Level</ion-select-option>
+                            <ion-select-option>Senior</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Schooling</ion-label>
+                        <ion-select [(ngModel)]="schooling" name="schooling" required disabled="{{schoolingDisabled}}">
+                            <ion-select-option>Elementary School</ion-select-option>
+                            <ion-select-option>Middle School</ion-select-option>
+                            <ion-select-option>High School</ion-select-option>
+                            <ion-select-option>BTech</ion-select-option>
+                            <ion-select-option>Bachelor</ion-select-option>
+                            <ion-select-option>Master</ion-select-option>
+                            <ion-select-option>Doctoral</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <!--work history-->
+                    <div [formGroup]="works" style="margin-top: 10%;">
+                        <div formArrayName="itemRows">
+
+                            <ion-toolbar>
+                                <ion-label>
+                                    <p>Work History:</p>
+                                </ion-label>
+
+                                <ion-buttons slot="end" style="margin-top: 3%;">
+                                    <ion-icon name="add" class="add-icon" (click)="addWork()"></ion-icon>
+                                </ion-buttons>
+
+                                <ion-buttons slot="start">
+                                    <ion-icon></ion-icon>
+                                </ion-buttons>
+
+                            </ion-toolbar>
+
+                            <div *ngFor="let item of works.controls.itemRows['controls']; let i=index"
+                                [formGroupName]="i">
+
+                                <ion-toolbar>
+                                    <ion-input class="input" id="item{{i}}" formControlName="item" type="text"
+                                        placeholder="work history" disabled="{{schoolingDisabled}}">
+                                    </ion-input>
+
+                                    <ion-buttons slot="end" style="margin-top: 1%;" (click)="deleteWork(i)">
+                                        <ion-icon name="close" class="remove-icon"></ion-icon>
+                                    </ion-buttons>
+
+                                    <ion-buttons slot="start">
+                                        <ion-icon></ion-icon>
+                                    </ion-buttons>
+                                </ion-toolbar>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--education history-->
+                    <div [formGroup]="educations" style="margin-top: 10%;">
+                        <div formArrayName="itemRows">
+
+                            <ion-toolbar>
+                                <ion-label>
+                                    <p>Education History:</p>
+                                </ion-label>
+
+                                <ion-buttons slot="end" style="margin-top: 3%;">
+                                    <ion-icon name="add" class="add-icon" (click)="addEducation()"></ion-icon>
+                                </ion-buttons>
+
+                                <ion-buttons slot="start">
+                                    <ion-icon></ion-icon>
+                                </ion-buttons>
+
+                            </ion-toolbar>
+
+                            <div *ngFor="let item of educations.controls.itemRows['controls']; let i=index"
+                                [formGroupName]="i">
+
+                                <ion-toolbar>
+                                    <ion-input class="input" id="item{{i}}" formControlName="item" type="text"
+                                        placeholder="education history" disabled="{{schoolingDisabled}}">
+                                    </ion-input>
+
+                                    <ion-buttons slot="end" style="margin-top: 1%;" (click)="deleteEducation(i)">
+                                        <ion-icon name="close" class="remove-icon"></ion-icon>
+                                    </ion-buttons>
+
+                                    <ion-buttons slot="start">
+                                        <ion-icon></ion-icon>
+                                    </ion-buttons>
+                                </ion-toolbar>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--user skills-->
+                    <div [formGroup]="skills" style="margin-top: 10%;">
+                        <div formArrayName="itemRows">
+
+                            <ion-toolbar>
+                                <ion-label>
+                                    <p>User Skills:</p>
+                                </ion-label>
+
+                                <ion-buttons slot="end" style="margin-top: 3%;">
+                                    <ion-icon name="add" class="add-icon" (click)="addSkill()"></ion-icon>
+                                </ion-buttons>
+
+                                <ion-buttons slot="start">
+                                    <ion-icon></ion-icon>
+                                </ion-buttons>
+
+                            </ion-toolbar>
+
+                            <div *ngFor="let item of skills.controls.itemRows['controls']; let i=index"
+                                [formGroupName]="i">
+
+                                <ion-toolbar>
+                                    <ion-input class="input" id="item{{i}}" formControlName="item" type="text"
+                                        placeholder="skill name" disabled="{{schoolingDisabled}}">
+                                    </ion-input>
+
+                                    <ion-buttons slot="end" style="margin-top: 1%;" (click)="deleteSkill(i)">
+                                        <ion-icon name="close" class="remove-icon"></ion-icon>
+                                    </ion-buttons>
+
+                                    <ion-buttons slot="start">
+                                        <ion-icon></ion-icon>
+                                    </ion-buttons>
+                                </ion-toolbar>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 100px;"></div>
+
+                </div>
+            </ion-content>
 
         </ion-slide>
 

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { IonSlides, ToastController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { DbService } from 'src/app/services/db.service';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -10,6 +11,10 @@ import { DbService } from 'src/app/services/db.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+
+  public works: FormGroup;
+  public educations: FormGroup;
+  public skills: FormGroup;
 
   // MAIN PAGE --------------------------------------------
   // Linking variable 'slides' to the slides in hmtl page
@@ -28,6 +33,7 @@ export class ProfilePage implements OnInit {
   mstatusDisabled: boolean; portfolioDisabled: boolean;
   careergoalDisabled: boolean; salaryDisabled: boolean;
   xplvlDisabled: boolean; schoolingDisabled: boolean;
+  formDisabled: boolean;
 
   countries: any;
   states: any;
@@ -42,12 +48,15 @@ export class ProfilePage implements OnInit {
   mstatus: string; portfolio: string;
   careergoal: string; salary: string;
   xplvl: string; schooling: string;
-
   oldName: string;
+
+  workHistory: any;
+  educationHistory: any;
+  userSkills: any;
 
   constructor(
     public httpClient: HttpClient, public toastController: ToastController,
-    private authService: AuthorizationService, private db: DbService) { }
+    private authService: AuthorizationService, private db: DbService, private fBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.init();
@@ -66,7 +75,104 @@ export class ProfilePage implements OnInit {
         }
       });
     });
+
+    this.works = this.fBuilder.group({
+      item: [''],
+      itemRows: this.fBuilder.array([this.initItemRows()])
+    });
+
+    this.educations = this.fBuilder.group({
+      item: [''],
+      itemRows: this.fBuilder.array([this.initItemRows()])
+    });
+
+    this.skills = this.fBuilder.group({
+      item: [''],
+      itemRows: this.fBuilder.array([this.initItemRows()])
+    });
+
+    this.work.removeAt(0);
+    this.education.removeAt(0);
+    this.skill.removeAt(0);
+
   }
+
+  initItemRows() {
+    return this.fBuilder.group({
+      item: ['']
+    });
+  }
+
+
+  // WORK - Dinamic Field
+  get work() {
+    return this.works.get('itemRows') as FormArray;
+  }
+
+  addWork() {
+    if (this.formDisabled === false) { this.work.push(this.initItemRows()); }
+  }
+
+  search_initWork(value: string) {
+    return this.fBuilder.group({
+      item: [value]
+    });
+  }
+
+  search_addWork(value: string) {
+    this.work.push(this.search_initWork(value));
+  }
+
+  deleteWork(index: number) {
+    if (this.formDisabled === false) { this.work.removeAt(index); }
+  }
+
+  // EDUCATION - Dinamic Field
+  get education() {
+    return this.educations.get('itemRows') as FormArray;
+  }
+
+  addEducation() {
+    if (this.formDisabled === false) { this.education.push(this.initItemRows()); }
+  }
+
+  search_initEducation(value: string) {
+    return this.fBuilder.group({
+      item: [value]
+    });
+  }
+
+  search_addEducation(value: string) {
+    this.education.push(this.search_initEducation(value));
+  }
+
+  deleteEducation(index: number) {
+    if (this.formDisabled === false) { this.education.removeAt(index); }
+  }
+
+  // SKILL - Dinamic Field
+  get skill() {
+    return this.skills.get('itemRows') as FormArray;
+  }
+
+  addSkill() {
+    if (this.formDisabled === false) { this.skill.push(this.initItemRows()); }
+  }
+
+  search_initSkill(value: string) {
+    return this.fBuilder.group({
+      item: [value]
+    });
+  }
+
+  search_addSkill(value: string) {
+    this.skill.push(this.search_initSkill(value));
+  }
+
+  deleteSkill(index: number) {
+    if (this.formDisabled === false) { this.skill.removeAt(index); }
+  }
+
 
   segmentChanged(ev: any) {
     this.slides.slideTo(ev.detail.value);
@@ -90,16 +196,41 @@ export class ProfilePage implements OnInit {
         this.lastname = this.data.lastName;
         this.country = this.data.country;
         this.state = this.data.state;
-        this.birth = this.data.birth;
-        this.gender = this.data.gender;
-        this.phone = this.data.phone;
-        this.mstatus = this.data.mstatus;
-        this.portfolio = this.data.portfolio;
-        this.careergoal = this.data.careergoal;
-        this.salary = this.data.salary;
-        this.xplvl = this.data.xplvl;
-        this.schooling = this.data.schooling;
+        this.birth = this.data.curriculum.birth;
+        this.gender = this.data.curriculum.gender;
+        this.phone = this.data.curriculum.phone;
+        this.mstatus = this.data.curriculum.mstatus;
+        this.portfolio = this.data.curriculum.portfolio;
+        this.careergoal = this.data.curriculum.careergoal;
+        this.salary = this.data.curriculum.salary;
+        this.xplvl = this.data.curriculum.xplvl;
+        this.schooling = this.data.curriculum.schooling;
         this.oldName = this.name;
+
+        this.work.removeAt(0);
+        if (response.curriculum.workHistory != undefined && response.curriculum.workHistory != null) {
+          this.work.removeAt(0);
+          response.curriculum.workHistory.forEach(x => {
+            this.search_addWork(x.item);
+          });
+        }
+
+        this.education.removeAt(0);
+        if (response.curriculum.educationHistory != undefined && response.curriculum.educationHistory != null) {
+          this.education.removeAt(0);
+          response.curriculum.educationHistory.forEach(x => {
+            this.search_addEducation(x.item);
+          });
+        }
+
+        this.skill.removeAt(0);
+        if (response.curriculum.userSkills != undefined && response.curriculum.userSkills != null) {
+          this.skill.removeAt(0);
+          response.curriculum.userSkills.forEach(x => {
+            this.search_addSkill(x.item);
+          });
+        }
+
       }
     },
       (error) => {
@@ -155,9 +286,14 @@ export class ProfilePage implements OnInit {
     this.salaryDisabled = status;
     this.xplvlDisabled = status;
     this.schoolingDisabled = status;
+    this.formDisabled = status;
   }
 
   update() {
+
+    this.workHistory = this.works.value.itemRows;
+    this.educationHistory = this.educations.value.itemRows;
+    this.userSkills = this.skills.value.itemRows;
 
     const body = {
       user: this.body,
@@ -176,7 +312,9 @@ export class ProfilePage implements OnInit {
         salary: this.salary,
         xplvl: this.xplvl,
         schooling: this.schooling,
-
+        workHistory: this.workHistory,
+        educationHistory: this.educationHistory,
+        userSkills: this.userSkills,
       },
     };
 
