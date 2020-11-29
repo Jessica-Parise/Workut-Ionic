@@ -10,46 +10,64 @@ export class UserCurriculumPage implements OnInit {
 
   id: string;
 
-  title: string;
-  description: string;
+  name: string;
+  email: string;
+  birth: string;
+  gender: string;
+  phone: string;
+  mstatus: string;
+  portifolio: string;
+  careergoal: string;
   salary: string;
-  country: string;
-  state: string;
-  date: string;
+  xplvl: string;
+  schooling: string;
+  Work: any;
+  Education: any;
   Skills: any;
-  companyName: string;
-  companyEmail: string;
+
+
 
   constructor(public actRoute: ActivatedRoute, private db: DbService) { }
 
   ngOnInit() {
     this.actRoute.params.subscribe(params => {
       this.id = params.id;
-      this.searchJob();
+      this.searchCV();
     });
   }
 
-  searchJob() {
-    this.db.SearchJob(this.id).then(response => {
+  searchCV() {
+    this.db.SearchCV(this.id).then(response => {
+      this.name = response.name;
+      this.email = response.email;
+      this.birth = response.birth;
+      this.gender = response.gender;
+      this.phone = response.phone;
+      this.mstatus = response.mstatus;
+      this.portifolio = response.portifolio;
+      this.careergoal = response.careergoal;
+      this.salary = response.salary;
+      this.xplvl = response.xplvl;
+      this.schooling = response.schooling;
 
-      this.db.SearchCompany(response.company).then(companyFound => {
+      if (response.workHistory[0].item == null) {
+        this.Work = null;
+      } else {
+        this.Work = response.workHistory;
+      }
+      if (response.educationHistory[0].item == null) {
+        this.Education = null;
+      } else {
+        this.Education = response.educationHistory;
+      }
+      if (response.userSkills[0].item == null) {
+        this.Skills = null;
+      } else {
+        this.Skills = response.userSkills;
+      }
 
-        this.title = response.jobTitle;
-        this.description = response.jobDescription;
-        this.salary = response.salary;
-        this.country = response.country;
-        this.state = response.state;
-        this.date = response.startDate;
-        this.companyName = companyFound.name;
-        this.companyEmail = companyFound.email;
 
-        if (response.skillsRequired[0].skill == null) {
-          this.Skills = null;
-        } else {
-          this.Skills = response.skillsRequired;
-        }
 
-      });
 
     });
   }

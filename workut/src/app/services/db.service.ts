@@ -99,6 +99,11 @@ export class DbService {
       this.API + '/getJob?id=' + id
     ).toPromise();
   }
+  public SearchCV(id: string): Promise<any> {
+    return this.http.get(
+      this.API + '/getUserCV?id=' + id
+    ).toPromise();
+  }
   public SearchUser(id: string): Promise<any> {
     return this.http.get(
       this.API + '/getUser?id=' + id

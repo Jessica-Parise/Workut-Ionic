@@ -17,36 +17,45 @@
   <div class="content">
 
     <div class="title-job">
-      <ion-label>{{title}}</ion-label>
+      <ion-label>Personal Data: </ion-label>
     </div>
 
-    <div class="subtitle box">
-      <ion-label>Salary: {{salary}}</ion-label>
-      <ion-label>Country: {{country}}</ion-label>
-      <ion-label>State: {{state}}</ion-label>
+    <div class="Description">
+      <ion-label class ="box">Birth: {{birth}}</ion-label>
+      <ion-label class ="box">Gender: {{gender}}</ion-label>
+      <ion-label class="box">Phone: {{phone}}</ion-label>
+      <ion-label class= "box">Mstatus: {{mstatus}}</ion-label>
+      <ion-label class ="box">Schooling: {{schooling}}</ion-label>
+    
     </div>
 
-    <div>
-      <ion-label class="box">Start Date: {{date}}</ion-label>
-    </div>
+   
 
 
     <div class="description">
-      <ion-label class="title title-job">Company</ion-label>
-      <ion-label class="box">Name: {{companyName}}</ion-label>
-      <ion-label class="box">Email: {{companyEmail}}</ion-label><br>
-    </div>
-
-
-    <div class="description">
-      <ion-label class="title">Job Description:</ion-label><br>
-      <ion-label class="box">{{description}}</ion-label>
-    </div>
+      <ion-label class="title title-job">Other Infos:</ion-label>
+      <ion-label class="box">Career Goal: {{careergoal}}</ion-label>
+      <ion-label class="box">Portifolio: {{portifolio}}</ion-label>
+      <ion-label class="box">Salary: {{salary}}</ion-label>
+      <ion-label class="box">XPLVL: {{xplvl}}</ion-label><br>
+    </div>    
 
     <div class="description">
-      <ion-label class="title">Skills required:</ion-label><br>
-      <ul *ngFor="let skill of Skills">
-        <li>{{skill.skill}}</li>
+      <ion-label class="title">Work History:</ion-label><br>
+      <ul *ngFor="let x of Work">
+        <li>{{x.item}}</li>
+      </ul>
+    </div>
+    <div class="description">
+      <ion-label class="title">Education History:</ion-label><br>
+      <ul *ngFor="let x of Education">
+        <li>{{x.item}}</li>
+      </ul>
+    </div>
+    <div class="description">
+      <ion-label class="title">User Skills:</ion-label><br>
+      <ul *ngFor="let x of Skills">
+        <li>{{x.item}}</li>
       </ul>
     </div>
 
