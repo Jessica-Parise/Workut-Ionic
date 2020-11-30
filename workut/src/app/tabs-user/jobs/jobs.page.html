@@ -11,20 +11,20 @@
       <ion-item *ngFor="let job of Jobs" class="item">
         <div class="container">
 
-          <ion-text class="list-subtitle">Job Title: {{job.jobTitle}}</ion-text>
-          <ion-text class="list-subtitle">Job Description: {{job.jobDescription}}</ion-text>
-          <ion-text class="list-subtitle">Salary: {{job.salary}}</ion-text>
-          <ion-text class="list-subtitle">Start Date: {{job.startDate}}</ion-text>
-          <ion-text class="list-subtitle">Country: {{job.country}}</ion-text>
-          <ion-text class="list-subtitle">State: {{job.state}}</ion-text><br>
+          <ion-text class="list-subtitle"><label for="" class="titulo">Job Title:</label> {{job.jobTitle}}</ion-text>
+          <ion-text class="list-subtitle"><label for="" class="titulo">Job Description:</label> {{job.jobDescription}}</ion-text>
+          <ion-text class="list-subtitle"><label for="" class="titulo">Salary:</label> {{job.salary}}</ion-text>
+          <ion-text class="list-subtitle"><label for="" class="titulo">Start Date:</label> {{job.startDate}}</ion-text>
+          <ion-text class="list-subtitle"><label for="" class="titulo">Country:</label> {{job.country}}</ion-text>
+          <ion-text class="list-subtitle"><label for="" class="titulo">State:</label> {{job.state}}</ion-text><br>
 
-          <ion-text class="list-subtitle">Company Name: {{job.companyName}}</ion-text>
-          <ion-text class="list-subtitle">Company Email: {{job.companyEmail}}</ion-text>
+          <ion-text class="list-subtitle"><label for="" class="titulo">Company Name:</label> {{job.companyName}}</ion-text>
+          <ion-text class="list-subtitle"><label for="" class="titulo">Company Email:</label> {{job.companyEmail}}</ion-text>
 
-          <ion-button fill="outline" style="width: 35%; margin-left: 60%;" color="primary" (click)="showJob(job)">
+          <ion-button fill="outline" style="width: 35%; margin-left: 60%;" (click)="showJob(job)">
             Details
           </ion-button>
-          <ion-button fill="outline" style="width: 35%; margin-left: 60%;" color="primary" (click)="applyJob(job)"
+          <ion-button fill="outline" style="width: 35%; margin-left: 60%;" (click)="applyJob(job)"
             [disabled]="job.applied">{{job.applied ? 'Applied' : 'Apply'}}</ion-button>
 
         </div>
