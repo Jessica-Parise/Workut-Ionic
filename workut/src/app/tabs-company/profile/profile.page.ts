@@ -178,6 +178,10 @@ export class ProfilePage implements OnInit {
 
     await alert.present();
   }
+  openCV(item){
+    this.router.navigate(['/user-curriculum', { id: item.user }]);
+    
+  }
 
   searchApplies() {
     this.db.CompanyAppliedJobSearch(this.body).then(response => {

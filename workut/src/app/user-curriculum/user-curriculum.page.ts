@@ -50,17 +50,17 @@ export class UserCurriculumPage implements OnInit {
       this.xplvl = response.xplvl;
       this.schooling = response.schooling;
 
-      if (response.workHistory[0].item == null) {
+      if (response.workHistory[0] == null) {
         this.Work = null;
       } else {
         this.Work = response.workHistory;
       }
-      if (response.educationHistory[0].item == null) {
+      if (response.educationHistory[0] == null) {
         this.Education = null;
       } else {
         this.Education = response.educationHistory;
       }
-      if (response.userSkills[0].item == null) {
+      if (response.userSkills[0] == null) {
         this.Skills = null;
       } else {
         this.Skills = response.userSkills;

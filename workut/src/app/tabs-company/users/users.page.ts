@@ -23,6 +23,11 @@ export class UsersPage implements OnInit {
   ngOnInit() {
     this.init();
   }
+  openCV(item){
+    
+    this.router.navigate(['/user-curriculum', { id: item._id.$oid}]);
+    
+  }
 
   init() {
     this.Users = null;
