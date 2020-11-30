@@ -85,7 +85,7 @@
               <ion-text class="list-subtitle">Name: {{apply.userName}} {{apply.userLastname}}</ion-text><br>
               <ion-text class="list-subtitle">Email: {{apply.userEmail}}</ion-text>
 
-              <ion-button fill="outline" style="width: 35%; margin-left: 60%;" color="primary">View CV</ion-button>
+              <ion-button (click)="openCV(apply)" fill="outline" style="width: 35%; margin-left: 60%;" color="primary">View CV</ion-button>
             </div>
           </ion-item>
         </div>
