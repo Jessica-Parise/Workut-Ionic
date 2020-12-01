@@ -61,8 +61,21 @@ ul{
     font-weight: 100%;
     margin-top: 15px;
   }
-  ion-header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  ion-toolbar {
+    display: flex;
+  }
+//   ion-header {
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+//   }
+  .title-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .title-logo img {
+    width: 100px;
+    height: 30px;
   }

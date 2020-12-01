@@ -1,5 +1,7 @@
 .container{
-    margin: .5em;
+    // margin: .5em;
+    width: 300px;
+    margin: .5em auto;
 }
 ion-content {
     width: 100%;
@@ -54,9 +56,18 @@ ion-searchbar {
 
 .swiper-slide {
     display: block;
+    overflow-y: auto;
 }
-.button-native {
-    border: none;
+
+.button-clear{
+    border: 1px solid #f82790;
+    border-radius: 8px;
+    color: #f82790;
+    // right: 0;
+}
+ion-button:hover {
+    color: white;
+    background-color:  #f82790;
 }
 
 @media (min-width: 1025px) {

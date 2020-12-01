@@ -1,5 +1,7 @@
 .container{
-    margin: .5em;
+    // margin: .5em;
+    width: 300px;
+    margin: .5em auto;
 }
 ion-content {
     width: 100%;
@@ -35,4 +37,17 @@ ion-slides {
     float: right;
     margin-bottom: 15px;
     color: red;
+}
+ion-fab-button {
+    width: 40px;
+    height: 40px;
+}
+.button-native {
+    border: none;
+}
+ion-ripple-effect{
+    border: none;
+}
+.button-inner {
+    color: aqua;
 }

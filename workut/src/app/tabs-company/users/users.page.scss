@@ -29,3 +29,12 @@ ion-searchbar {
   margin: 0px auto;
   margin-bottom: 0px;
 }
+.button-clear{
+  border: 1px solid #f82790;
+  border-radius: 8px;
+  color: #f82790;
+}
+ion-button:hover {
+  color: white;
+  background-color:  #f82790;
+}
