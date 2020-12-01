@@ -208,7 +208,7 @@ export class ProfilePage implements OnInit {
         this.oldName = this.name;
 
         this.work.removeAt(0);
-        if (response.curriculum.workHistory != undefined && response.curriculum.workHistory != null) {
+        if (response.curriculum.workHistory[0] != undefined && response.curriculum.workHistory[0] != null) {
           this.work.removeAt(0);
           response.curriculum.workHistory.forEach(x => {
             this.search_addWork(x.item);
@@ -216,7 +216,7 @@ export class ProfilePage implements OnInit {
         }
 
         this.education.removeAt(0);
-        if (response.curriculum.educationHistory != undefined && response.curriculum.educationHistory != null) {
+        if (response.curriculum.educationHistory[0] != undefined && response.curriculum.educationHistory[0] != null) {
           this.education.removeAt(0);
           response.curriculum.educationHistory.forEach(x => {
             this.search_addEducation(x.item);
@@ -224,7 +224,7 @@ export class ProfilePage implements OnInit {
         }
 
         this.skill.removeAt(0);
-        if (response.curriculum.userSkills != undefined && response.curriculum.userSkills != null) {
+        if (response.curriculum.userSkills[0] != undefined && response.curriculum.userSkills[0] != null) {
           this.skill.removeAt(0);
           response.curriculum.userSkills.forEach(x => {
             this.search_addSkill(x.item);
@@ -294,6 +294,7 @@ export class ProfilePage implements OnInit {
     this.workHistory = this.works.value.itemRows;
     this.educationHistory = this.educations.value.itemRows;
     this.userSkills = this.skills.value.itemRows;
+    const birthConfigured = this.birth.substring(0, 10);
 
     const body = {
       user: this.body,
@@ -303,7 +304,7 @@ export class ProfilePage implements OnInit {
         lastName: this.lastname,
         country: this.country,
         state: this.state,
-        birth: this.birth,
+        birth: birthConfigured,
         gender: this.gender,
         phone: this.phone,
         mstatus: this.mstatus,
