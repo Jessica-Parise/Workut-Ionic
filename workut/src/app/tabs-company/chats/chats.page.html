@@ -1,9 +1,32 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>chats</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+
+  <div class="contacts">
+    <div class="contacts-header">
+      <div class="imageProfile"></div>
+      <div class="searchBar">
+        <input type="search" placeholder="Search Contact" />
+      </div>
+    </div>
+    <div class="contacts-body">
+      <div class="contact" *ngFor="let contact of Contacts">
+        <div class="imageProfile"></div>
+        <div class="contacts-contact-name">
+          <span (click)="changeCurrentContact(contact.contactName)">{{contact.contactName}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat">
+    <div class="chats-header">
+      <div *ngIf="currentContact" class="imageProfile"></div>
+      <div class="chat-contact-name">
+        <span>{{currentContact}}</span>
+      </div>
+    </div>
+    <div class="chat-body">
+
+    </div>
+  </div>
 
 </ion-content>

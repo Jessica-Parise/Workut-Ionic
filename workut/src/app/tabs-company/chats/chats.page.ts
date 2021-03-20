@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatsPage implements OnInit {
 
+  Contacts = [{ contactName: 'Florzinha' }, { contactName: 'Docinho' }, { contactName: 'Lindinha' }];
+  currentContact = '';
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  changeCurrentContact(contact: string): void {
+    this.currentContact = contact;
   }
 
 }

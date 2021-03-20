@@ -1,0 +1,93 @@
+@media (min-width: 1000px) {
+    .contacts{
+        position: absolute;
+        background-color: white;
+        width: 20%;
+        height: 88vh;
+        margin-top: 3%;
+        margin-left: 20%;
+        overflow-y: scroll;
+    }
+    
+    .contacts-header{
+        background-color: gray;
+        padding: 15px;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .imageProfile{
+        background-color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+    }
+    
+    .searchBar{
+        width: 80%;
+        margin-top: 1%;
+        margin-left: 2%;
+    }
+    
+    .searchBar input{
+        padding: 10px;
+        width: 100%;
+    }
+    
+    .contacts-body{
+        background-color: wheat;
+        height: 100vh;
+        padding: 2%;
+    }
+    
+    .contact{
+        background-color: gray;
+        margin-bottom: 3%;
+        height: 6vh;
+        padding: 2%;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .contacts-contact-name{
+        margin-top: 4%;
+        margin-left: 2%;
+    }
+    
+    .contacts-contact-name span{
+        cursor: pointer;
+        color: black;
+    }
+    
+    
+    
+    .chat{
+        position: absolute;
+        background-color: white;
+        width: 40%;
+        height: 88vh;
+        margin-top: 3%;
+        margin-left: 40%;
+        overflow-y: scroll;
+    }
+    
+    .chats-header{
+        background-color: gray;
+        padding: 15px;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .chat-contact-name {
+        margin-left: 2%;
+        margin-top: 2%;
+        text-align: start;
+        width: 80%;
+    }
+    
+    .chat-body{
+        background-color: wheat;
+        height: 100vh;
+        padding: 2%;
+    }
+}
