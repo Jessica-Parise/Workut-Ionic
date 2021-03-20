@@ -10,9 +10,9 @@
     <div class="contacts-pos-header"></div>
     <div class="contacts-body">
       <div class="contact" *ngFor="let contact of Contacts">
-        <div class="contacts-imageProfile" (click)="changeCurrentContact(contact.name)"></div>
+        <div class="contacts-imageProfile" (click)="changeCurrentContact(contact.id, contact.name, contact.type)"></div>
         <div class="contacts-contact-name">
-          <span (click)="changeCurrentContact(contact.name)">{{contact.name}}</span>
+          <span (click)="changeCurrentContact(contact.id, contact.name, contact.type)">{{contact.name}}</span>
         </div>
       </div>
     </div>
@@ -27,7 +27,25 @@
     </div>
     <div class="chats-pos-header"></div>
     <div class="chat-body">
+      <div class="messages" *ngIf="currentContact">
 
+
+        <div [formGroup]="Mensagens">
+          <div formArrayName="itemRows">
+            <div *ngFor="let mensagem of Mensagens.controls.itemRows['controls']; let i=index" [formGroupName]="i">
+              <div style="display: flex; flex-direction: row;">
+                <textarea formControlName="mensagem" placeholder="Item" class="txtMessage"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="action-menu" *ngIf="currentContact">
+        <input style="width: 90%;" type="text" [(ngModel)]="message" name="message" />
+        <button style="width: 10%;" (click)=SendMessage();>Send</button>
+      </div>
     </div>
   </div>
 

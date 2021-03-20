@@ -178,11 +178,10 @@ export class ProfilePage implements OnInit {
 
     await alert.present();
   }
-  openCV(item){
-    this.router.navigate(['/user-curriculum', { id: item.user }]);
-    
-  }
 
+  openCV(item) {
+    this.router.navigate(['/user-curriculum', { id: item.user }]);
+  }
   searchApplies() {
     this.db.CompanyAppliedJobSearch(this.body).then(response => {
       if (response === '404') {
@@ -217,5 +216,14 @@ export class ProfilePage implements OnInit {
       }
     );
   }
+
+  Decline(item): void {
+
+  }
+
+  Chat(item): void {
+
+  }
+
 }
 
