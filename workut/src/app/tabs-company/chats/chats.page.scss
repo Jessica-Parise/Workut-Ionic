@@ -10,17 +10,25 @@
     }
     
     .contacts-header{
+        position: fixed;
+        width: 20%;
+        margin-right: 1%;
         background-color: gray;
         padding: 15px;
         display: flex;
         flex-direction: row;
     }
     
+    .contacts-pos-header{
+        height: 8vh;
+    }
+
     .imageProfile{
         background-color: white;
         width: 50px;
         height: 50px;
         border-radius: 100%;
+        cursor: pointer;
     }
     
     .searchBar{
@@ -59,8 +67,6 @@
         color: black;
     }
     
-    
-    
     .chat{
         position: absolute;
         background-color: white;
@@ -72,10 +78,108 @@
     }
     
     .chats-header{
+        position: fixed;
+        width: 40%;
         background-color: gray;
         padding: 15px;
         display: flex;
         flex-direction: row;
+    }
+
+    .chats-pos-header{
+        height: 7vh;
+    }
+    
+    .chat-contact-name {
+        margin-left: 2%;
+        margin-top: 2%;
+        text-align: start;
+        width: 80%;
+    }
+    
+    .chat-body{
+        background-color: wheat;
+        height: 100vh;
+        padding: 2%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .contacts{
+        position: absolute;
+        background-color: white;
+        width: 12%;
+        height: 84vh;
+        margin-top: 15%;
+        margin-left: 2%;
+        overflow-y: scroll;
+    }
+    
+    .contacts-header{
+        display: none;
+    }
+
+    .contacts-pos-header{
+        display: none;
+    }
+    
+    .imageProfile{
+        background-color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+    
+    .searchBar{
+        display: none;
+    }
+    
+    .searchBar input{
+        display: none;
+    }
+    
+    .contacts-body{
+        background-color: wheat;
+        height: 100vh;
+        padding: 2%;
+    }
+    
+    .contact{
+        margin-bottom: 3%;
+        height: 6vh;
+        padding: 2%;
+        display: flex;
+    }
+    
+    .contacts-contact-name{
+        display: none;
+    }
+    
+    .contacts-contact-name span{
+        display: none;
+    }
+    
+    .chat{
+        position: absolute;
+        background-color: white;
+        width: 82%;
+        height: 84vh;
+        margin-top: 15%;
+        margin-left: 16%;
+        overflow-y: scroll;
+    }
+    
+    .chats-header{
+        position: fixed;
+        width: 82%;
+        background-color: gray;
+        padding: 15px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .chats-pos-header{
+        display: none;
     }
     
     .chat-contact-name {

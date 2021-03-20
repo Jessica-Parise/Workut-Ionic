@@ -7,9 +7,10 @@
         <input type="search" placeholder="Search Contact" />
       </div>
     </div>
+    <div class="contacts-pos-header"></div>
     <div class="contacts-body">
       <div class="contact" *ngFor="let contact of Contacts">
-        <div class="imageProfile"></div>
+        <div class="imageProfile" (click)="changeCurrentContact(contact.contactName)"></div>
         <div class="contacts-contact-name">
           <span (click)="changeCurrentContact(contact.contactName)">{{contact.contactName}}</span>
         </div>
@@ -24,6 +25,7 @@
         <span>{{currentContact}}</span>
       </div>
     </div>
+    <div class="chats-pos-header"></div>
     <div class="chat-body">
 
     </div>
