@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: '',
@@ -13,33 +13,33 @@ const routes: Routes = [
   },
   {
     path: 'register-user',
-    loadChildren: () => import('./register-user/register-user.module').then( m => m.RegisterUserPageModule)
+    loadChildren: () => import('./register-user/register-user.module').then(m => m.RegisterUserPageModule)
   },
   {
     path: 'register-company',
-    loadChildren: () => import('./register-company/register-company.module').then( m => m.RegisterCompanyPageModule)
+    loadChildren: () => import('./register-company/register-company.module').then(m => m.RegisterCompanyPageModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'tabs-company',
-    loadChildren: () => import('./tabs-company/tabs-company.module').then( m => m.TabsCompanyPageModule)
+    loadChildren: () => import('./tabs-company/tabs-company.module').then(m => m.TabsCompanyPageModule)
   },
   {
     path: 'tabs-user',
-    loadChildren: () => import('./tabs-user/tabs-user.module').then( m => m.TabsUserPageModule)
+    loadChildren: () => import('./tabs-user/tabs-user.module').then(m => m.TabsUserPageModule)
   },
   {
     path: 'job-details',
-    loadChildren: () => import('./job-details/job-details.module').then( m => m.JobDetailsPageModule)
+    loadChildren: () => import('./job-details/job-details.module').then(m => m.JobDetailsPageModule)
   },
-  
+
 
   {
     path: 'user-curriculum',
-    loadChildren: () => import('./user-curriculum/user-curriculum.module').then( m => m.UserCurriculumPageModule)
+    loadChildren: () => import('./user-curriculum/user-curriculum.module').then(m => m.UserCurriculumPageModule)
   },
 
 ];

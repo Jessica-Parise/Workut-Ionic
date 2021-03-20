@@ -24,17 +24,26 @@ const routes: Routes = [
       {
         path: 'profile',
         loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+      },
+      {
+        path: 'chats',
+        loadChildren: () => import('./chats/chats.module').then( m => m.ChatsPageModule)
       }
-      
     ]
-  },  {
+  },
+  {
     path: 'job-create',
     loadChildren: () => import('./job-create/job-create.module').then( m => m.JobCreatePageModule)
   },
   {
     path: 'job-edit',
     loadChildren: () => import('./job-edit/job-edit.module').then( m => m.JobEditPageModule)
+  },
+  {
+    path: 'chats',
+    loadChildren: () => import('./chats/chats.module').then( m => m.ChatsPageModule)
   }
+
 
 ];
 
