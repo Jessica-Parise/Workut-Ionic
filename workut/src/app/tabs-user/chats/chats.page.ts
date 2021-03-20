@@ -16,7 +16,7 @@ export class ChatsPage implements OnInit {
   constructor(private authService: AuthorizationService, private db: DbService) { }
 
   ngOnInit() {
-    this.authService.verifySession('2').then(() => {
+    this.authService.verifySession('1').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
         this.LOGIN = LOGIN;
         if (LOGIN == null) {

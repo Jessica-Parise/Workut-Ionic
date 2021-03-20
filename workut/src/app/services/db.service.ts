@@ -157,6 +157,7 @@ export class DbService {
       this.API + '/UserAppliedJobsSearch_Title?search=' + search, body
     ).toPromise();
   }
+
   public CompanyAppliedJobSearch(body: any): Promise<any> {
     return this.http.post(
       this.API + '/CompanyAppliedJobsSearch', body
@@ -172,6 +173,24 @@ export class DbService {
   public verifyAppliedStatus(user: string, job: string): Promise<any> {
     return this.http.get(
       this.API + '/verifyAppliedStatus?user=' + user + '&job=' + job
+    ).toPromise();
+  }
+
+  public getSentContacts(LOGIN: any): Promise<any> {
+    return this.http.post(
+      this.API + '/getSentContacts', { ID: LOGIN.ID, TOKEN: LOGIN.TOKEN }
+    ).toPromise();
+  }
+
+  public getReceivedContacts(LOGIN: any): Promise<any> {
+    return this.http.post(
+      this.API + '/getReceivedContacts', { ID: LOGIN.ID, TOKEN: LOGIN.TOKEN }
+    ).toPromise();
+  }
+
+  public getSomeone(ID: string): Promise<any> {
+    return this.http.get(
+      this.API + '/getSomeone?id=' + ID
     ).toPromise();
   }
 
