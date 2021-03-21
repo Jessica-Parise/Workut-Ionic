@@ -182,6 +182,7 @@ export class ProfilePage implements OnInit {
   openCV(item) {
     this.router.navigate(['/user-curriculum', { id: item.user }]);
   }
+
   searchApplies() {
     this.db.CompanyAppliedJobSearch(this.body).then(response => {
       if (response === '404') {
@@ -219,10 +220,31 @@ export class ProfilePage implements OnInit {
 
   Decline(item): void {
 
+    const body = {
+      company: this.body,
+      id: item._id.$oid
+    };
+
+    this.db.UserDeleteAppliedJob(body).then(response => {
+      if (response === '200') {
+        this.search();
+      } else if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
+
   }
 
   Chat(item): void {
-
+    this.db.CreateContact(this.body, item.user).then(response => {
+      this.router.navigate(['/tabs-company/chats']);
+    });
   }
 
 }

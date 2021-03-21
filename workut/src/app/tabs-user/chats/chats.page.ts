@@ -113,6 +113,8 @@ export class ChatsPage implements OnInit {
 
   SendMessage(): void {
     this.db.postChatMessage(this.LOGIN, this.currentContactId, this.message, this.currentContactType).then(response => {
+      this.addItemWithText(this.message, false);
+      this.qteMsg++;
       this.message = '';
     }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });
   }
@@ -129,7 +131,7 @@ export class ChatsPage implements OnInit {
         this.addItemWithText(response[i].message, owner);
         this.qteMsg++;
       }
-      const source = interval(10000);
+      const source = interval(60000);
       this.subscription = source.subscribe(val => {
         this.LoadMessagesLive();
       });

@@ -206,4 +206,17 @@ export class DbService {
     ).toPromise();
   }
 
+  public CreateContact(LOGIN: any, user2: string): Promise<any> {
+    return this.http.post(
+      this.API + '/CreateContact', { TOKEN: LOGIN.TOKEN, user1: LOGIN.ID, user2 }
+    ).toPromise();
+  }
+
+  public CompanyDeleteAppliedJob(body: any): Promise<any> {
+    return this.http.post(
+      this.API + '/UserAppliedJobsDelete', body
+    ).toPromise();
+  }
+
 }
+
