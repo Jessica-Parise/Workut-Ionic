@@ -3,6 +3,7 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 import { DbService } from 'src/app/services/db.service';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { interval, Subscription } from 'rxjs';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-chats',
@@ -25,7 +26,7 @@ export class ChatsPage implements OnInit {
 
   constructor(
     private authService: AuthorizationService, private db: DbService,
-    private fBuilder: FormBuilder
+    private fBuilder: FormBuilder, public toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -82,19 +83,19 @@ export class ChatsPage implements OnInit {
         for (let j = 0; j < sent.length; j++) {
           this.db.getSomeone(sent[j].user2).then(response => {
             this.Contacts[i] = { id: sent[j]._id.$oid, name: response.name, type: '1' }; i++;
-          }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });
+          }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
         }
 
         // tslint:disable-next-line: prefer-for-of
         for (let j = 0; j < received.length; j++) {
           this.db.getSomeone(received[j].user1).then(response => {
             this.Contacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2' }; i++;
-          }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });
+          }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
         }
 
-      }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });
+      }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
 
-    }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });
+    }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
   }
 
   changeCurrentContact(id: string, contact: string, type: string): void {
@@ -116,7 +117,7 @@ export class ChatsPage implements OnInit {
       this.addItemWithText(this.message, false);
       this.qteMsg++;
       this.message = '';
-    }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });
+    }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
   }
 
   LoadMessagesHistory(): void {
@@ -135,7 +136,7 @@ export class ChatsPage implements OnInit {
       this.subscription = source.subscribe(val => {
         this.LoadMessagesLive();
       });
-    }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });
+    }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
   }
 
   LoadMessagesLive(): void {
@@ -150,7 +151,18 @@ export class ChatsPage implements OnInit {
         this.addItemWithText(response[i].message, owner);
         this.qteMsg++;
       }
-    }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });
+    }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
+  }
+
+  // Presents an alert for status
+  async statusAlert(title, mensagem) {
+    const alert = await this.toastController.create({
+      header: title,
+      message: mensagem,
+      duration: 1000
+    });
+
+    await alert.present();
   }
 
 }

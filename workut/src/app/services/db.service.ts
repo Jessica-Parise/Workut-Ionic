@@ -214,7 +214,7 @@ export class DbService {
 
   public CompanyDeleteAppliedJob(body: any): Promise<any> {
     return this.http.post(
-      this.API + '/UserAppliedJobsDelete', body
+      this.API + '/CompanyDeleteAppliedJob', body
     ).toPromise();
   }
 

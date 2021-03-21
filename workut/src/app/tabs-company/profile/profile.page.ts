@@ -225,9 +225,9 @@ export class ProfilePage implements OnInit {
       id: item._id.$oid
     };
 
-    this.db.UserDeleteAppliedJob(body).then(response => {
+    this.db.CompanyDeleteAppliedJob(body).then(response => {
       if (response === '200') {
-        this.search();
+        this.searchApplies();
       } else if (response === '404') {
         this.authService.Logout();
       } else {
