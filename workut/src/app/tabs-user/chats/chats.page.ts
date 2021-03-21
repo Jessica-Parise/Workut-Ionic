@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { DbService } from 'src/app/services/db.service';
 import { FormArray, FormBuilder } from '@angular/forms';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chats',
@@ -19,6 +20,8 @@ export class ChatsPage implements OnInit {
   qteMsg = 0;
 
   Mensagens: any;
+
+  subscription: Subscription;
 
   constructor(
     private authService: AuthorizationService, private db: DbService,
@@ -45,17 +48,19 @@ export class ChatsPage implements OnInit {
   initItemRows(): any {
     return this.fBuilder.group({
       mensagem: [''],
+      owner: [true]
     });
   }
 
-  initItemWithtext(mensagem: string): any {
+  initItemWithtext(mensagem: string, owner: boolean): any {
     return this.fBuilder.group({
-      mensagem: [mensagem]
+      mensagem: [mensagem],
+      owner: [owner]
     });
   }
 
-  addItemWithText(mensagem: string): void {
-    this.mensagens.push(this.initItemWithtext(mensagem));
+  addItemWithText(mensagem: string, owner: boolean): void {
+    this.mensagens.push(this.initItemWithtext(mensagem, owner));
   }
 
   resetMessages(): void {
@@ -108,13 +113,39 @@ export class ChatsPage implements OnInit {
 
   SendMessage(): void {
     this.db.postChatMessage(this.LOGIN, this.currentContactId, this.message, this.currentContactType).then(response => {
+      this.message = '';
     }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });
   }
 
   LoadMessagesHistory(): void {
     this.db.getChatMessagesHistory(this.LOGIN, this.currentContactId, this.currentContactType).then(response => {
+      let owner = true;
       for (let i = 0; i < response.length; i++) {
-        this.addItemWithText(response[i].message);
+        if (response[i].contactType === '1') {
+          owner = true;
+        } else {
+          owner = false;
+        }
+        this.addItemWithText(response[i].message, owner);
+        this.qteMsg++;
+      }
+      const source = interval(1000);
+      this.subscription = source.subscribe(val => {
+        this.LoadMessagesLive();
+      });
+    }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });
+  }
+
+  LoadMessagesLive(): void {
+    this.db.getChatMessagesHistory(this.LOGIN, this.currentContactId, this.currentContactType).then(response => {
+      let owner = true;
+      for (let i = this.qteMsg; i < response.length; i++) {
+        if (this.currentContactType === '1') {
+          owner = true;
+        } else {
+          owner = false;
+        }
+        this.addItemWithText(response[i].message, owner);
         this.qteMsg++;
       }
     }, (error) => { /* this.statusAlert('Error', 'An error occurred. Please try again!'); */ });

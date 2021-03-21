@@ -120,16 +120,44 @@
         display: flex;
         flex-direction: row;
         margin-left: -5px;
-        width: 38%;
+        width: 100%;
         height: 5vh;
-        position: fixed;
     }
 
-    .txtMessage{
-        resize: none;
-        width: 60%;
-        margin-bottom: 1%;
+    .action-menu input{
+        width: 85%;
     }
+
+    .action-menu button{
+        width: 15%;
+    }
+
+    .divReceivedTxtMessage{
+        width: 100%;
+    }
+
+    .divSentTxtMessage{
+        width: 100%;
+    }
+
+    .divSentTxtMessage textarea{
+        max-width: 60%;
+        min-width: 60%;
+        min-height: 5vh;
+        max-height: 10vh;
+        margin-bottom: 1%;
+        background-color: #ff6db6;
+    }
+
+    .divReceivedTxtMessage textarea{
+        max-width: 60%;
+        min-width: 60%;
+        min-height: 5vh;
+        max-height: 10vh;
+        margin-bottom: 1%;
+        margin-left: 40%;
+    }
+
 }
 
 @media (max-width: 1000px) {

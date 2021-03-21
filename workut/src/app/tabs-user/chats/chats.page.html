@@ -34,7 +34,12 @@
           <div formArrayName="itemRows">
             <div *ngFor="let mensagem of Mensagens.controls.itemRows['controls']; let i=index" [formGroupName]="i">
               <div style="display: flex; flex-direction: row;">
-                <textarea formControlName="mensagem" placeholder="Item" class="txtMessage"></textarea>
+                <div *ngIf="mensagens.value[i].owner" class="divSentTxtMessage">
+                  <textarea formControlName="mensagem" readonly></textarea>
+                </div>
+                <div *ngIf="!mensagens.value[i].owner" class="divReceivedTxtMessage">
+                  <textarea formControlName="mensagem" readonly></textarea>
+                </div>
               </div>
             </div>
           </div>
@@ -43,8 +48,8 @@
 
       </div>
       <div class="action-menu" *ngIf="currentContact">
-        <input style="width: 90%;" type="text" [(ngModel)]="message" name="message" />
-        <button style="width: 10%;" (click)=SendMessage();>Send</button>
+        <input type="text" [(ngModel)]="message" name="message" placeholder="Type a message" />
+        <button (click)=SendMessage();>Send</button>
       </div>
     </div>
   </div>
