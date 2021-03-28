@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="logo">
+      <h6>Hi, {{name}}</h6>
+      <ion-icon class="logout-icon" name="log-out" (click)="Logout();"></ion-icon>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button tab="chats">
+      <ion-icon name="chatbubble-outline"></ion-icon>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>

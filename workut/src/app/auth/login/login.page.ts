@@ -49,6 +49,12 @@ export class LoginPage implements OnInit {
           this.email = '';
           this.password = '';
         });
+      } else if (response.status === '200.3') {
+        this.authService.setCurrentLogin(response.TOKEN, response.id.$oid, '2').then(() => {
+          this.router.navigate(['/tabs-admin']);
+          this.email = '';
+          this.password = '';
+        });
       } else if (response.status === '404') {
         this.statusAlert('Error', 'Account not found!');
       } else {
@@ -66,7 +72,5 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
-
-
 
 }

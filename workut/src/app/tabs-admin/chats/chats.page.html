@@ -1,0 +1,57 @@
+<ion-content>
+
+  <div class="contacts">
+    <div class="contacts-header">
+      <div class="contacts-imageProfile"></div>
+      <div class="searchBar">
+        <input type="search" placeholder="Search Contact" />
+      </div>
+    </div>
+    <div class="contacts-pos-header"></div>
+    <div class="contacts-body">
+      <div class="contact" *ngFor="let contact of Contacts">
+        <div class="contacts-imageProfile" (click)="changeCurrentContact(contact.id, contact.name, contact.type)"></div>
+        <div class="contacts-contact-name">
+          <span (click)="changeCurrentContact(contact.id, contact.name, contact.type)">{{contact.name}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat">
+    <div class="chats-header">
+      <div *ngIf="currentContact" class="chats-imageProfile"></div>
+      <div class="chat-contact-name">
+        <span>{{currentContact}}</span>
+      </div>
+    </div>
+    <div class="chats-pos-header"></div>
+    <div class="chat-body">
+      <div class="messages" *ngIf="currentContact">
+
+
+        <div [formGroup]="Mensagens">
+          <div formArrayName="itemRows">
+            <div *ngFor="let mensagem of Mensagens.controls.itemRows['controls']; let i=index" [formGroupName]="i">
+              <div style="display: flex; flex-direction: row;">
+                <div *ngIf="mensagens.value[i].owner" class="divSentTxtMessage">
+                  <textarea formControlName="mensagem" readonly></textarea>
+                </div>
+                <div *ngIf="!mensagens.value[i].owner" class="divReceivedTxtMessage">
+                  <textarea formControlName="mensagem" readonly></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="action-menu" *ngIf="currentContact">
+        <input type="text" [(ngModel)]="message" name="message" placeholder="Type a message" />
+        <button (click)=SendMessage();>Send</button>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
