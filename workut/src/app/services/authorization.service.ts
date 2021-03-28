@@ -67,6 +67,8 @@ export class AuthorizationService {
           return '/tabs-user';
         } else if (session.type === '2') {
           return '/tabs-company';
+        } else if (session.type === '3') {
+          return '/tabs-admin';
         } else {
           return 'cancel';
         }

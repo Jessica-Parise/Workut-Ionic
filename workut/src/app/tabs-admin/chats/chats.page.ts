@@ -13,12 +13,14 @@ import { ToastController } from '@ionic/angular';
 export class ChatsPage implements OnInit {
 
   Contacts = [];
+  bckContacts = [];
   currentContact = '';
   currentContactType = '';
   currentContactId = '';
   LOGIN: any;
   message = '';
   qteMsg = 0;
+  search;
 
   Mensagens: any;
 
@@ -92,6 +94,8 @@ export class ChatsPage implements OnInit {
             this.Contacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2' }; i++;
           }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
         }
+
+        this.bckContacts = this.Contacts;
 
       }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
 
