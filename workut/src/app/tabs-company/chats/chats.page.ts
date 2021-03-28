@@ -132,10 +132,10 @@ export class ChatsPage implements OnInit {
         this.addItemWithText(response[i].message, owner);
         this.qteMsg++;
       }
-      const source = interval(60000);
+      /*const source = interval(60000);
       this.subscription = source.subscribe(val => {
         this.LoadMessagesLive();
-      });
+      });*/
     }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
   }
 
