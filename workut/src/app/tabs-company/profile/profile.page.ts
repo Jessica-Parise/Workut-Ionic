@@ -220,24 +220,28 @@ export class ProfilePage implements OnInit {
 
   Decline(item): void {
 
-    const body = {
-      company: this.body,
-      id: item._id.$oid
-    };
+    const cn = confirm
+      ('Are you sure that you wanna refuse AND DELETE this apply FOREVER ???');
+    if (cn) {
+      const body = {
+        company: this.body,
+        id: item._id.$oid
+      };
 
-    this.db.CompanyDeleteAppliedJob(body).then(response => {
-      if (response === '200') {
-        this.searchApplies();
-      } else if (response === '404') {
-        this.authService.Logout();
-      } else {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
-      }
-    },
-      (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
-      }
-    );
+      this.db.CompanyDeleteAppliedJob(body).then(response => {
+        if (response === '200') {
+          this.searchApplies();
+        } else if (response === '404') {
+          this.authService.Logout();
+        } else {
+          this.statusAlert('Error', 'An error occurred. Please try again!');
+        }
+      },
+        (error) => {
+          this.statusAlert('Error', 'An error occurred. Please try again!');
+        }
+      );
+    }
 
   }
 
