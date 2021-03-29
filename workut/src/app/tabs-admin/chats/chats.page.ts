@@ -128,7 +128,7 @@ export class ChatsPage implements OnInit {
     this.db.getChatMessagesHistory(this.LOGIN, this.currentContactId, this.currentContactType).then(response => {
       let owner = true;
       for (let i = 0; i < response.length; i++) {
-        if (response[i].contactType === '1') {
+        if (response[i].contactType === '2') {
           owner = false;
         } else {
           owner = true;
@@ -147,7 +147,7 @@ export class ChatsPage implements OnInit {
     this.db.getChatMessagesHistory(this.LOGIN, this.currentContactId, this.currentContactType).then(response => {
       let owner = true;
       for (let i = this.qteMsg; i < response.length; i++) {
-        if (response[i].contactType === '1') {
+        if (response[i].contactType === '2') {
           owner = false;
         } else {
           owner = true;

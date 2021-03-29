@@ -141,7 +141,7 @@
         width: 100%;
     }
 
-    .divSentTxtMessage textarea{
+    .divReceivedTxtMessage textarea{
         max-width: 60%;
         min-width: 60%;
         min-height: 5vh;
@@ -149,7 +149,7 @@
         margin-bottom: 1%;
     }
     
-    .divReceivedTxtMessage textarea{
+    .divSentTxtMessage textarea{
         max-width: 60%;
         min-width: 60%;
         min-height: 5vh;
@@ -287,24 +287,16 @@
         width: 97%;
     }
 
-    .divSentTxtMessage{
+    .divReceivedTxtMessage{
         width: 100%;
         float: left;
     }
 
-    .divReceivedTxtMessage{
+    .divSentTxtMessage{
         width: 100%;
     }
-
-    .divReceivedTxtMessage textarea{
-        max-width: 60%;
-        min-width: 60%;
-        min-height: 5vh;
-        max-height: 10vh;
-        margin-bottom: 1%;
-    }
     
-    .divSentTxtMessage textarea{
+    .divReceivedTxtMessage textarea{
         max-width: 60%;
         min-width: 60%;
         min-height: 5vh;
@@ -313,5 +305,13 @@
         margin-left: 40%;
         background-color: #ff6db6;
     }
+
+    .divSentTxtMessage textarea{
+        max-width: 60%;
+        min-width: 60%;
+        min-height: 5vh;
+        max-height: 10vh;
+        margin-bottom: 1%;
+    }    
 
 }
