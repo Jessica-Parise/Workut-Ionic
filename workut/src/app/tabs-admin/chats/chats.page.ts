@@ -84,18 +84,20 @@ export class ChatsPage implements OnInit {
         // tslint:disable-next-line: prefer-for-of
         for (let j = 0; j < sent.length; j++) {
           this.db.getSomeone(sent[j].user2).then(response => {
-            this.Contacts[i] = { id: sent[j]._id.$oid, name: response.name, type: '1' }; i++;
+            this.Contacts[i] = { id: sent[j]._id.$oid, name: response.name, type: '1' };
+            this.bckContacts[i] = { id: sent[j]._id.$oid, name: response.name, type: '1' };
+            i++;
           }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
         }
 
         // tslint:disable-next-line: prefer-for-of
         for (let j = 0; j < received.length; j++) {
           this.db.getSomeone(received[j].user1).then(response => {
-            this.Contacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2' }; i++;
+            this.Contacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2' };
+            this.bckContacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2' };
+            i++;
           }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
         }
-
-        this.bckContacts = this.Contacts;
 
       }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
 
@@ -167,6 +169,25 @@ export class ChatsPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  searchContacts() {
+
+    if (this.search === '') {
+      for (let i = 0; i < this.bckContacts.length;) {
+        this.Contacts[i] = this.bckContacts[i];
+        i++;
+      }
+    } else {
+      for (let i = 0; i < this.bckContacts.length;) {
+        if (!(this.bckContacts[i].name.toLowerCase()).includes((this.search).toLowerCase())) {
+          this.Contacts.splice(i);
+        } else {
+          this.Contacts.splice(i, 1, this.bckContacts[i]);
+        }
+        i++;
+      }
+    }
   }
 
 }
