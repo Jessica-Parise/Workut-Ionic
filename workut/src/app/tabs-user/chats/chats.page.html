@@ -4,7 +4,9 @@
     <div class="contacts-header">
       <div class="contacts-imageProfile"></div>
       <div class="searchBar">
-        <input type="search" placeholder="Search Contact" />
+        <ion-searchbar [(ngModel)]="search" name="search" (ionChange)="searchContacts()" ngModel
+          placeholder="Search Contact" showCancelButton="focus">
+        </ion-searchbar>
       </div>
     </div>
     <div class="contacts-pos-header"></div>
