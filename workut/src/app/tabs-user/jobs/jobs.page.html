@@ -21,10 +21,10 @@
           <ion-text class="list-subtitle"><label for="" class="titulo">Company Name:</label> {{job.companyName}}</ion-text>
           <ion-text class="list-subtitle"><label for="" class="titulo">Company Email:</label> {{job.companyEmail}}</ion-text>
 
-          <ion-button fill="outline" style="width: 35%; margin-left: 60%;" (click)="showJob(job)">
+          <ion-button fill="clear" style="width: 35%; margin-left: 60%;" (click)="showJob(job)">
             Details
           </ion-button>
-          <ion-button fill="outline" style="width: 35%; margin-left: 60%;" (click)="applyJob(job)"
+          <ion-button fill="clear" style="width: 35%; margin-left: 60%;" (click)="applyJob(job)"
             [disabled]="job.applied">{{job.applied ? 'Applied' : 'Apply'}}</ion-button>
 
         </div>

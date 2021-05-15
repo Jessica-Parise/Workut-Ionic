@@ -1,14 +1,15 @@
 .container {
-  max-width: 500px;
+  max-width: 880px;
   width: 100%;
   margin: 10px auto;
   display: flex;
-  padding: 10px 0px 10px 15px;
   flex-direction: column;
   border: 1px solid #f82790;
   box-shadow: 1px 1px 1px #b6b5b5;
   border-radius: 8px;
   background-color: rgba(177, 176, 176, 0.151);
+
+  padding: 15px 10px;
 }
 
 .list{
@@ -21,19 +22,22 @@
   margin-bottom: 1px;
   line-height: 22px;
 }
-
-/* Custom Skeleton Line Height and Margin */
-.custom-skeleton ion-skeleton-text {
-  line-height: 13px;
+ion-searchbar {
+  max-width: 900px;
+  width: 100%;
+  padding: 15px 10px;
+  margin: 0px auto;
+  margin-bottom: 0px;
 }
-
-.custom-skeleton ion-skeleton-text:last-child {
-  margin-bottom: 5px;
+.button-clear{
+  border: 1px solid #f82790;
+  border-radius: 8px;
+  color: #f82790;
 }
-
+ion-button:hover {
+  color: white;
+  background-color:  #f82790;
+}
 .titulo {
   color: var(--color-primary);
-}
-.button-native{
-  border-color: none;
 }
