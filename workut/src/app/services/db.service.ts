@@ -224,5 +224,17 @@ export class DbService {
     ).toPromise();
   }
 
+  public getS3Token(body: any): Promise<any> {
+    return this.http.post(
+      this.API + '/getS3Token', body
+    ).toPromise();
+  }
+
+  public PublishImage(body: any): Promise<any> {
+    return this.http.post(
+      this.API + '/PublishImage', body
+    ).toPromise();
+  }
+
 }
 

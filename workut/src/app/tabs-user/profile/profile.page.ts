@@ -4,6 +4,7 @@ import { IonSlides, ToastController } from '@ionic/angular';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { DbService } from 'src/app/services/db.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-profile',
@@ -53,6 +54,8 @@ export class ProfilePage implements OnInit {
   workHistory: any;
   educationHistory: any;
   userSkills: any;
+
+  imgURL: any;
 
   constructor(
     public httpClient: HttpClient, public toastController: ToastController,
@@ -191,6 +194,7 @@ export class ProfilePage implements OnInit {
         this.authService.Logout();
       } else {
         this.data = response;
+        this.imgURL = this.data.imgURL;
         this.email = this.data.email;
         this.name = this.data.name;
         this.lastname = this.data.lastName;
@@ -372,5 +376,17 @@ export class ProfilePage implements OnInit {
     }
 
   }
+
+  // Image
+  readImage(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.imgURL = event.target.result;
+      }
+    }
+  }
+
 
 }

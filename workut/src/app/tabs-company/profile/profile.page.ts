@@ -36,6 +36,8 @@ export class ProfilePage implements OnInit {
 
   oldName: string;
 
+  imgURL: any;
+
   constructor(
     public httpClient: HttpClient, public toastController: ToastController,
     private router: Router, private authService: AuthorizationService, private db: DbService) { }
@@ -77,6 +79,7 @@ export class ProfilePage implements OnInit {
         this.authService.Logout();
       } else {
         this.data = response;
+        this.imgURL = this.data.imgURL;
         this.email = this.data.email;
         this.name = this.data.name;
         this.cep = this.data.cep;
@@ -249,6 +252,17 @@ export class ProfilePage implements OnInit {
     this.db.CreateContact(this.body, item.user).then(response => {
       this.router.navigate(['/tabs-company/chats']);
     });
+  }
+
+  // Image
+  readImage(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.imgURL = event.target.result;
+      }
+    }
   }
 
 }

@@ -27,6 +27,16 @@
         </ion-fab>
 
         <div class="container">
+
+          <form style="align-items: center;">
+
+            <img class="profileImage" [src]="imgURL">
+
+            <input type="file" style="font-size: small; text-align: center;" (change)="readImage($event);"
+              accept="image/jpeg, image/png" />
+
+          </form>
+
           <ion-item>
             <ion-input [(ngModel)]="email" name="email" type="email" placeholder="your@email.com" ngModel required
               disabled="{{emailDisabled}}">
@@ -87,10 +97,9 @@
 
               <ion-button (click)="openCV(apply)" fill="clear" style="width: 35%; margin-left: 60%;">View CV
               </ion-button>
-              <ion-button (click)="Chat(apply)" fill="clear"
-                style="width: 35%; margin-left: 60%;">chat</ion-button>
-              <ion-button (click)="Decline(apply)"
-                fill="clear" style="width: 35%; margin-left: 60%;">Decline</ion-button>
+              <ion-button (click)="Chat(apply)" fill="clear" style="width: 35%; margin-left: 60%;">chat</ion-button>
+              <ion-button (click)="Decline(apply)" fill="clear" style="width: 35%; margin-left: 60%;">Decline
+              </ion-button>
             </div>
           </ion-item>
         </div>
