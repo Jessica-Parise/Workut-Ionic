@@ -224,16 +224,24 @@ export class DbService {
     ).toPromise();
   }
 
-  public getS3Token(body: any): Promise<any> {
+  public getDriveToken(body: any): Promise<any> {
     return this.http.post(
-      this.API + '/getS3Token', body
+      this.API + '/getDriveToken', body
     ).toPromise();
   }
 
-  public PublishImage(body: any): Promise<any> {
+  public PublishImage(body: any, id: string): Promise<any> {
     return this.http.post(
-      this.API + '/PublishImage', body
+      this.API + '/PublishImage', {body, image: id}
     ).toPromise();
+  }
+
+  public UploadImage(body: any, image: any): Promise<any> {
+    return this.getDriveToken(body).then(token => {
+      return this.http.post('https://www.googleapis.com/upload/drive/v3/files/', image,
+        { headers: { Authorization: 'Bearer ' + token } }
+      ).toPromise();
+    });
   }
 
 }

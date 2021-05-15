@@ -37,6 +37,8 @@ export class ProfilePage implements OnInit {
   oldName: string;
 
   imgURL: any;
+  imgDisabled: boolean;
+  uploadedImageID: string;
 
   constructor(
     public httpClient: HttpClient, public toastController: ToastController,
@@ -47,6 +49,7 @@ export class ProfilePage implements OnInit {
   }
 
   init() {
+    this.updateControls(true);
     this.authService.verifySession('2').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
         if (LOGIN != null) {
@@ -129,6 +132,7 @@ export class ProfilePage implements OnInit {
     this.emailDisabled = status;
     this.nameDisabled = status; this.cepDisabled = status;
     this.countryDisabled = status; this.stateDisabled = status;
+    this.imgDisabled = status;
   }
 
   editProfile() {
@@ -143,27 +147,31 @@ export class ProfilePage implements OnInit {
           cep: this.cep,
           country: this.country,
           state: this.state,
+          imgURL: ''
         },
       };
 
-      this.db.CompanyUpdateProfile(body).then(response => {
-        if (response === '200') {
-          this.statusAlert('Sucess', 'Profile data has been updated successfully!');
-          if (this.oldName !== this.name) {
-            location.reload();
+      this.db.PublishImage(this.body, this.uploadedImageID).then(infoImg => {
+        body.newData.imgURL = 'https://drive.google.com/uc?id=' + infoImg.id;
+        this.db.CompanyUpdateProfile(body).then(response => {
+          if (response === '200') {
+            this.statusAlert('Sucess', 'Profile data has been updated successfully!');
+            if (this.oldName !== this.name) {
+              location.reload();
+            }
+          } else if (response === '404') {
+            this.authService.Logout();
+          } else {
+            this.statusAlert('Error', 'An error occurred. Please try again!');
           }
-        } else if (response === '404') {
-          this.authService.Logout();
-        } else {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      },
-        (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
-        }
-      );
-      this.iconName = 'lock-closed';
-      this.updateControls(true);
+        },
+          (error) => {
+            this.statusAlert('Error', 'An error occurred. Please try again!');
+          }
+        );
+        this.iconName = 'lock-closed';
+        this.updateControls(true);
+      });
     }
     else {
       this.iconName = 'lock-open';
@@ -262,6 +270,9 @@ export class ProfilePage implements OnInit {
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.imgURL = event.target.result;
       }
+      this.db.UploadImage(this.body, event.target.files[0]).then(response => {
+        this.uploadedImageID = response.id;
+      });
     }
   }
 

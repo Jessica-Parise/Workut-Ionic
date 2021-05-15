@@ -30,14 +30,9 @@
 
                 <div class="container">
 
-                    <form style="align-items: center;">
-
-                        <img class="profileImage" [src]="imgURL">
-
-                        <input type="file" style="font-size: small; text-align: center;" (change)="readImage($event);"
-                            accept="image/jpeg, image/png" />
-
-                    </form>
+                    <img class="profileImage" [src]="imgURL">
+                    <input type="file" style="font-size: small; text-align: center;" (change)="readImage($event);"
+                        accept="image/jpeg, image/png" [disabled]="imgDisabled" required />
 
                     <ion-item>
                         <ion-input [(ngModel)]="email" name="email" type="email" placeholder="your@email.com" ngModel

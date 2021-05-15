@@ -56,6 +56,8 @@ export class ProfilePage implements OnInit {
   userSkills: any;
 
   imgURL: any;
+  imgDisabled: boolean;
+  uploadedImageID: string;
 
   constructor(
     public httpClient: HttpClient, public toastController: ToastController,
@@ -97,6 +99,9 @@ export class ProfilePage implements OnInit {
     this.work.removeAt(0);
     this.education.removeAt(0);
     this.skill.removeAt(0);
+
+    this.updateControls(true);
+    this.updateControls_CV(true);
 
   }
 
@@ -278,6 +283,7 @@ export class ProfilePage implements OnInit {
     this.emailDisabled = status;
     this.nameDisabled = status; this.lastnameDisabled = status;
     this.countryDisabled = status; this.stateDisabled = status;
+    this.imgDisabled = status;
   }
 
   updateControls_CV(status: boolean) {
@@ -320,25 +326,30 @@ export class ProfilePage implements OnInit {
         workHistory: this.workHistory,
         educationHistory: this.educationHistory,
         userSkills: this.userSkills,
+        imgURL: ''
       },
     };
 
-    this.db.UserUpdateProfile(body).then(response => {
-      if (response === '200') {
-        this.statusAlert('Success', 'Profile data has been updated successfully!');
-        if (this.oldName !== this.name) {
-          location.reload();
+    this.db.PublishImage(this.body, this.uploadedImageID).then(infoImg => {
+      body.newData.imgURL = 'https://drive.google.com/uc?id=' + infoImg.id;
+      this.db.UserUpdateProfile(body).then(response => {
+        if (response === '200') {
+          this.statusAlert('Success', 'Profile data has been updated successfully!');
+          if (this.oldName !== this.name) {
+            location.reload();
+          }
+        } else if (response === '404') {
+          this.authService.Logout();
+        } else {
+          this.statusAlert('Error', 'An error occurred. Please try again!');
         }
-      } else if (response === '404') {
-        this.authService.Logout();
-      } else {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
-      }
-    },
-      (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
-      }
-    );
+      },
+        (error) => {
+          this.statusAlert('Error', 'An error occurred. Please try again!');
+        }
+      );
+    });
+
   }
 
   async statusAlert(title, message) {
@@ -385,6 +396,9 @@ export class ProfilePage implements OnInit {
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.imgURL = event.target.result;
       }
+      this.db.UploadImage(this.body, event.target.files[0]).then(response => {
+        this.uploadedImageID = response.id;
+      });
     }
   }
 
