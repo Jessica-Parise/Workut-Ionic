@@ -206,6 +206,12 @@ export class DbService {
     ).toPromise();
   }
 
+  public getChatMessagesHistoryLive(LOGIN: any, idContact: string, contactType: string): Promise<any> {
+    return this.http.post(
+      this.API + '/getChatMessagesHistoryLive', { ID: LOGIN.ID, TOKEN: LOGIN.TOKEN, idContact, contactType }
+    ).toPromise();
+  }
+
   public CreateContact(LOGIN: any, user2: string): Promise<any> {
     return this.http.post(
       this.API + '/CreateContact', { TOKEN: LOGIN.TOKEN, user1: LOGIN.ID, user2 }

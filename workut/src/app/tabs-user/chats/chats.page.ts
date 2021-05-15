@@ -138,7 +138,7 @@ export class ChatsPage implements OnInit {
         this.addItemWithText(response[i].message, owner);
         this.qteMsg++;
       }
-      const source = interval(1000);
+      const source = interval(10000);
       this.subscription = source.subscribe(val => {
         this.LoadMessagesLive();
       });
@@ -146,7 +146,7 @@ export class ChatsPage implements OnInit {
   }
 
   LoadMessagesLive(): void {
-    this.db.getChatMessagesHistory(this.LOGIN, this.currentContactId, this.currentContactType).then(response => {
+    this.db.getChatMessagesHistoryLive(this.LOGIN, this.currentContactId, this.currentContactType).then(response => {
       let owner = true;
       for (let i = this.qteMsg; i < response.length; i++) {
         if (response[i].contactType === '1') {
