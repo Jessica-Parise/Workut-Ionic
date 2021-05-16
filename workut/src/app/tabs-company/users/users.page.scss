@@ -41,3 +41,21 @@ ion-button:hover {
 .titulo {
   color: var(--color-primary);
 }
+
+@media screen and (min-width: 1000px) {
+  .profileImage{
+    border-radius: 50%;
+    margin-left: 90%;
+    width: 9%;
+    height: 7vh;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .profileImage{
+    border-radius: 50%;
+    margin-left: 77%;
+    width: 20%;
+    height: 8vh;
+  }
+}

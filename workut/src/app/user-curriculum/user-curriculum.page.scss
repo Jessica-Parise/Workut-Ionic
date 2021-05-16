@@ -79,3 +79,23 @@ ul{
     width: 100px;
     height: 30px;
   }
+
+  @media screen and (min-width: 1000px) {
+    .profileImage{
+        margin-left: 47%;
+        margin-right: 47%;
+        border-radius: 50%;
+        width: 6%;
+        height: 10vh;
+    }
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .profileImage{
+        margin-left: 40%;
+        margin-right: 40%;
+        border-radius: 50%;
+        width: 20%;
+        height: 9vh;
+    }
+  }

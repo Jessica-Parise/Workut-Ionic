@@ -52,13 +52,18 @@ ion-ripple-effect{
     color: aqua;
 }
 
-.profileImage{
-    margin-right: 15%;
-    margin-left: 15%;
-    width: 70%;
-    height: 20vh;
-    border-radius: 50%;
-    background-color: white;
-    outline: none;
-    box-shadow: none;
-}
+@media screen and (min-width: 1000px) {
+    .profileImage{
+      border-radius: 50%;
+      width: 55%;
+      height: 16vh;
+    }
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .profileImage{
+      border-radius: 50%;
+      width: 45%;
+      height: 16vh;
+    }
+  }

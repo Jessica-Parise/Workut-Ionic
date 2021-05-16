@@ -24,7 +24,7 @@ export class UserCurriculumPage implements OnInit {
   Work: any;
   Education: any;
   Skills: any;
-
+  userImg: string;
 
 
   constructor(public actRoute: ActivatedRoute, private db: DbService) { }
@@ -40,6 +40,7 @@ export class UserCurriculumPage implements OnInit {
     this.db.SearchCV(this.id).then(response => {
       this.name = response.name;
       this.email = response.email;
+      this.userImg = response.img;
       this.birth = response.birth;
       this.gender = response.gender;
       this.phone = response.phone;
@@ -65,10 +66,6 @@ export class UserCurriculumPage implements OnInit {
       } else {
         this.Skills = response.userSkills;
       }
-
-
-
-
     });
   }
 

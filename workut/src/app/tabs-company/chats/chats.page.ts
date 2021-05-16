@@ -26,6 +26,9 @@ export class ChatsPage implements OnInit {
 
   subscription: Subscription;
 
+  currentIMG: string;
+  currentContactIMG: string;
+
   constructor(
     private authService: AuthorizationService, private db: DbService,
     private fBuilder: FormBuilder, public toastController: ToastController
@@ -38,7 +41,10 @@ export class ChatsPage implements OnInit {
         if (LOGIN == null) {
           this.authService.Logout();
         }
-        this.LoadContacts();
+        this.db.getSomeone(LOGIN.ID).then(response => {
+          this.currentIMG = response.imgURL;
+          this.LoadContacts();
+        }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
       });
     });
     this.Mensagens = this.fBuilder.group({
@@ -84,8 +90,8 @@ export class ChatsPage implements OnInit {
         // tslint:disable-next-line: prefer-for-of
         for (let j = 0; j < sent.length; j++) {
           this.db.getSomeone(sent[j].user2).then(response => {
-            this.Contacts[i] = { id: sent[j]._id.$oid, name: response.name, type: '1' };
-            this.bckContacts[i] = { id: sent[j]._id.$oid, name: response.name, type: '1' };
+            this.Contacts[i] = { id: sent[j]._id.$oid, name: response.name, type: '1', img: response.imgURL };
+            this.bckContacts[i] = { id: sent[j]._id.$oid, name: response.name, type: '1', img: response.imgURL };
             i++;
           }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
         }
@@ -93,8 +99,8 @@ export class ChatsPage implements OnInit {
         // tslint:disable-next-line: prefer-for-of
         for (let j = 0; j < received.length; j++) {
           this.db.getSomeone(received[j].user1).then(response => {
-            this.Contacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2' };
-            this.bckContacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2' };
+            this.Contacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2', img: response.imgURL };
+            this.bckContacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2', img: response.imgURL };
             i++;
           }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
         }
@@ -104,12 +110,13 @@ export class ChatsPage implements OnInit {
     }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
   }
 
-  changeCurrentContact(id: string, contact: string, type: string): void {
+  changeCurrentContact(id: string, contact: string, type: string, imgURL: string): void {
     this.resetMessages();
     if (id !== this.currentContactId) {
       this.currentContact = contact;
       this.currentContactType = type;
       this.currentContactId = id;
+      this.currentContactIMG = imgURL;
       this.LoadMessagesHistory();
     } else {
       this.currentContact = null;

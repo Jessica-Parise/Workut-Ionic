@@ -21,6 +21,7 @@ export class JobDetailsPage implements OnInit {
   Skills: any;
   companyName: string;
   companyEmail: string;
+  companyImg: string;
 
   constructor(public actRoute: ActivatedRoute, private db: DbService) { }
 
@@ -44,6 +45,7 @@ export class JobDetailsPage implements OnInit {
         this.date = response.startDate;
         this.companyName = companyFound.name;
         this.companyEmail = companyFound.email;
+        this.companyImg = companyFound.img;
 
         if (response.skillsRequired[0].skill == null) {
           this.Skills = null;

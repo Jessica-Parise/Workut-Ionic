@@ -10,6 +10,7 @@
       <ion-item *ngFor="let user of Users" class="item">
         <div class="container">
   
+          <img class="profileImage" [src]="user.imgURL">
           <ion-text class="list-subtitle"><label for="" class="titulo">Name:</label> {{user.name}}</ion-text>
           <ion-text class="list-subtitle"><label for="" class="titulo">Lastname:</label> {{user.lastName}}</ion-text>
           <ion-text class="list-subtitle"><label for="" class="titulo">Email:</label> {{user.email}}</ion-text>

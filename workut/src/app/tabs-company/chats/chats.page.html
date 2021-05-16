@@ -2,7 +2,7 @@
 
   <div class="contacts">
     <div class="contacts-header">
-      <div class="contacts-imageProfile"></div>
+      <img class="contacts-imageProfile" [src]="currentIMG" />
       <div class="searchBar">
         <ion-searchbar [(ngModel)]="search" name="search" (ionChange)="searchContacts()" ngModel
           placeholder="Search Contact" showCancelButton="focus">
@@ -12,9 +12,9 @@
     <div class="contacts-pos-header"></div>
     <div class="contacts-body">
       <div class="contact" *ngFor="let contact of Contacts">
-        <div class="contacts-imageProfile" (click)="changeCurrentContact(contact.id, contact.name, contact.type)"></div>
+        <img [src]="contact.img" class="contacts-imageProfile" (click)="changeCurrentContact(contact.id, contact.name, contact.type, contact.img)" />
         <div class="contacts-contact-name">
-          <span (click)="changeCurrentContact(contact.id, contact.name, contact.type)">{{contact.name}}</span>
+          <span (click)="changeCurrentContact(contact.id, contact.name, contact.type, contact.img)">{{contact.name}}</span>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
 
   <div class="chat">
     <div class="chats-header">
-      <div *ngIf="currentContact" class="chats-imageProfile"></div>
+      <img *ngIf="currentContact" class="chats-imageProfile" [src]="currentContactIMG" />
       <div class="chat-contact-name">
         <span>{{currentContact}}</span>
       </div>

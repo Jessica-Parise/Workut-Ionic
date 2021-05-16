@@ -67,6 +67,7 @@ export class JobsPage implements OnInit {
             } else {
               value.companyName = companyFound.name;
               value.companyEmail = companyFound.email;
+              value.companyImg = companyFound.img;
             }
           });
 
