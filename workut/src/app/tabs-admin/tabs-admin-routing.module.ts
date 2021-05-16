@@ -16,9 +16,14 @@ const routes: Routes = [
       {
         path: 'chats',
         loadChildren: () => import('./chats/chats.module').then(m => m.ChatsPageModule)
+      },
+      {
+        path: 'premium-accounts',
+        loadChildren: () => import('./premium-accounts/premium-accounts.module').then(m => m.PremiumAccountsPageModule)
       }
     ]
   }
+
 ];
 
 @NgModule({
