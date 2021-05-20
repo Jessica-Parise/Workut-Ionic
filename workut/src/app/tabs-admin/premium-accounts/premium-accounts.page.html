@@ -6,4 +6,24 @@
 
 <ion-content>
 
+  <ion-searchbar [(ngModel)]="search" name="search" (ionChange)="searchAccounts()" ngModel placeholder="Search Contact"
+    showCancelButton="focus">
+  </ion-searchbar>
+
+  <ion-row class="linha" *ngIf="Accounts">
+    <ion-col size="3" *ngFor="let user of Accounts">
+
+      <div class="container">
+        <img class="profileImage" [src]="user.imgURL"><br>
+        <ion-text class="list-subtitle"><label for="" class="titulo">Name:</label> {{user.name}}</ion-text>
+        <ion-text class="list-subtitle"><label for="" class="titulo">Email:</label> {{user.email}}
+        </ion-text>
+        <ion-button fill="clear" style="width: 50%;" (click)="ActivePremium(user._id.$oid)" [disabled]="user.premium">
+          Active Premium</ion-button>
+      </div>
+
+    </ion-col>
+
+  </ion-row>
+
 </ion-content>
