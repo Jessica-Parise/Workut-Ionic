@@ -5,7 +5,7 @@
   <ion-toolbar>
     <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)" color="danger">
       <ion-segment-button value="0">
-        <ion-label>Personal data</ion-label>
+        <ion-label>Dados Pessoais</ion-label>
       </ion-segment-button>
       <ion-segment-button value="1">
         <ion-label>Jobs inbox</ion-label>
@@ -38,7 +38,7 @@
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-input [(ngModel)]="name" name="name" type="text" placeholder="Name" ngModel required
+            <ion-input [(ngModel)]="name" name="name" type="text" placeholder="Nome" ngModel required
               disabled="{{nameDisabled}}">
             </ion-input>
           </ion-item>
@@ -86,8 +86,8 @@
           <ion-item *ngFor="let apply of Applies" class="item">
             <div class="container">
 
-              <ion-text class="list-subtitle">Job Title: {{apply.jobTitle}}</ion-text><br>
-              <ion-text class="list-subtitle">Name: {{apply.userName}} {{apply.userLastname}}</ion-text><br>
+              <ion-text class="list-subtitle">Cargo: {{apply.jobTitle}}</ion-text><br>
+              <ion-text class="list-subtitle">Nome: {{apply.userName}} {{apply.userLastname}}</ion-text><br>
               <ion-text class="list-subtitle">Email: {{apply.userEmail}}</ion-text>
 
               <ion-button (click)="openCV(apply)" fill="clear" style="width: 35%; margin-left: 60%;">View CV

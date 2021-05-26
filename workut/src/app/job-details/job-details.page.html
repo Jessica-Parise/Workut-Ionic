@@ -6,7 +6,7 @@
     </ion-buttons>
 
     <div class="toolbar">
-      <label>Workut - Job Detail</label>
+      <label>Workut - Detalhes da Vaga</label>
       <ion-icon class="ion-margin-end"></ion-icon>
     </div>
 
@@ -23,30 +23,30 @@
     </div>
 
     <div class="box">
-      <ion-label>Salary: {{salary}}</ion-label>
-      <ion-label>Country: {{country}}</ion-label>
-      <ion-label>State: {{state}}</ion-label>
+      <ion-label>Salário: {{salary}}</ion-label>
+      <ion-label>País: {{country}}</ion-label>
+      <ion-label>Estado: {{state}}</ion-label>
     </div>
 
     <div>
-      <ion-label class="box">Start Date: {{date}}</ion-label>
+      <ion-label class="box">Data de início: {{date}}</ion-label>
     </div>
 
 
     <div class="description">
       <ion-label class="title title-job">Company</ion-label>
-      <ion-label class="box">Name: {{companyName}}</ion-label>
+      <ion-label class="box">Nome: {{companyName}}</ion-label>
       <ion-label class="box">Email: {{companyEmail}}</ion-label><br>
     </div>
 
 
     <div class="description">
-      <ion-label class="title">Job Description:</ion-label><br>
+      <ion-label class="title">Descrição da vaga:</ion-label><br>
       <ion-label class="box">{{description}}</ion-label>
     </div>
 
     <div class="description">
-      <ion-label class="title">Skills required:</ion-label><br>
+      <ion-label class="title">Habilidades:</ion-label><br>
       <ul *ngFor="let skill of Skills">
         <li>{{skill.skill}}</li>
       </ul>

@@ -44,7 +44,7 @@ export class ChatsPage implements OnInit {
         this.db.getSomeone(LOGIN.ID).then(response => {
           this.currentIMG = response.imgURL;
           this.LoadContacts();
-        }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
+        }, (error) => { this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!'); });
       });
     });
     this.Mensagens = this.fBuilder.group({
@@ -93,7 +93,7 @@ export class ChatsPage implements OnInit {
             this.Contacts[i] = { id: sent[j]._id.$oid, name: response.name, type: '1', img: response.imgURL };
             this.bckContacts[i] = { id: sent[j]._id.$oid, name: response.name, type: '1', img: response.imgURL };
             i++;
-          }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
+          }, (error) => { this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!'); });
         }
 
         // tslint:disable-next-line: prefer-for-of
@@ -102,12 +102,12 @@ export class ChatsPage implements OnInit {
             this.Contacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2', img: response.imgURL };
             this.bckContacts[i] = { id: received[j]._id.$oid, name: response.name, type: '2', img: response.imgURL };
             i++;
-          }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
+          }, (error) => { this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!'); });
         }
 
-      }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
+      }, (error) => { this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!'); });
 
-    }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
+    }, (error) => { this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!'); });
   }
 
   changeCurrentContact(id: string, contact: string, type: string, imgURL: string): void {
@@ -130,7 +130,7 @@ export class ChatsPage implements OnInit {
       this.addItemWithText(this.message, false);
       this.qteMsg++;
       this.message = '';
-    }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
+    }, (error) => { this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!'); });
   }
 
   LoadMessagesHistory(): void {
@@ -149,7 +149,7 @@ export class ChatsPage implements OnInit {
       this.subscription = source.subscribe(val => {
         this.LoadMessagesLive();
       });
-    }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
+    }, (error) => { this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!'); });
   }
 
   LoadMessagesLive(): void {
@@ -164,7 +164,7 @@ export class ChatsPage implements OnInit {
         this.addItemWithText(response[i].message, owner);
         this.qteMsg++;
       }
-    }, (error) => { this.statusAlert('Error', 'An error occurred. Please try again!'); });
+    }, (error) => { this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!'); });
   }
 
   // Presents an alert for status

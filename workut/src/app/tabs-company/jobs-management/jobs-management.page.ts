@@ -45,11 +45,11 @@ export class JobsManagementPage implements OnInit {
   async deleteJob(job) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Are you sure?',
-      message: 'If you delete this Job, it will be lost forever',
+      header: 'Você tem certeza?',
+      message: 'Esta vaga será deletada para sempre',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
           handler: () => {
 
@@ -79,11 +79,11 @@ export class JobsManagementPage implements OnInit {
       } else if (response === '404') {
         this.authService.Logout();
       } else {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     );
   }
@@ -97,7 +97,7 @@ export class JobsManagementPage implements OnInit {
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     );
   }
@@ -126,7 +126,7 @@ export class JobsManagementPage implements OnInit {
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     );
   }

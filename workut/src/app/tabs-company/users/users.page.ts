@@ -55,7 +55,7 @@ export class UsersPage implements OnInit {
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     );
   }
@@ -79,7 +79,7 @@ export class UsersPage implements OnInit {
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     );
   }

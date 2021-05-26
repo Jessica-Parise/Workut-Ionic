@@ -56,9 +56,9 @@ export class LoginPage implements OnInit {
           this.password = '';
         });
       } else if (response.status === '404') {
-        this.statusAlert('Error', 'Account not found!');
+        this.statusAlert('Erro', 'Conta não encontrada!');
       } else {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!');
       }
     });
 

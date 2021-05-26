@@ -161,13 +161,13 @@ export class RegisterCompanyPage implements OnInit {
         this.state = '';
         this.router.navigate(['/login']);
       } else if (response === '400') {
-        this.statusAlert('Error', 'This email is already registered in the system!');
+        this.statusAlert('Erro', 'Esse email já está sendo utilizado!');
       } else if (response === '500') {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!');
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!');
       }
     );
 
@@ -209,7 +209,7 @@ export class RegisterCompanyPage implements OnInit {
     // and update the States list with the 'Other' option
     else {
       this.state = '';
-      this.states = [{ nome: 'Other' }];
+      this.states = [{ nome: 'Outros' }];
     }
 
   }
