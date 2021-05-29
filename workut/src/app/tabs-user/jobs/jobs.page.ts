@@ -43,35 +43,54 @@ export class JobsPage implements OnInit {
   }
 
   searchJobs() {
-    this.db.ListJobs(this.body).then(response => {
-      if (response === '404') {
+    this.db.listPremiumJobs(this.body).then(response_p => {
+      if (response_p === '404') {
         this.authService.Logout();
       } else {
-        this.Jobs = response;
-        let i = -1;
+        this.Jobs = response_p;
+        
+        this.db.listJobs(this.body).then(response => {
+          if (response === '404') {
+            this.authService.Logout();
+          } else {
 
-        this.Jobs.forEach(value => {
-          i++;
+            let count = response_p.length;
+            response.forEach(value => {
+              this.Jobs[count] = value;
+              count++;
+            });
 
-          this.db.verifyAppliedStatus(this.body.ID, value._id.$oid).then(applyStatus => {
-            if (applyStatus == null) {
-              value.applied = false;
-            } else {
-              value.applied = true;
-            }
-          });
+            let i = -1;
 
-          this.db.SearchCompany(value.company).then(companyFound => {
-            if (companyFound == null) {
-              this.Jobs.splice(i);
-            } else {
-              value.companyName = companyFound.name;
-              value.companyEmail = companyFound.email;
-              value.companyImg = companyFound.img;
-            }
-          });
+            this.Jobs.forEach(value => {
+              i++;
 
-        });
+              this.db.verifyAppliedStatus(this.body.ID, value._id.$oid).then(applyStatus => {
+                if (applyStatus == null) {
+                  value.applied = false;
+                } else {
+                  value.applied = true;
+                }
+              });
+
+              this.db.SearchCompany(value.company).then(companyFound => {
+                if (companyFound == null) {
+                  this.Jobs.splice(i);
+                } else {
+                  value.companyName = companyFound.name;
+                  value.companyEmail = companyFound.email;
+                  value.companyImg = companyFound.img;
+                }
+              });
+
+            });
+
+          }
+        },
+          (error) => {
+            this.statusAlert('Error', 'An error occurred. Please try again!');
+          }
+        );
 
       }
     },

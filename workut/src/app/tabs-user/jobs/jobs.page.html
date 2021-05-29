@@ -12,8 +12,15 @@
         <div class="container">
 
           <img class="profileImage" [src]="job.companyImg"><br>
-          <ion-text class="list-subtitle"><label for="" class="titulo">Job Title:</label> {{job.jobTitle}}</ion-text>
-          <ion-text class="list-subtitle"><label for="" class="titulo">Job Description:</label> {{job.jobDescription}}</ion-text>
+          
+
+          <ion-text *ngIf="job.banner" class="list-subtitle"><label for="" class="titulo">BANNER Title:</label> {{job.jobTitle}}</ion-text>
+          <ion-text *ngIf="job.banner" class="list-subtitle"><label for="" class="titulo">BANNER Description:</label> {{job.jobDescription}}</ion-text>
+          
+          <ion-text *ngIf="!job.banner" class="list-subtitle"><label for="" class="titulo">Job Title:</label> {{job.jobTitle}}</ion-text>
+          <ion-text *ngIf="!job.banner" class="list-subtitle"><label for="" class="titulo">Job Description:</label> {{job.jobDescription}}</ion-text>
+
+
           <ion-text class="list-subtitle"><label for="" class="titulo">Salary:</label> {{job.salary}}</ion-text>
           <ion-text class="list-subtitle"><label for="" class="titulo">Start Date:</label> {{job.startDate}}</ion-text>
           <ion-text class="list-subtitle"><label for="" class="titulo">Country:</label> {{job.country}}</ion-text>

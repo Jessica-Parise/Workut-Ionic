@@ -64,9 +64,15 @@ export class DbService {
     ).toPromise();
   }
 
-  public ListJobs(session: any): Promise<any> {
+  public listJobs(session: any): Promise<any> {
     return this.http.post(
       this.API + '/listJobs', session
+    ).toPromise();
+  }
+
+  public listPremiumJobs(session: any): Promise<any> {
+    return this.http.post(
+      this.API + '/listPremiumJobs', session
     ).toPromise();
   }
 
@@ -99,11 +105,13 @@ export class DbService {
       this.API + '/getJob?id=' + id
     ).toPromise();
   }
+
   public SearchCV(id: string): Promise<any> {
     return this.http.get(
       this.API + '/getUserCV?id=' + id
     ).toPromise();
   }
+
   public SearchUser(id: string): Promise<any> {
     return this.http.get(
       this.API + '/getUser?id=' + id
