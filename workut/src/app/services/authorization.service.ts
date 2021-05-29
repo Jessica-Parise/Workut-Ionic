@@ -9,23 +9,26 @@ export class AuthorizationService {
 
   constructor(private router: Router, private storage: Storage) { }
 
-  setCurrentLogin(paramTOKEN: string, paramID: string, paramtype: string): any {
+  setCurrentLogin(paramTOKEN: string, paramID: string, paramtype: string, paramPremium: boolean): any {
     return this.getCurrentLogin().then(session => {
 
       let _TOKEN = paramTOKEN;
       let _ID = paramID;
       let _type = paramtype;
+      let _premium = paramPremium;
 
       if (session != null) {
         _TOKEN = paramTOKEN != null ? paramTOKEN : session.TOKEN;
         _ID = paramID != null ? paramID : session.ID;
         _type = paramtype != null ? paramtype : session.type;
+        _premium = paramPremium != false ? paramPremium : session.premium;
       }
 
       this.storage.set('session', {
         'TOKEN': _TOKEN,
         'ID': _ID,
-        'type': _type
+        'type': _type,
+        'premium': _premium
       });
     });
   }

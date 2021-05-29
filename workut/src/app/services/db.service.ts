@@ -232,7 +232,7 @@ export class DbService {
 
   public PublishImage(body: any, id: string): Promise<any> {
     return this.http.post(
-      this.API + '/PublishImage', {body, image: id}
+      this.API + '/PublishImage', { body, image: id }
     ).toPromise();
   }
 
@@ -247,6 +247,12 @@ export class DbService {
   public getAccounts(body: any): Promise<any> {
     return this.http.post(
       this.API + '/getAccounts', body
+    ).toPromise();
+  }
+
+  public setPremiumAccount(body: any, account: string): Promise<any> {
+    return this.http.post(
+      this.API + '/setPremiumAccount', { session: body, account }
     ).toPromise();
   }
 

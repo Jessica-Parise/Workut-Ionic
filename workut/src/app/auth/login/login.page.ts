@@ -38,19 +38,19 @@ export class LoginPage implements OnInit {
 
     this.db.Login(user).then(response => {
       if (response.status === '200.1') {
-        this.authService.setCurrentLogin(response.TOKEN, response.id.$oid, '1').then(() => {
+        this.authService.setCurrentLogin(response.TOKEN, response.id.$oid, '1', response.premium).then(() => {
           this.router.navigate(['/tabs-user']);
           this.email = '';
           this.password = '';
         });
       } else if (response.status === '200.2') {
-        this.authService.setCurrentLogin(response.TOKEN, response.id.$oid, '2').then(() => {
+        this.authService.setCurrentLogin(response.TOKEN, response.id.$oid, '2', response.premium).then(() => {
           this.router.navigate(['/tabs-company']);
           this.email = '';
           this.password = '';
         });
       } else if (response.status === '200.3') {
-        this.authService.setCurrentLogin(response.TOKEN, response.id.$oid, '3').then(() => {
+        this.authService.setCurrentLogin(response.TOKEN, response.id.$oid, '3', false).then(() => {
           this.router.navigate(['/tabs-admin']);
           this.email = '';
           this.password = '';

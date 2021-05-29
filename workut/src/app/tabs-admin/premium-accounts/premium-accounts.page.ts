@@ -78,7 +78,16 @@ export class PremiumAccountsPage implements OnInit {
   }
 
   ActivePremium(id: string) {
-    console.log('active - ' + id);
+    this.db.setPremiumAccount(this.LOGIN, id).then(response => {
+      if (response == 200) {
+        this.listAccounts();
+        this.statusAlert('Sucesso', 'Conta Premium ativa!');
+      } else {
+        
+    console.log(response);
+        this.statusAlert('Erro', 'Não foi possível ativar a Conta Premium!');
+      }
+    }).catch(() => { this.statusAlert('Erro', 'Não foi possível ativar a Conta Premium!'); });
   }
 
 }
