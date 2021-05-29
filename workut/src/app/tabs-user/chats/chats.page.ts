@@ -146,9 +146,9 @@ export class ChatsPage implements OnInit {
       let owner = true;
       for (let i = 0; i < response.length; i++) {
         if (response[i].contactType === '1') {
-          owner = false;
-        } else {
           owner = true;
+        } else {
+          owner = false;
         }
         this.addItemWithText(response[i].message, owner);
         this.qteMsg++;
@@ -165,9 +165,9 @@ export class ChatsPage implements OnInit {
       let owner = true;
       for (let i = this.qteMsg; i < response.length; i++) {
         if (response[i].contactType === '1') {
-          owner = false;
-        } else {
           owner = true;
+        } else {
+          owner = false;
         }
         this.addItemWithText(response[i].message, owner);
         this.qteMsg++;

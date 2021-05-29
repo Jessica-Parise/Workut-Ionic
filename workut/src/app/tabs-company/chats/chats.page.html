@@ -36,10 +36,10 @@
           <div formArrayName="itemRows">
             <div *ngFor="let mensagem of Mensagens.controls.itemRows['controls']; let i=index" [formGroupName]="i">
               <div style="display: flex; flex-direction: row;">
-                <div *ngIf="mensagens.value[i].owner" class="divSentTxtMessage">
+                <div *ngIf="!mensagens.value[i].owner" class="divSentTxtMessage">
                   <textarea formControlName="mensagem" readonly></textarea>
                 </div>
-                <div *ngIf="!mensagens.value[i].owner" class="divReceivedTxtMessage">
+                <div *ngIf="mensagens.value[i].owner" class="divReceivedTxtMessage">
                   <textarea formControlName="mensagem" readonly></textarea>
                 </div>
               </div>
