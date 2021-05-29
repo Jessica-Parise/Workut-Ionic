@@ -34,7 +34,15 @@ export class ChatsPage implements OnInit {
     private fBuilder: FormBuilder, public toastController: ToastController
   ) { }
 
+  ionViewDidEnter() {
+    this.init();
+  }
+
   ngOnInit() {
+    this.init();
+  }
+
+  init() {
     this.authService.verifySession('2').then(() => {
       this.authService.getCurrentLogin().then(LOGIN => {
         this.LOGIN = LOGIN;

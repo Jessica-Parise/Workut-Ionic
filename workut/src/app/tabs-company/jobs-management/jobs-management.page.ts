@@ -15,6 +15,9 @@ export class JobsManagementPage implements OnInit {
   search;
   Jobs;
   body;
+  premium;
+  jobs_banner;
+  bannerID;
 
   constructor(
     public http: HttpClient, private router: Router, public alertController: AlertController,
@@ -30,7 +33,9 @@ export class JobsManagementPage implements OnInit {
       this.authService.getCurrentLogin().then(LOGIN => {
         if (LOGIN != null) {
           this.body = LOGIN;
+          this.premium = LOGIN.premium;
           this.searchJobs();
+          this.searchJobsToBanner();
         } else {
           this.authService.Logout();
         }
@@ -40,7 +45,7 @@ export class JobsManagementPage implements OnInit {
 
   ionViewDidEnter() {
     this.init();
-  } 
+  }
 
   async deleteJob(job) {
     const alert = await this.alertController.create({
@@ -129,6 +134,54 @@ export class JobsManagementPage implements OnInit {
         this.statusAlert('Error', 'An error occurred. Please try again!');
       }
     );
+  }
+
+  searchJobsToBanner() {
+    this.db.listCompanyJobsToCreateBanner(this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+        this.jobs_banner = response;
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
+  }
+
+  jobSelected() {
+    console.log(this.bannerID);
+
+    this.db.listCompanyJobsToCreateBanner(this.body).then(response => {
+      if (response === '404') {
+        this.authService.Logout();
+      } else {
+
+        let deleted = 0;
+
+        response.forEach(element => {
+          this.db.disableBanner(this.body, element._id.$oid).then(status => {
+
+            deleted++;
+            if(deleted == response.length){
+              this.db.createBanner(this.body, this.bannerID).then(statusResponse=>{
+                if(statusResponse == '200'){
+                  this.statusAlert("Sucesso", "Banner Criado com Sucesso!");
+                }
+              });
+            }
+
+          })
+        });
+
+      }
+    },
+      (error) => {
+        this.statusAlert('Error', 'An error occurred. Please try again!');
+      }
+    );
+
   }
 
 }

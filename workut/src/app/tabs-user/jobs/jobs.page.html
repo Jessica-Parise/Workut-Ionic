@@ -12,13 +12,17 @@
         <div class="container">
 
           <img class="profileImage" [src]="job.companyImg"><br>
-          
 
-          <ion-text *ngIf="job.banner" class="list-subtitle"><label for="" class="titulo">BANNER Title:</label> {{job.jobTitle}}</ion-text>
-          <ion-text *ngIf="job.banner" class="list-subtitle"><label for="" class="titulo">BANNER Description:</label> {{job.jobDescription}}</ion-text>
-          
-          <ion-text *ngIf="!job.banner" class="list-subtitle"><label for="" class="titulo">Job Title:</label> {{job.jobTitle}}</ion-text>
-          <ion-text *ngIf="!job.banner" class="list-subtitle"><label for="" class="titulo">Job Description:</label> {{job.jobDescription}}</ion-text>
+
+          <ion-text *ngIf="job.banner" class="list-subtitle"><label for="" class="titulo">BANNER Title:</label>
+            {{job.jobTitle}}</ion-text>
+          <ion-text *ngIf="job.banner" class="list-subtitle"><label for="" class="titulo">BANNER Description:</label>
+            {{job.jobDescription}}</ion-text>
+
+          <ion-text *ngIf="!job.banner" class="list-subtitle"><label for="" class="titulo">Job Title:</label>
+            {{job.jobTitle}}</ion-text>
+          <ion-text *ngIf="!job.banner" class="list-subtitle"><label for="" class="titulo">Job Description:</label>
+            {{job.jobDescription}}</ion-text>
 
 
           <ion-text class="list-subtitle"><label for="" class="titulo">Salary:</label> {{job.salary}}</ion-text>
@@ -26,14 +30,21 @@
           <ion-text class="list-subtitle"><label for="" class="titulo">Country:</label> {{job.country}}</ion-text>
           <ion-text class="list-subtitle"><label for="" class="titulo">State:</label> {{job.state}}</ion-text><br>
 
-          <ion-text class="list-subtitle"><label for="" class="titulo">Company Name:</label> {{job.companyName}}</ion-text>
-          <ion-text class="list-subtitle"><label for="" class="titulo">Company Email:</label> {{job.companyEmail}}</ion-text>
+          <ion-text class="list-subtitle"><label for="" class="titulo">Company Name:</label> {{job.companyName}}
+          </ion-text>
+          <ion-text class="list-subtitle"><label for="" class="titulo">Company Email:</label> {{job.companyEmail}}
+          </ion-text>
 
           <ion-button fill="clear" style="width: 35%; margin-left: 60%;" (click)="showJob(job)">
             Details
           </ion-button>
           <ion-button fill="clear" style="width: 35%; margin-left: 60%;" (click)="applyJob(job)"
-            [disabled]="job.applied">{{job.applied ? 'Applied' : 'Apply'}}</ion-button>
+            [disabled]="job.applied">
+            {{job.applied ? 'Applied' : 'Apply'}}
+          </ion-button>
+          <ion-button *ngIf="premium" fill="clear" style="width: 35%; margin-left: 60%;" (click)="startChat(job)">
+            Start Chat
+          </ion-button>
 
         </div>
 

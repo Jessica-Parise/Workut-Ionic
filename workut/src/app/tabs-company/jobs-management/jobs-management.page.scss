@@ -46,3 +46,17 @@ ion-searchbar {
         margin-right: 240px;
     }
 }
+
+
+@media (min-width: 1000px){
+    .selectBanner{
+        margin-left: 28%;
+        margin-right: 28%;
+    }
+}
+
+@media (max-width: 1000px){
+    .selectBanner{
+        text-align: start;
+    }
+}

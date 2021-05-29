@@ -15,6 +15,7 @@ export class JobsPage implements OnInit {
   search;
   Jobs;
   body;
+  premium;
 
   constructor(
     public http: HttpClient, public toastController: ToastController,
@@ -30,6 +31,7 @@ export class JobsPage implements OnInit {
       this.authService.getCurrentLogin().then(LOGIN => {
         if (LOGIN != null) {
           this.body = LOGIN;
+          this.premium = LOGIN.premium;
           this.searchJobs();
         } else {
           this.authService.Logout();
@@ -48,7 +50,7 @@ export class JobsPage implements OnInit {
         this.authService.Logout();
       } else {
         this.Jobs = response_p;
-        
+
         this.db.listJobs(this.body).then(response => {
           if (response === '404') {
             this.authService.Logout();
@@ -77,6 +79,7 @@ export class JobsPage implements OnInit {
                 if (companyFound == null) {
                   this.Jobs.splice(i);
                 } else {
+                  value.companyID = companyFound._id.$oid;
                   value.companyName = companyFound.name;
                   value.companyEmail = companyFound.email;
                   value.companyImg = companyFound.img;
@@ -167,6 +170,12 @@ export class JobsPage implements OnInit {
 
   showJob(job) {
     this.router.navigate(['/job-details', { id: job._id.$oid }]);
+  }
+
+  startChat(item): void {
+    this.db.User_CreateContact(this.body, item.companyID).then(response => {
+      this.router.navigate(['/tabs-user/chats']);
+    });
   }
 
 }

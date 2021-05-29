@@ -1,36 +1,46 @@
 <ion-content>
 
-    <ion-searchbar [(ngModel)]="search" name="search" (ionChange)="searchJobs_Title()" ngModel
-        placeholder="Search by Job Title" showCancelButton="focus">
-    </ion-searchbar>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button color="danger" routerLink="/tabs-company/job-create">
-            <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
+  <ion-searchbar [(ngModel)]="search" name="search" (ionChange)="searchJobs_Title()" ngModel
+    placeholder="Search by Job Title" showCancelButton="focus">
+  </ion-searchbar>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="danger" routerLink="/tabs-company/job-create">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
-    <ion-list class="list">
-        
-        <ion-item *ngFor="let job of Jobs">
-            <div class="container">
+  <div *ngIf="premium">
+    <ion-item class="selectBanner">
+      <ion-label>Escolher um novo Banner:</ion-label>
+      <ion-select [(ngModel)]="bannerID" name="bannerID" (ionChange)="jobSelected()">
+        <ion-select-option *ngFor="let job of jobs_banner" [value]="job._id.$oid">
+          {{job.jobTitle}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
 
-                <ion-icon name="close" color="danger" class="close-icon" (click)="deleteJob(job)"></ion-icon>
-                <ion-icon name="create" color="secondary" class="edit-icon" (click)="editJob(job)"></ion-icon>
+  <ion-list class="list">
 
-                <ion-text class="list-title">{{job.jobTitle}}</ion-text><br>
+    <ion-item *ngFor="let job of Jobs">
+      <div class="container">
 
-                <div style="margin-bottom: 5px;"></div>
+        <ion-icon name="close" color="danger" class="close-icon" (click)="deleteJob(job)"></ion-icon>
+        <ion-icon name="create" color="secondary" class="edit-icon" (click)="editJob(job)"></ion-icon>
 
-                <ion-text class="list-subtitle">Salary: {{job.salary}}</ion-text><br>
-                <ion-text class="list-subtitle">Start date: {{job.startDate}}</ion-text><br>
-                <ion-text class="list-subtitle">Job Description: {{job.jobDescription}}</ion-text>
+        <ion-text class="list-title">{{job.jobTitle}}</ion-text><br>
 
-            </div>
-        </ion-item>
+        <div style="margin-bottom: 5px;"></div>
 
-    </ion-list>
+        <ion-text class="list-subtitle">Salary: {{job.salary}}</ion-text><br>
+        <ion-text class="list-subtitle">Start date: {{job.startDate}}</ion-text><br>
+        <ion-text class="list-subtitle">Job Description: {{job.jobDescription}}</ion-text>
 
-    <!-- Skeleton screen -->
+      </div>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- Skeleton screen -->
   <div *ngIf="!Jobs">
     <ion-list>
 

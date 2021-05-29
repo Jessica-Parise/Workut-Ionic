@@ -226,6 +226,12 @@ export class DbService {
     ).toPromise();
   }
 
+  public User_CreateContact(LOGIN: any, user2: string): Promise<any> {
+    return this.http.post(
+      this.API + '/User_CreateContact', { TOKEN: LOGIN.TOKEN, user1: LOGIN.ID, user2 }
+    ).toPromise();
+  }
+
   public CompanyDeleteAppliedJob(body: any): Promise<any> {
     return this.http.post(
       this.API + '/CompanyDeleteAppliedJob', body
@@ -261,6 +267,24 @@ export class DbService {
   public setPremiumAccount(body: any, account: string): Promise<any> {
     return this.http.post(
       this.API + '/setPremiumAccount', { session: body, account }
+    ).toPromise();
+  }
+
+  public listCompanyJobsToCreateBanner(body: any): Promise<any> {
+    return this.http.post(
+      this.API + '/listCompanyJobsToCreateBanner', body
+    ).toPromise();
+  }
+
+  public disableBanner(body: any, jobID: string): Promise<any> {
+    return this.http.post(
+      this.API + '/disableBanner', { session: body, jobID }
+    ).toPromise();
+  }
+
+  public createBanner(body: any, jobID: string): Promise<any> {
+    return this.http.post(
+      this.API + '/createBanner', { session: body, jobID }
     ).toPromise();
   }
 
