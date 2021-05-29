@@ -17,6 +17,9 @@ export class JobsPage implements OnInit {
   body;
   premium;
 
+  normalJobs_count;
+  premiumJobs_count;
+
   constructor(
     public http: HttpClient, public toastController: ToastController,
     private router: Router, private authService: AuthorizationService, private db: DbService) { }
@@ -50,17 +53,21 @@ export class JobsPage implements OnInit {
         this.authService.Logout();
       } else {
         this.Jobs = response_p;
-
+        this.premiumJobs_count = response_p.length;
         this.db.listJobs(this.body).then(response => {
           if (response === '404') {
             this.authService.Logout();
           } else {
 
-            let count = response_p.length;
-            response.forEach(value => {
-              this.Jobs[count] = value;
-              count++;
-            });
+            this.normalJobs_count = response_p.length;
+
+            if (this.Jobs.length !== (this.premiumJobs_count + this.normalJobs_count)) {
+              let count = 0;
+              response.forEach(value => {
+                this.Jobs[this.premiumJobs_count + count] = value;
+                count++;
+              });
+            }
 
             let i = -1;
 
