@@ -92,7 +92,7 @@ export class ProfilePage implements OnInit {
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     );
   }
@@ -113,7 +113,7 @@ export class ProfilePage implements OnInit {
       this.countries = response;
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     );
   }
@@ -123,7 +123,7 @@ export class ProfilePage implements OnInit {
       this.states = response;
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     );
   }
@@ -155,18 +155,18 @@ export class ProfilePage implements OnInit {
         body.newData.imgURL = 'https://drive.google.com/uc?id=' + infoImg.id;
         this.db.CompanyUpdateProfile(body).then(response => {
           if (response === '200') {
-            this.statusAlert('Sucess', 'Profile data has been updated successfully!');
+            this.statusAlert('Sucesso', 'Seu perfil foi atualizado com sucesso!');
             if (this.oldName !== this.name) {
               location.reload();
             }
           } else if (response === '404') {
             this.authService.Logout();
           } else {
-            this.statusAlert('Error', 'An error occurred. Please try again!');
+            this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
           }
         },
           (error) => {
-            this.statusAlert('Error', 'An error occurred. Please try again!');
+            this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
           }
         );
         this.iconName = 'lock-closed';
@@ -224,7 +224,7 @@ export class ProfilePage implements OnInit {
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     );
   }
@@ -232,7 +232,7 @@ export class ProfilePage implements OnInit {
   Decline(item): void {
 
     const cn = confirm
-      ('Are you sure that you wanna refuse AND DELETE this apply FOREVER ???');
+      ('Tem certeza que deseja recusar e DELETAR PARA SEMPRE???');
     if (cn) {
       const body = {
         company: this.body,
@@ -245,11 +245,11 @@ export class ProfilePage implements OnInit {
         } else if (response === '404') {
           this.authService.Logout();
         } else {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
+          this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
         }
       },
         (error) => {
-          this.statusAlert('Error', 'An error occurred. Please try again!');
+          this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
         }
       );
     }

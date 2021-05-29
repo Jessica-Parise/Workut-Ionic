@@ -14,14 +14,14 @@
   <ion-grid>
     <form #form="ngForm" (ngSubmit)="saveChanges()" class="editForm">
 
-      <ion-input class="input" ngModel required type="text" [(ngModel)]="jobTitle" name="jobTitle" placeholder="Title">
+      <ion-input class="input" ngModel required type="text" [(ngModel)]="jobTitle" name="jobTitle" placeholder="Cargo">
       </ion-input>
 
       <ion-input class="input" ngModel required type="text" [(ngModel)]="jobDescription" name="jobDescription"
-        placeholder="Description">
+        placeholder="Descrição">
       </ion-input>
 
-      <ion-input class="input" ngModel required type="text" [(ngModel)]="salary" name="salary" placeholder="Salary">
+      <ion-input class="input" ngModel required type="text" [(ngModel)]="salary" name="salary" placeholder="Salário">
       </ion-input>
 
       <ion-select class="input" [(ngModel)]="country" name="country" (ionChange)="countrySelected()" required>
@@ -46,7 +46,7 @@
 
           <ion-toolbar>
             <ion-label>
-              <p>Skills Required:</p>
+              <p>Habilidades Desejadas:</p>
             </ion-label>
 
             <ion-buttons slot="end" style="margin-top: 3%;">
@@ -62,7 +62,7 @@
           <div *ngFor="let item of addmore.controls.itemRows['controls']; let i=index" [formGroupName]="i">
 
             <ion-toolbar>
-              <ion-input class="input" id="skill{{i}}" formControlName="skill" type="text" placeholder="skill name">
+              <ion-input class="input" id="skill{{i}}" formControlName="skill" type="text" placeholder="Habilidade">
               </ion-input>
 
               <ion-buttons slot="end" style="margin-top: 1%;" (click)="deleteRow(i)">

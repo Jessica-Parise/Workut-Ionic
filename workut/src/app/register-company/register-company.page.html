@@ -22,7 +22,7 @@
 
           <!--SignUp Title-->
           <div>
-            <h3 class="titleSlide">Company SignUp</h3>
+            <h3 class="titleSlide">Cadastrar empresa</h3>
           </div>
 
           <!--Slides-->
@@ -33,7 +33,7 @@
               <div>
                 <!--Name-->
                 <ion-item>
-                  <ion-input [(ngModel)]="name" name="name" type="text" placeholder="Name" ngModel required>
+                  <ion-input [(ngModel)]="name" name="name" type="text" placeholder="Nome" ngModel required>
                   </ion-input>
                 </ion-item>
                 <!--Lastname-->
@@ -43,7 +43,7 @@
                 </ion-item>
                 <!--Next Button-->
                 <ion-button size="larger" expand="block" (click)="Move(1)">
-                  Next
+                  Próximo
                 </ion-button>
               </div>
 
@@ -56,7 +56,7 @@
                   <!--Country-->
 
                   <ion-item>
-                    <ion-label>Country</ion-label>
+                    <ion-label>País</ion-label>
                     <ion-select [(ngModel)]="country" name="country" (ionChange)="countrySelected()" required>
                       <ion-select-option *ngFor="let country of countries" [value]="country.nome_pais_int">
                         {{country.nome_pais_int}}</ion-select-option>
@@ -66,7 +66,7 @@
                   <!--State-->
 
                   <ion-item>
-                    <ion-label>State</ion-label>
+                    <ion-label>Estado</ion-label>
                     <ion-select [(ngModel)]="state" name="state" required>
                       <ion-select-option *ngFor="let state of states" [value]="state.nome">
                         {{state.nome}}</ion-select-option>
@@ -77,10 +77,10 @@
                 <!--Next and Previous Buttons-->
                 <div class="btnsSlide">
                   <ion-button class="btnSlide" size="larger" (click)="Move(0)">
-                    Back
+                    Anterior
                   </ion-button>
                   <ion-button class="btnSlide" size="larger" (click)="Move(2)">
-                    Next
+                    Próximo
                   </ion-button>
                 </div>
               </div>
@@ -91,23 +91,23 @@
               <div>
                 <!--Email-->
                 <ion-item>
-                  <ion-input [(ngModel)]="email" name="email" type="email" placeholder="your@email.com" ngModel
+                  <ion-input [(ngModel)]="email" name="email" type="email" placeholder="email@email.com" ngModel
                     required>
                   </ion-input>
                 </ion-item>
                 <!--Password-->
                 <ion-item>
-                  <ion-input [(ngModel)]="password" name="password" type="password" placeholder="Password" ngModel
+                  <ion-input [(ngModel)]="password" name="password" type="password" placeholder="Senha" ngModel
                     required>
                   </ion-input>
                 </ion-item>
                 <!--Next and SignUp Button-->
                 <div class="btnsSlide">
                   <ion-button class="btnSlide" size="larger" (click)="Move(1)">
-                    Back
+                    Anterior
                   </ion-button>
                   <ion-button class="btnSlide" size="larger" type="submit" [disabled]="form.invalid">
-                    Sign up
+                    Cadastrar
                   </ion-button>
                 </div>
               </div>

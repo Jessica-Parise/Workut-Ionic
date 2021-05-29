@@ -130,16 +130,16 @@ export class JobCreatePage implements OnInit {
     this.db.CreateJob(body).then(response => {
       if (response === '200') {
         this.createdTime = new Date().toLocaleTimeString();
-        this.statusAlert('Success', 'Job data was sucessfully created');
+        this.statusAlert('Successo', 'Vaga criada com sucesso');
         this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.createdTime }]);
       } else if (response === '404') {
         this.authService.Logout();
       } else {
-        this.statusAlert('Error', 'Error during the creation ... please try again later');
+        this.statusAlert('Erro', 'Erro durante a criação... por favor, tente novamente mais tarde.');
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!');
       }
     );
 

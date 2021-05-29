@@ -160,16 +160,16 @@ export class JobEditPage implements OnInit {
     this.db.EditJob(body).then(response => {
       if (response === '200') {
         this.updateTime = new Date().toLocaleTimeString();
-        this.statusAlert('Success', 'Job data was sucessfully updated');
+        this.statusAlert('Successo', 'Os dados da vaga foram atualizados com sucesso!');
         this.navigationRouter.navigate(['/tabs-company/jobs-management', { updated: this.updateTime }]);
       } else if (response === '404') {
         this.authService.Logout();
       } else {
-        this.statusAlert('Error', 'Error during the update ... please try again later');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred ... please try again later');
+        this.statusAlert('Erro', 'Um erro ocorreu. Tente novamente mais tarde!');
       }
     );
 

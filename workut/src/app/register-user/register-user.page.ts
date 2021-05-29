@@ -150,7 +150,7 @@ export class RegisterUserPage implements OnInit {
     // Sending the user object to MondoDB via POST request
     this.db.UserSingUp(user).then(response => {
       if (response === '200') {
-        this.statusAlert('Success', 'Account successfully registered!');
+        this.statusAlert('Sucesso', 'Conta registrada com sucesso!');
         // Reseting the values, case the user return to this page
         this.email = '';
         this.name = '';
@@ -160,13 +160,13 @@ export class RegisterUserPage implements OnInit {
         this.state = '';
         this.router.navigate(['/login']);
       } else if (response === '400') {
-        this.statusAlert('Error', 'This email is already registered in the system!');
+        this.statusAlert('Erro', 'Este email já está sendo utilizado!');
       } else if (response === '500') {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!');
       }
     },
       (error) => {
-        this.statusAlert('Error', 'An error occurred. Please try again!');
+        this.statusAlert('Erro', 'Ocorreu um erro. Por favor, tente novamente!');
       }
     );
 
