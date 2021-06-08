@@ -10,9 +10,9 @@
     <div *ngIf="Jobs">
       <ion-item *ngFor="let job of Jobs" class="item">
         <div class="container">
-
+          <div class="perfil-div">
           <img class="profileImage" [src]="job.companyImg"><br>
-
+        </div>
 
           <ion-text *ngIf="job.banner" class="list-subtitle"><label for="" class="titulo">BANNER Title:</label>
             {{job.jobTitle}}</ion-text>

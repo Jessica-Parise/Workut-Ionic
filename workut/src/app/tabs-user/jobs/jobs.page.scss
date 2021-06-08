@@ -7,7 +7,7 @@
   border: 1px solid #f82790;
   box-shadow: 1px 1px 1px #b6b5b5;
   border-radius: 8px;
-  background-color: rgba(177, 176, 176, 0.151);
+  //background-color: rgba(177, 176, 176, 0.151);
 
   padding: 15px 10px;
 }
@@ -20,6 +20,7 @@
   font-size: 14px;
   color:black;
   margin-bottom: 1px;
+  margin-left: 40px;
   line-height: 22px;
 }
 ion-searchbar {
@@ -30,31 +31,26 @@ ion-searchbar {
   margin-bottom: 0px;
 }
 .button-clear{
-  border: 1px solid #f82790;
+  //  border: 1px solid #f82790;
   border-radius: 8px;
-  color: #f82790;
+  color: white;
+  background-color: #f82790;
+  width: 140px;
 }
 ion-button:hover {
-  color: white;
-  background-color:  #f82790;
+  background-color: #f82790d7;
 }
 .titulo {
   color: var(--color-primary);
 }
-@media screen and (min-width: 1000px) {
-  .profileImage{
-    border-radius: 50%;
-    margin-left: 90%;
-    width: 9%;
-    height: 7vh;
-  }
-}
 
-@media screen and (max-width: 1000px) {
-  .profileImage{
-    border-radius: 50%;
-    margin-left: 77%;
-    width: 20%;
-    height: 8vh;
-  }
+.profileImage {
+  max-width: 50px;
+  width: 100%;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.perfil-div {
+  display: flex;
+  flex-direction: row-reverse;
 }

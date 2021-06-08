@@ -10,13 +10,17 @@
       <ion-item *ngFor="let user of Users" class="item">
         <div class="container">
   
-          <img class="profileImage" [src]="user.imgURL">
+          <div class="perfil-div">
+            <img class="profileImage" [src]="user.imgURL">
+          </div>
           <ion-text class="list-subtitle"><label for="" class="titulo">Nome:</label> {{user.name}}</ion-text>
           <ion-text class="list-subtitle"><label for="" class="titulo">Sobrenome:</label> {{user.lastName}}</ion-text>
           <ion-text class="list-subtitle"><label for="" class="titulo">Email:</label> {{user.email}}</ion-text>
           <ion-text class="list-subtitle"><label for="" class="titulo">País:</label> {{user.country}}</ion-text>
           <ion-text class="list-subtitle"><label for="" class="titulo">Estado:</label> {{user.state}}</ion-text>
-          <ion-button (click)="openCV(user)" fill="clear" style="width: 35%; margin-left: 60%;" >Ver currículo</ion-button>
+          <div class="perfil-div">
+            <ion-button (click)="openCV(user)" fill="clear">Ver currículo</ion-button>
+          </div>
         </div>
 
       </ion-item>
